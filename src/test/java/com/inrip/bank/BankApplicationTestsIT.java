@@ -197,7 +197,7 @@ class BankApplicationTestsIT {
 
 
     /*
-     * Test Case - test_add_transaction_reference_is_duplicated
+     * Test Case - test_add_transaction_no_account_iban
      * Expected: error
      * Description:
      *      create a transaction with no account_iban
@@ -277,56 +277,6 @@ class BankApplicationTestsIT {
                      .andExpect(jsonPath("$.size()", is(1)))
                      .andExpect(jsonPath("$.[0].reference").value(transactionRequestDTO.getReference()));
     }*/
-
-    /*
-     * Test Case - test_case_status_with_no_date
-     * Asumption: a transaction with no date, the response is NotFoundException
-     * 
-     */
-    @Test
-    public void test_case_status_with_no_date() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
-        StatusRequestDTO statusRequestDTO = null;
-
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(NO_DATE, 
-                                                        true, 10, 2);
-        when(mTransactionService.getTransactionByReference(any())).thenReturn(transaction);
-        
-        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(CLIENT);
-        this.mMockMvc.perform(get(url)
-                     .with(httpBasic("test", "1234"))
-                     .contentType(MediaType.APPLICATION_JSON)                                           
-                     .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
-                     .andExpect(status().isOk())
-                     .andExpect(content().contentTypeCompatibleWith("application/json"))
-                     .andExpect(jsonPath("reference").value(statusRequestDTO.getReference()))
-                     .andExpect(jsonPath("status").value(is(INVALID.get()))
-                      ).andReturn();
-
-        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(ATM);
-        this.mMockMvc.perform(get(url)
-                    .with(httpBasic("test", "1234"))
-                    .contentType(MediaType.APPLICATION_JSON)                                           
-                    .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentTypeCompatibleWith("application/json"))
-                    .andExpect(jsonPath("reference").value(statusRequestDTO.getReference()))
-                    .andExpect(jsonPath("status").value(is(INVALID.get()))
-                    ).andReturn();
-
-        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(INTERNAL);
-        this.mMockMvc.perform(get(url)
-                        .with(httpBasic("test", "1234"))
-                        .contentType(MediaType.APPLICATION_JSON)                                           
-                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentTypeCompatibleWith("application/json"))
-                        .andExpect(jsonPath("reference").value(statusRequestDTO.getReference()))
-                        .andExpect(jsonPath("status").value(is(INVALID.get()))
-                        ).andReturn();
-                                
-    }
-
    
     /*
      * Test Case A - test_case_status_ruleA
