@@ -47,46 +47,46 @@ The parameters to configre the access to the API are:
 
 # Configuration parameters
 The app is using the Spring Boot framework, JUnit and Mockito. The file application.properties has the next list of configurable parameters:
-• server.port is by default to 8080
 
-bank.basic.message.alive is the welcome message in the API , accesible at the root path of the servlet context
-bank.basic.auth.username is the username expected in the request headers Basic Auth
-bank.basic.auth.password is the password expected in the request headers Basic Auth
-
-The next commented lines are to switch to MongoDB
-## para usar mongodb, en caso contrario H2
-## bank.basic.mongodb.uri=mongodb+srv://test:1234@sandbox.bjcecbp.mongodb.net/simple_bank
-## spring.data.mongodb.database=simple_bank
+    • server.port is by default to 8080
+    • bank.basic.message.alive is the welcome message in the API , accesible at the root path of the servlet context
+    • bank.basic.auth.username is the username expected in the request headers Basic Auth
+    • bank.basic.auth.password is the password expected in the request headers Basic Auth
 
 The enxt block of params are specific from the funtional logic implementesd for the test:
-• bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true the service response the status UNKNOWN for the trasactions with no date. Set it by default to true, then the service will up HttpAcceptException and return httpt code 202 ACCEPTED. Such of that, is better the assumption of 202 ACCEPTED.
-• bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will trucate date for comparision according the requeriment TODAY
-• bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account iban and credit is nit stored in database, then the service will create the account with credit set to 0. By default is true
-• bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS if set to true the service will check before note the transaction if the account iban has enough credit to support the operation. By default is true
-• bank.basic.DEBUG_DATA_ON_RESPONSES if set to true the service will include debug information in the json, by default false
-• bank.basic.DEBUG_API_METHODS if set to true the service will accept debuging api calls
+
+    • bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true the service response the status UNKNOWN for the trasactions with no date. Set it by default to true, then the service will up HttpAcceptException and return httpt code 202 ACCEPTED. Such of that, is better the assumption of 202 ACCEPTED.
+
+    • bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will trucate date for comparision according the requeriment TODAY.
+
+    • bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account iban and credit is nit stored in database, then the service will create the account with credit set to 0. By default is true.
+
+    • bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS if set to true the service will check before note the transaction if the account iban has enough credit to support the operation. By default is true.
+
+    • bank.basic.DEBUG_DATA_ON_RESPONSES if set to true the service will include debug information in the json, by default false.
+
+    • bank.basic.DEBUG_API_METHODS if set to true the service will accept debuging api calls.
 
 Default configuration:
 
-server.port=8080
-server.tomcat.max-threads=1200
-server.tomcat.accept-count=1200
+    server.port=8080
+    server.tomcat.max-threads=1200
+    server.tomcat.accept-count=1200
 
-bank.basic.message.alive=Transaction REST API is running
-bank.basic.auth.username=test
-bank.basic.auth.password=1234
+    bank.basic.message.alive=Transaction REST API is running
+    bank.basic.auth.username=test
+    bank.basic.auth.password=1234
 
-bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS=false
-bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES=true
-bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS=true
-bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS=true
-bank.basic.DEBUG_DATA_ON_RESPONSES=false
-bank.basic.DEBUG_API_METHODS=false
+    bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS=false
+    bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES=true
+    bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS=true
+    bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS=true
+    bank.basic.DEBUG_DATA_ON_RESPONSES=false
+    bank.basic.DEBUG_API_METHODS=false
 
-## para usar mongodb, en caso contrario H2
-## bank.basic.mongodb.uri=mongodb+srv://test:1234@sandbox.bjcecbp.mongodb.net/simple_bank
-## spring.data.mongodb.database=simple_bank
-
+    <!--## para usar mongodb, en caso contrario H2
+    ## bank.basic.mongodb.uri=mongodb+srv://test:1234@sandbox.bjcecbp.mongodb.net/simple_bank
+    ## spring.data.mongodb.database=simple_bank-->
 
 # Author
 Enrique AC
