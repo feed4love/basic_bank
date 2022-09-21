@@ -31,17 +31,17 @@ Can be configured with the parameter <bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STAT
 
 3) Entity account keep data to match requeriments about account and credit
 
-4) Entity transaction keep data to match requeriments about transaction
+4) Entity transaction keep data to match requeriments about transaction and status logic
 
-5) The database choosen is H2, but initial test has been done with Atlas, the MongoDb Cluster that is a great optin but require configure the client Ip address in the server to accept connections. 
-The main different that affects to the project example is the need --or not of the use JPA , as far MongoDB is not relational DB. The code for switch to MongoDB is commented.
+5) The database choosen is H2, but initial test has been done with Atlas, the MongoDb Cluster that is a great option but require configure the client Ip address at the cluster instance, or to have it running in local.
+The main affects is about the JPA , as far MongoDB is not a relational DB. The code for switch to MongoDB is commented.
 
-6) Security. Here is choose to use a Basic Authorization for the API and allow move forward with the main requeriments. Is well known is better method to use Oauth2.0 and JWT, .., also with other techs. to protect the services from unauthorized access or  attacks (such in the servlet configuration and in the application server).  Any case regarding this matter I have decided at this stage implement the Basic and move forwad according the schedulle.
+6) Security. Here is choose to use a Basic Authorization for the API. Is well known better methods such Oauth2.0 , JWT, among others to protect servlets and api rest. Any case regarding this matter I have decided at this stage implement the Basic and move forwad at this stage with requirements and test cases.
 The parameters to configre the access to the API are:
     bank.basic.auth.username
     bank.basic.auth.password
 
-7) It is asumme that is need to have an entity for Account to keep track about the credit is avaibable for an IBAN Account number to match requeriments.
+7) It is asumme that is need to have an entity name account to keep data about the credit avaibable for an IBAN Account.
 
 
 # Configuration parameters
@@ -55,11 +55,11 @@ The app is using the Spring Boot framework, JUnit and Mockito. The file applicat
 
 • bank.basic.auth.password is the password expected in the request headers Basic Auth
 
-• bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true the service response the status UNKNOWN for the trasactions with no date. Set it by default to true, then the service will up HttpAcceptException and return httpt code 202 ACCEPTED. Such of that, is better the assumption of 202 ACCEPTED.
+• bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true the service response the status UNKNOWN for the trasactions with no date. Set it by default to true, then the service will up HttpAcceptException and return httpt code 202 ACCEPTED. Such of that, is better the assumption to response HTTP202 ACCEPTED.
 
 • bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will trucate date for comparision according the requeriment TODAY.
 
-• bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account iban and credit is nit stored in database, then the service will create the account with credit set to 0. By default is true.
+• bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account iban and credit is not stored in database, then the service will create the account with credit set to 0. By default is true.
 
 • bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS if set to true the service will check before note the transaction if the account iban has enough credit to support the operation. By default is true.
 
