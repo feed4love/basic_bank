@@ -50,9 +50,9 @@ The app is using the Spring Boot framework, JUnit and Mockito. The file applicat
 
 • bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will trucate date for comparision according the requeriment TODAY.
 
-• bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account iban and credit is not stored in database, then the service will create the account with credit set to 0. By default is true.
+• bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account isnt exists, then the service will create the account and set the initial credit to 0.
 
-• bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS set to true then the service will check if the account iban has enough credit to support the operation and before note the transaction. By default is true, any operation bellow 0 is denied.
+• bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS set to true then the service will check if the account iban has enough credit to support the operation.
 
 • bank.basic.DEBUG_DATA_ON_RESPONSES if set to true the service will include debug information in the json, by default false.
 
