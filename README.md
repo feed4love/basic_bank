@@ -70,6 +70,7 @@ Default configuration:
 # Test cases
 The next list parameters could interfere with the proper run of the test. 
 Set them to the default values:
+
     bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS=true
     bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS=true
 
