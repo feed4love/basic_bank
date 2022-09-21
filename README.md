@@ -77,7 +77,7 @@ A example list of avaibable calls to end points are:
     http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=false
     http://test:1234@localhost:8080/api/transaction/status
 
-    Disabled by debug popouses:
+    Disable by debug:
     http://test:1234@localhost:8080/api/transaction/all
     http://test:1234@localhost:8080/api/transaction/reference/REF-TEST?descending_amount=false
 
