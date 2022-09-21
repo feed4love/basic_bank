@@ -76,8 +76,10 @@ A example list of avaibable calls to end points are:
     http://test:1234@localhost:8080/api/transaction/add
     http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=false
     http://test:1234@localhost:8080/api/transaction/status
-    http://test:1234@localhost:8080/api/transaction/all -> 4debug
-    http://test:1234@localhost:8080/api/transaction/reference/REF-TEST?descending_amount=false  -> 4debug
+
+    Disabled by debug popouses:
+    http://test:1234@localhost:8080/api/transaction/all
+    http://test:1234@localhost:8080/api/transaction/reference/REF-TEST?descending_amount=false
 
 # Author
 2022 Enrique AC
