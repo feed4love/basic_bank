@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "9a7d63b7-fc0c-4aee-9807-3dae9d52239a",
+		"name": "Bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Status",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://test:1234@localhost:8080/api/transaction/",
+					"protocol": "http",
+					"auth": {
+						"user": "test",
+						"password": "1234"
+					},
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All transactions",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://test:1234@localhost:8080/api/transaction/all",
+					"protocol": "http",
+					"auth": {
+						"user": "test",
+						"password": "1234"
+					},
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"reference\":\"1\",\r\n    \"account_iban\":\"1\",\r\n    \"date\":\"2022-09-19T20:55:42.000Z\",\r\n    \"amount\":1,\r\n    \"fee\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://test:1234@localhost:8080/api/transaction/add",
+					"protocol": "http",
+					"auth": {
+						"user": "test",
+						"password": "1234"
+					},
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Account IBAN",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=false",
+					"protocol": "http",
+					"auth": {
+						"user": "test",
+						"password": "1234"
+					},
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"iban",
+						"IBAN-001"
+					],
+					"query": [
+						{
+							"key": "descending_amount",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search By Reference",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://test:1234@localhost:8080/api/transaction/reference/REF-003?descending_amount=false",
+					"protocol": "http",
+					"auth": {
+						"user": "test",
+						"password": "1234"
+					},
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"reference",
+						"REF-003"
+					],
+					"query": [
+						{
+							"key": "descending_amount",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status by Reference",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reference\": \"1as0sa0\",\r\n    \"channel\": \"CLIENT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://test:1234@localhost:8080/api/transaction/status",
+					"protocol": "http",
+					"auth": {
+						"user": "test",
+						"password": "1234"
+					},
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

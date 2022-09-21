@@ -26,7 +26,6 @@ The parameters to configre the access to the API are:
 
 7) It is asumme that is need to have an entity name account to keep data about the credit avaibable associated with an IBAN Account code.
 
-
 # Configuration parameters
 The file application.properties has the next list of configurable parameters:
 
@@ -69,5 +68,15 @@ Default configuration:
     ## bank.basic.mongodb.uri=mongodb+srv://test:1234@sandbox.bjcecbp.mongodb.net/simple_bank
     ## spring.data.mongodb.database=simple_bank
 
+# API URL
+The file Bank.postman_collection.json include the main commands and paths to the api.
+A example list of avaibable calls to end points are:
+http://test:1234@localhost:8080/api/transaction/
+http://test:1234@localhost:8080/api/transaction/all
+http://test:1234@localhost:8080/api/transaction/add
+http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=false -> only 4debug
+http://test:1234@localhost:8080/api/transaction/reference/REF-TEST?descending_amount=false
+http://test:1234@localhost:8080/api/transaction/status
+
 # Author
-Enrique AC
+2022 Enrique AC
