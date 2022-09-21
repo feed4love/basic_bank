@@ -48,7 +48,7 @@ The app is using the Spring Boot framework, JUnit and Mockito. The file applicat
 
 • bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true, then the service will response status UNKNOWN for trasactions without the field date setted. Set it by default to FALSE, then the service will up a HttpAcceptException, then the servlet returns Http 202 ACCEPTED. Such of that, is better the assumption to response HTTP202 ACCEPTED. By default is set to FALSE.
 
-• bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will trucate date for comparision according the requeriment TODAY.
+• bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will trucate dates for comparision and according the assumption about the requeriment TODAY. If set to false, then the comparision between dates will complete. Set by default to FALSE.
 
 • bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account isnt exists, then the service will create the account and set the initial credit to 0.
 
