@@ -42,7 +42,7 @@ The file application.properties has the next list of configurable parameters:
 
 • bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account isnt exists, then the service will create the account and set the initial credit to 0.
 
-• bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS set to true then the service will check if the account iban has enough credit to support the operation.
+• bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS set to true then the service will check if the account iban has enough credit to support the operation. Set by default to TRUE.
 
 • bank.basic.DEBUG_DATA_ON_RESPONSES if set to true the service will include debug information in the json, by default false.
 
@@ -66,6 +66,12 @@ Default configuration:
     ## para usar mongodb, en caso contrario H2
     ## bank.basic.mongodb.uri=mongodb+srv://test:1234@sandbox.bjcecbp.mongodb.net/simple_bank
     ## spring.data.mongodb.database=simple_bank
+
+# Test cases
+The next list parameters could interfere with the proper run of the test. 
+Set them to the default values:
+    bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS=true
+    bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS=true
 
 # API URL
 The file Bank.postman_collection.json include the main commands and paths to the api.
