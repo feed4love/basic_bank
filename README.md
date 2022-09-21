@@ -70,8 +70,6 @@ The enxt block of params are specific from the funtional logic implementesd for 
 Default configuration:
 
     server.port=8080
-    server.tomcat.max-threads=1200
-    server.tomcat.accept-count=1200
 
     bank.basic.message.alive=Transaction REST API is running
     bank.basic.auth.username=test
