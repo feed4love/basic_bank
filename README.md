@@ -3,10 +3,7 @@
 The goal of this code challenge is to create a microservice using Java and any framework
 that you think it is appropriate.
 
-# Author
-Enrique AC
-
-# Requirements
+# Requirements summary
 1) that a transaction that leaves the total account balance bellow 0 is not allowed.
 2) reference (optional): The transaction unique reference number in our system. If not present, the system will generate one.
 3) Transaction data:
@@ -27,7 +24,6 @@ additional information for a specific transaction.
 be any of these values: CLIENT, ATM, INTERNAL
 
 # Assumptions
-
 1) Optional dates to null in the Transaction will cause indeterminated state in the Status Transaction when it is requested. It is asummed at this cases the service can return a new status -UNKNOWN- or better response with <BadRequestException>. 
 Can be configured with the parameter <bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS>, if set to <true> the service will response when date is not provided.
 
@@ -49,4 +45,5 @@ The parameters to configre the access to the API are:
 
 8) Others together with Swagger has not been done at this stage.
 
-
+# Author
+Enrique AC
