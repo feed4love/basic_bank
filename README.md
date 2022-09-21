@@ -7,20 +7,30 @@ that you think it is appropriate.
 1) that a transaction that leaves the total account balance bellow 0 is not allowed.
 2) reference (optional): The transaction unique reference number in our system. If not present, the system will generate one.
 3) Transaction data:
-    • account_iban (mandatory):
-    • date (optional) **
-    • amount (mandatory): If positive the transaction is a credit (add money) to the account. If negative it is a debit (deduct money from the account)
-    • fee (optional): Fee that will be deducted from the amount, regardless on the
+• account_iban (mandatory)
+
+• date (optional)
+
+• amount (mandatory): If positive the transaction is a credit (add money) to the account. If negative it is a debit (deduct money from the account)
+
+• fee (optional): Fee that will be deducted from the amount, regardless on the
 amount being positive or negative.
-    • description (optional):
+
+• description (optional)
+
 4) This endpoint searches for transactions and should be able to:
-    • Filter by account_iban
-    • Sort by amount (ascending/descending)
-    • This endpoint, based on the payload and some business rules, will return the status and
-additional information for a specific transaction.
+
+• Filter by account_iban
+
+• Sort by amount (ascending/descending)
+
+• This endpoint, based on the payload and some business rules, will return the status and additional information for a specific transaction.
+
 5) Transaction Status data:
-    • reference (mandatory): The transaction reference number
-    • channel (optional): The type of the channel that is asking for the status. It can
+
+• reference (mandatory): The transaction reference number
+
+• channel (optional): The type of the channel that is asking for the status. It can
 be any of these values: CLIENT, ATM, INTERNAL
 
 # General notes and assumptions
