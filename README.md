@@ -3,7 +3,7 @@
 The goal of this code challenge is to create a microservice using Java and any framework
 that you think it is appropriate.
 
-# Requirements summary
+# Requirements (summary)
 1) that a transaction that leaves the total account balance bellow 0 is not allowed.
 2) reference (optional): The transaction unique reference number in our system. If not present, the system will generate one.
 3) This endpoint searches for transactions and should be able to:
@@ -15,10 +15,10 @@ that you think it is appropriate.
     • This endpoint, based on the payload and some business rules, will return the status and additional information for a specific transaction.
 
 # General notes and assumptions
-1) Optional dates to null in the Transaction will cause indeterminated state in the Status Transaction when it is requested. It is asummed at this cases the service can return a new status -UNKNOWN- or better response with <BadRequestException>. 
-Can be configured with the parameter <bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS>, if set to <true> the service will response when date is not provided.
+1) Optional dates to null in the Transaction will cause indeterminated state in the Status Transaction when it is requested. It is asummed at this cases the service can return a new status -UNKNOWN- or better response with BadRequestException. 
+Can be configured with the parameter bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS, if set to true then the service will response when date is not provided.
 
-2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Anycase, If dates are or not truncated for comparision shall be configured with the parameter <bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES>
+2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Anycase, If dates are or not truncated for comparision shall be configured with the parameter bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES.
 
 3) Entity account keep data to match requeriments about account and credit
 
