@@ -8,13 +8,12 @@ The app is using the Spring Boot framework.
 The integration test of the rest controller are written with JUnit5 and Mockito.
 
 1) Optional dates and nulls at the transactions could cause indeterminated states in the Status according the requirements. It is asummed at this cases the service can return a new status UNKNOWN, or response empty HTTP 202 ACCEPTED.
-With the parameter ACCEPT_UNKNOWN_TRANSACTION_STATUS, if set to true then the service will response UNKNOWN when a date is not avaibable to compute. By default set to FALSE, then the service will return Htttp202.
 
-2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Set to true the parameter TRANSACTION_STATUS_TRUNCATE_DATES means the service will trucate dates when compares itself, removing hours minutes and seconds. By default set to TRUE.
+2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Set to true the parameter TRANSACTION_STATUS_TRUNCATE_DATES means the service will trucate dates when compares itself, removing hours minutes and seconds.
 
-3) Entity account keep data to match requeriments about account and credit
+3) Entity account keep data to match requeriments about account and credit.
 
-4) Entity transaction keep data to match requeriments about transaction and status logic
+4) Entity transaction keep data to match requeriments about transaction and status logic.
 
 5) The database is working curently is H2, but initial develop has been started with Atlas, the MongoDb Cluster that is a great option for nono E/R database. But the cluster of Mongo require to configure each client Ip address to accept connections, so the most portable option is to use H2.
 The codes to switch for MongoDB are commented.
@@ -39,7 +38,7 @@ The file application.properties has the next list of configurable parameters:
 
 • bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true, then the service will response status UNKNOWN for trasactions without the field date setted. Set it by default to FALSE, then the service will up a HttpAcceptException, then the servlet returns Http 202 ACCEPTED. Such of that, is better the assumption to response HTTP202 ACCEPTED. By default is set to FALSE.
 
-• bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will truncate dates for comparision and according the assumption about the requeriment TODAY. If set to false, then the comparision between dates will complete. Set by default to FALSE.
+• bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will truncate dates for comparision and according the assumption about the requeriment TODAY. If set to false, then the comparision between dates will complete. Set by default to TRUE.
 
 • bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account isnt exists, then the service will create the account and set the initial credit to 0.
 
