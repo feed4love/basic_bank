@@ -24,7 +24,7 @@ The codes to switch for MongoDB are commented.
 
 8) As summary, the main app components are
 
-###### Services:
+### Services:
 
 • TransactionService expose the endpoints:
 
