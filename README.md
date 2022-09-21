@@ -23,7 +23,7 @@ additional information for a specific transaction.
     • channel (optional): The type of the channel that is asking for the status. It can
 be any of these values: CLIENT, ATM, INTERNAL
 
-# Assumptions
+# General notes and assumptions
 1) Optional dates to null in the Transaction will cause indeterminated state in the Status Transaction when it is requested. It is asummed at this cases the service can return a new status -UNKNOWN- or better response with <BadRequestException>. 
 Can be configured with the parameter <bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS>, if set to <true> the service will response when date is not provided.
 
