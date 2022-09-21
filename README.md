@@ -29,19 +29,19 @@ The codes to switch for MongoDB are commented.
 
 #### Service:
 
-• TransactionService expose the endpoints:
+• TransactionService serve the endpoints:
 
     http://test:1234@localhost:8080/api/transaction/
     http://test:1234@localhost:8080/api/transaction/add
     http://test:1234@localhost:8080/api/transaction/iban/IBAN-001
     http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=true
 
-• TransactionService expose the endpoint:
+• TransactionService serve the endpoint:
 
     http://test:1234@localhost:8080/api/transaction/status
 
 
-• AccountService dont serve endpoints.
+• AccountService is not exposed.
 
 #### Repository:
 
