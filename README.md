@@ -46,7 +46,7 @@ The app is using the Spring Boot framework, JUnit and Mockito. The file applicat
 
 • bank.basic.auth.password is the password expected in the request headers Basic Auth
 
-• bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true the service response the status UNKNOWN for the trasactions with no date. Set it by default to true, then the service will up HttpAcceptException and return httpt code 202 ACCEPTED. Such of that, is better the assumption to response HTTP202 ACCEPTED.
+• bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true, then the service will response status UNKNOWN for trasactions without the field date setted. Set it by default to FALSE, then the service will up a HttpAcceptException, then the servlet returns Http 202 ACCEPTED. Such of that, is better the assumption to response HTTP202 ACCEPTED. By default is set to FALSE.
 
 • bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will trucate date for comparision according the requeriment TODAY.
 
