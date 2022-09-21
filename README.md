@@ -8,11 +8,11 @@ that you think it is appropriate.
 2) reference (optional): The transaction unique reference number in our system. If not present, the system will generate one.
 3) This endpoint searches for transactions and should be able to:
 
-• Filter by account_iban
+    • Filter by account_iban
 
-• Sort by amount (ascending/descending)
+    • Sort by amount (ascending/descending)
 
-• This endpoint, based on the payload and some business rules, will return the status and additional information for a specific transaction.
+    • This endpoint, based on the payload and some business rules, will return the status and additional information for a specific transaction.
 
 # General notes and assumptions
 1) Optional dates to null in the Transaction will cause indeterminated state in the Status Transaction when it is requested. It is asummed at this cases the service can return a new status -UNKNOWN- or better response with <BadRequestException>. 
