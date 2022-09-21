@@ -20,18 +20,26 @@ The codes to switch for MongoDB are commented.
 
 6) Security. Here is choosen for the API rest the Basic Authorization. Neverless is well known better methods such Oauth2.0 , JWT, among others. Any case regarding this matter is decided at this stage to implement the Basic Auth and move forwad with next requirements. The parameters to configre the access to the API are bank.basic.auth.username and bank.basic.auth.password .
 
-7) It is asumme that is needed to have an entity named account to keep data about the credit avaibable and associated with the IBAN Account noted into the transactions and deploy two services.
+7) It is asumme that is needed to have an entity named account to keep data about the credit avaibable and associated with the IBAN Account noted into the transactions.
 
-• TransactionService serve the endpoints:
+8) As summary, the main app components are
+
+## Services:
+
+• TransactionService expose the endpoints:
 
     http://test:1234@localhost:8080/api/transaction/
     http://test:1234@localhost:8080/api/transaction/add
     http://test:1234@localhost:8080/api/transaction/iban/IBAN-001
     http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=true
 
-• TransactionService serve the endpoint:
+• TransactionService expose the endpoint:
 
     http://test:1234@localhost:8080/api/transaction/status
+
+
+• AccountService dont serve endpoints.
+
 
 
 # Configuration parameters
