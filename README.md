@@ -41,9 +41,9 @@ The file application.properties has the next list of configurable parameters:
 
 • bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS set to true then the service will check if the account iban has enough credit to support the operation. Set by default to TRUE.
 
-• bank.basic.DEBUG_DATA_ON_RESPONSES if set to true the service will include debug information in the json, by default false.
+• bank.basic.DEBUG_DATA_ON_RESPONSES if set to true the service will add several debug information at the json response. Currently included at the StatusResponseDTO to track the constraint applied to calculate the status. By default set to FALSE.
 
-• bank.basic.DEBUG_API_METHODS if set to true the service will accept debuging api calls.
+• bank.basic.DEBUG_API_METHODS if set to true the service will accept debuging api calls to the endpoints /api/transaction/all and /api/transaction/reference/. By default set to FALSE.
 
 Default configuration:
 
