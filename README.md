@@ -49,11 +49,12 @@ The parameters to configre the access to the API are:
 The app is using the Spring Boot framework, JUnit and Mockito. The file application.properties has the next list of configurable parameters:
 
 • server.port is by default to 8080
-• bank.basic.message.alive is the welcome message in the API , accesible at the root path of the servlet context
-• bank.basic.auth.username is the username expected in the request headers Basic Auth
-• bank.basic.auth.password is the password expected in the request headers Basic Auth
 
-The enxt block of params are specific from the funtional logic implementesd for the test:
+• bank.basic.message.alive is the welcome message in the API , accesible at the root path of the servlet context
+
+• bank.basic.auth.username is the username expected in the request headers Basic Auth
+
+• bank.basic.auth.password is the password expected in the request headers Basic Auth
 
 • bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true the service response the status UNKNOWN for the trasactions with no date. Set it by default to true, then the service will up HttpAcceptException and return httpt code 202 ACCEPTED. Such of that, is better the assumption of 202 ACCEPTED.
 
