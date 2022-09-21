@@ -5,7 +5,7 @@ that you think it is appropriate.
 
 # General notes and assumptions
 The app is using the Spring Boot framework. 
-The rest controller integration test cases are with JUnit5 and Mockito. 
+The integration test of the rest controller are written with JUnit5 and Mockito.
 
 1) Optional dates to null in the Transaction will cause indeterminated state in the Status Transaction when it is requested. It is asummed at this cases the service can return a new status -UNKNOWN- or better response with BadRequestException. 
 Can be configured with the parameter ACCEPT_UNKNOWN_TRANSACTION_STATUS, if set to true then the service will response when date is not provided.
