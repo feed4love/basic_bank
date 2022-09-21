@@ -16,9 +16,9 @@ that you think it is appropriate.
 
 # General notes and assumptions
 1) Optional dates to null in the Transaction will cause indeterminated state in the Status Transaction when it is requested. It is asummed at this cases the service can return a new status -UNKNOWN- or better response with BadRequestException. 
-Can be configured with the parameter bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS, if set to true then the service will response when date is not provided.
+Can be configured with the parameter ACCEPT_UNKNOWN_TRANSACTION_STATUS, if set to true then the service will response when date is not provided.
 
-2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Anycase, If dates are or not truncated for comparision shall be configured with the parameter bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES.
+2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Anycase, If dates are or not truncated for comparision shall be configured with the parameter TRANSACTION_STATUS_TRUNCATE_DATES.
 
 3) Entity account keep data to match requeriments about account and credit
 
