@@ -29,11 +29,11 @@ Can be configured with the parameter <bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STAT
 
 2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Anycase, If dates are or not truncated for comparision shall be configured with the parameter <bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES>
 
-3) Entity <account> keep data to match requeriments of account and credit
+3) Entity account keep data to match requeriments about account and credit
 
-4) Entity <transaction> keep data to match requeriments of account and credit
+4) Entity transaction keep data to match requeriments about transaction
 
-5) The database choose is H2, but initial test has been done with Atlas, the MongoDb Cluster that is a great optin but require configure the client Ip address in the server to accept connections. 
+5) The database choosen is H2, but initial test has been done with Atlas, the MongoDb Cluster that is a great optin but require configure the client Ip address in the server to accept connections. 
 The main different that affects to the project example is the need --or not of the use JPA , as far MongoDB is not relational DB. The code for switch to MongoDB is commented.
 
 6) Security. Here is choose to use a Basic Authorization for the API and allow move forward with the main requeriments. Is well known is better method to use Oauth2.0 and JWT, .., also with other techs. to protect the services from unauthorized access or  attacks (such in the servlet configuration and in the application server).  Any case regarding this matter I have decided at this stage implement the Basic and move forwad according the schedulle.
