@@ -53,6 +53,7 @@ import static org.mockito.Mockito.when;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 
+import static com.inrip.bank.common.UtilTest.TRANSACTION_WHEN.NO_DATE;
 import static com.inrip.bank.common.UtilTest.TRANSACTION_WHEN.TOMORROW;
 import static com.inrip.bank.common.UtilTest.TRANSACTION_WHEN.TODAY;
 import static com.inrip.bank.common.UtilTest.TRANSACTION_WHEN.YESTERDAY;
@@ -252,9 +253,9 @@ class BankApplicationTestsIT {
     }
 
     /*
-     * Extra: find by reference
+     * Extra: find by reference, test DISABLE for debug purpouses
      */
-    @Test
+    /*@Test
     public void test_load_transaction_by_reference() throws Exception {
         String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.SEARCH_BY_REFERENCE;
 
@@ -275,6 +276,55 @@ class BankApplicationTestsIT {
                      .andExpect(jsonPath("$.*").value(hasSize(1)))
                      .andExpect(jsonPath("$.size()", is(1)))
                      .andExpect(jsonPath("$.[0].reference").value(transactionRequestDTO.getReference()));
+    }*/
+
+    /*
+     * Test Case - test_case_status_with_no_date
+     * Asumption: a transaction with no date, the response is NotFoundException
+     * 
+     */
+    @Test
+    public void test_case_status_with_no_date() throws Exception {
+        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        StatusRequestDTO statusRequestDTO = null;
+
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(NO_DATE, 
+                                                        true, 10, 2);
+        when(mTransactionService.getTransactionByReference(any())).thenReturn(transaction);
+        
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(CLIENT);
+        this.mMockMvc.perform(get(url)
+                     .with(httpBasic("test", "1234"))
+                     .contentType(MediaType.APPLICATION_JSON)                                           
+                     .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                     .andExpect(status().isOk())
+                     .andExpect(content().contentTypeCompatibleWith("application/json"))
+                     .andExpect(jsonPath("reference").value(statusRequestDTO.getReference()))
+                     .andExpect(jsonPath("status").value(is(INVALID.get()))
+                      ).andReturn();
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(ATM);
+        this.mMockMvc.perform(get(url)
+                    .with(httpBasic("test", "1234"))
+                    .contentType(MediaType.APPLICATION_JSON)                                           
+                    .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentTypeCompatibleWith("application/json"))
+                    .andExpect(jsonPath("reference").value(statusRequestDTO.getReference()))
+                    .andExpect(jsonPath("status").value(is(INVALID.get()))
+                    ).andReturn();
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(INTERNAL);
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(statusRequestDTO.getReference()))
+                        .andExpect(jsonPath("status").value(is(INVALID.get()))
+                        ).andReturn();
+                                
     }
 
    

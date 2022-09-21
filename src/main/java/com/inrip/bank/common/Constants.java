@@ -11,9 +11,12 @@ public interface Constants {
 	public static String HTTP_METHOD_POST = "POST";
 	public static String HTTP_METHOD_PUT = "PUT";
 	public static String HTTP_METHOD_DELETE = "DELETE";
-	public static int HTTP_STATUS_SUCCESS_STATUS_CODE = 200;
-	public static String HTTP_STATUS_SUCCESS_STATUS = "SUCCESS";
+	public static int HTTP_STATUS_SUCCESS_STATUS_CODE = 200;	
+	public static String HTTP_STATUS_SUCCESS_STATUS = "SUCCESS";	
 	public static String HTTP_STATUS_SUCCESS_STATUS_DESCRIPTION = "Success";
+	public static int HTTP_STATUS_ACCEPT_STATUS_CODE = 202;
+	public static String HTTP_STATUS_ACCEPT_STATUS = "ACCEPT";	
+	public static String HTTP_STATUS_ACCEPT_STATUS_DESCRIPTION = "Accept";
 	public static int HTTP_STATUS_BAD_REQUEST_STATUS_CODE = 400;
 	public static String HTTP_STATUS_BAD_REQUEST_STATUS = "BAD_REQUEST";
 	public static String HTTP_STATUS_BAD_REQUEST_STATUS_DESCRIPTION = "Bad Request";

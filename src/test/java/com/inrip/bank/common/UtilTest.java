@@ -41,7 +41,8 @@ public class UtilTest {
     public enum TRANSACTION_WHEN {
         TODAY,
         TOMORROW,
-        YESTERDAY
+        YESTERDAY,
+        NO_DATE
     }
 
     public static StatusRequestDTO getFakeStatusRequestDTO(TRANSACTION_CHANNEL channel) {
@@ -65,9 +66,12 @@ public class UtilTest {
         }else
         if(when==TRANSACTION_WHEN.YESTERDAY){
             transaction.setDate(Utils.getYesterday(trucate_dates));
+        }else
+        if(when==TRANSACTION_WHEN.NO_DATE){
+            transaction.setDate(null);
         }else{
             transaction.setDate(Utils.getToday(trucate_dates));
-        }        
+        }
         return Optional.of(transaction);
     }    
 
@@ -89,6 +93,9 @@ public class UtilTest {
         }else
         if(when==TRANSACTION_WHEN.YESTERDAY){
             transactionRequestDTO.setDate(Utils.getYesterday(trucate_dates));
+        }else
+        if(when==TRANSACTION_WHEN.NO_DATE){
+            transactionRequestDTO.setDate(null);
         }else{
             transactionRequestDTO.setDate(Utils.getToday(trucate_dates));
         }

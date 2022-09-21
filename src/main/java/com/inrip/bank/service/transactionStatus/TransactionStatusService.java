@@ -1,5 +1,6 @@
 package com.inrip.bank.service.transactionStatus;
 
+import com.inrip.bank.controller.exceptions.HttpAcceptException;
 import com.inrip.bank.dto.StatusRequestDTO;
 import com.inrip.bank.dto.StatusResponseDTO;
 
@@ -8,5 +9,5 @@ import com.inrip.bank.dto.StatusResponseDTO;
  *
  */
 public interface TransactionStatusService {
-	public StatusResponseDTO getTransactionStatus(StatusRequestDTO statusRequest);
+	public StatusResponseDTO getTransactionStatus(StatusRequestDTO statusRequestDTO) ;
 }

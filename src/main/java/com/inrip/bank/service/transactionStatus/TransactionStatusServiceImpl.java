@@ -8,9 +8,15 @@ import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException.InternalServerError;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.inrip.bank.common.Utils;
+import com.inrip.bank.controller.exceptions.BadRequestException;
+import com.inrip.bank.controller.exceptions.HttpAcceptException;
+import com.inrip.bank.controller.exceptions.NotFoundException;
 import com.inrip.bank.dto.StatusRequestDTO;
 import com.inrip.bank.dto.StatusResponseDTO;
 import com.inrip.bank.model.Transaction;
@@ -31,6 +37,10 @@ public class TransactionStatusServiceImpl implements TransactionStatusService {
 
 	@Autowired
 	private TransactionService mTransactionService;
+
+	
+	@Value("${bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS}")
+	private boolean PARAM_ACCEPT_UNKNOWN_TRANSACTION_STATUS;
 
 	@Value("${bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES}")
 	private boolean PARAM_TRANSACTION_STATUS_TRUNCATE_DATES;
@@ -101,10 +111,11 @@ public class TransactionStatusServiceImpl implements TransactionStatusService {
 						PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;
 
-		if(statusResponseDTO==null){
-			statusResponseDTO = new StatusResponseDTO(statusRequestDTO.getReference(), "UNKNOWN");
+		if(!PARAM_ACCEPT_UNKNOWN_TRANSACTION_STATUS){
+			throw new HttpAcceptException("NO_DATE_YET", "Until can compute null dates");
 		}
-
+		
+		statusResponseDTO = new StatusResponseDTO(statusRequestDTO.getReference(), "UNKNOWN");
 		return statusResponseDTO;		
 	}
 

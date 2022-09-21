@@ -23,6 +23,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 
 import com.inrip.bank.common.Constants;
 import com.inrip.bank.controller.exceptions.BadRequestException;
+import com.inrip.bank.controller.exceptions.HttpAcceptException;
 import com.inrip.bank.controller.exceptions.NotFoundException;
 
 /**
@@ -247,5 +248,22 @@ public abstract class HTTPResponseHandler {
 		mLogger.error(message, ex);
 
 	}
+
+	@ExceptionHandler(HttpAcceptException.class)
+	public void handleHttpAcceptException(HttpAcceptException ex, HttpServletRequest request,
+										  HttpServletResponse response) {
+
+		String code = Constants.HTTP_STATUS_ACCEPT_STATUS;
+		String message = ex.getStatusMessage();
+		int httpStatus = HttpStatus.ACCEPTED.value();
+		String endUserMessage = ex.getEndUserMessage();
+		String externalMessage = ex.getExternalMessage();
+
+		mLogger.error(message, ex);
+
+		constructHeaders(response, code, message, httpStatus, endUserMessage, externalMessage);
+
+	}
+
 
 }

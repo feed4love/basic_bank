@@ -1,5 +1,6 @@
 package com.inrip.bank.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -7,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inrip.bank.common.RequestMappings;
+import com.inrip.bank.controller.exceptions.HttpAcceptException;
 import com.inrip.bank.controller.handlers.HTTPResponseHandler;
 import com.inrip.bank.dto.StatusRequestDTO;
 import com.inrip.bank.dto.StatusResponseDTO;
@@ -24,9 +28,11 @@ import com.inrip.bank.dto.TransactionResponseDTO;
 import com.inrip.bank.service.transaction.TransactionService;
 import com.inrip.bank.service.transactionStatus.TransactionStatusService;
 
+import javassist.NotFoundException;
+
 /**
  * @author Enrique AC
- *
+ *	Main Rest Controller of Simple_Bank
  */
 
 @RestController
@@ -42,25 +48,33 @@ public class TransactionController extends HTTPResponseHandler {
 	private TransactionStatusService mTransactionStatusService;
 
 	@Value("${bank.basic.message.alive}")
-	private String REST_RUNNING;
+	private String PARAM_REST_RUNNING;
+
+	@Value("${bank.basic.DEBUG_API_METHODS}")
+	private boolean PARAM_DEBUG_API_METHODS;
 
 	/**
-	 * Comprobar que el servicio esta activo en el REQUEST_CONTEXT y CONTEXT_PATH
+	 * check if the servicio is running on REQUEST_CONTEXT y CONTEXT_PATH
 	 *
 	 */
 	@RequestMapping(value = RequestMappings.SERVICE_STATUS, method = RequestMethod.GET)
 	public @ResponseBody String helloWorld() {
-		return REST_RUNNING;
+		return PARAM_REST_RUNNING;
 	}
 
 	/**
-	 * Listar todas las transacciones
+	 * extra: list all transacciones (4debug)
 	 *
 	 */
 	@RequestMapping(value = RequestMappings.LIST_ALL, method = RequestMethod.GET)
 	public @ResponseBody List<TransactionResponseDTO> listAllTransactions() {
+		if(!PARAM_DEBUG_API_METHODS)
+			return null;
+
+		List<TransactionResponseDTO> listTransactionResponseDTO = new ArrayList<TransactionResponseDTO>();
 		mLogger.info("Init - listAllTransactions");
-		return mTransactionService.getAllTransactions();
+		listTransactionResponseDTO = mTransactionService.getAllTransactions();
+		return  listTransactionResponseDTO;
 	}
 
 	/**
@@ -78,16 +92,21 @@ public class TransactionController extends HTTPResponseHandler {
 	}
 
 	/**
-	 * Extra: list transactions filtering by reference
+	 * extra: list transactions filtering by reference (4debug)
+	 * @throws NotFoundException
 	 *
 	 */
 	@RequestMapping(value = RequestMappings.SEARCH_BY_REFERENCE, method = RequestMethod.GET)
 	public @ResponseBody List<TransactionResponseDTO> searchTransactionByReference(
 							@PathVariable String reference,
 							@RequestParam(name="descending_amount", required=false, defaultValue="false") boolean descending_amount
-							) {		
+							) throws NotFoundException {		
+		if(!PARAM_DEBUG_API_METHODS)
+			return null;
+					
+		List<TransactionResponseDTO> resp = new ArrayList<TransactionResponseDTO>();
 		mLogger.info("Init - searchTransactionByReference descending<" + descending_amount + ">");
-		List<TransactionResponseDTO> resp = mTransactionService.getAllTransactionByReference(reference, descending_amount);
+		resp = mTransactionService.getAllTransactionByReference(reference, descending_amount);
 		return resp;
 	}
 
@@ -111,9 +130,14 @@ public class TransactionController extends HTTPResponseHandler {
 	 */
 	@RequestMapping(value = RequestMappings.TRANSACTION_STATUS, method = RequestMethod.GET, produces="application/json")	
 	@ResponseBody
-	public StatusResponseDTO transactionStatus(@RequestBody StatusRequestDTO statusRequestDTO) {		
-		mLogger.info("Init - transactionStatus <" + statusRequestDTO.toString() + ">");
-		StatusResponseDTO resp = mTransactionStatusService.getTransactionStatus(statusRequestDTO);
+	public StatusResponseDTO transactionStatus(@RequestBody StatusRequestDTO statusRequestDTO) {	
+		StatusResponseDTO resp = null;
+		try{
+			mLogger.info("Init - transactionStatus <" + statusRequestDTO.toString() + ">");
+			resp = mTransactionStatusService.getTransactionStatus(statusRequestDTO);	
+		}catch(HttpAcceptException e){
+			mLogger.info("Init - transactionStatus <" + statusRequestDTO.toString() + ">");
+		}
 		return resp;
 	}
 
