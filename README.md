@@ -43,7 +43,6 @@ The parameters to configre the access to the API are:
 
 7) It is asumme that is need to have an entity for Account to keep track about the credit is avaibable for an IBAN Account number to match requeriments.
 
-8) Others together with Swagger has not been done at this stage.
 
 # Configuration parameters
 The app is using the Spring Boot framework, JUnit and Mockito. The file application.properties has the next list of configurable parameters:
