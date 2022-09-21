@@ -24,7 +24,7 @@ The parameters to configre the access to the API are:
     bank.basic.auth.username
     bank.basic.auth.password
 
-7) It is asumme that is need to have an entity name account to keep data about the credit avaibable associated with an IBAN Account code.
+7) It is asumme that is needed to have an entity named account to keep data about the credit avaibable and associated with any IBAN Account code.
 
 # Configuration parameters
 The file application.properties has the next list of configurable parameters:
