@@ -7,8 +7,8 @@ that you think it is appropriate.
 The app is using the Spring Boot framework. 
 The integration test of the rest controller are written with JUnit5 and Mockito.
 
-1) Optional dates to null in the Transaction will cause indeterminated state in the Status Transaction when it is requested. It is asummed at this cases the service can return a new status UNKNOWN, or response empty HTTP 202 ACCEPTED.
-Can be configured with the parameter ACCEPT_UNKNOWN_TRANSACTION_STATUS, if set to true then the service will response UNKNOWN when the date is not avaibable. By default set to FALSE, then the service will return Htttp202.
+1) Optional dates and nulls at the transactions could cause indeterminated states in the Status according the requirements. It is asummed at this cases the service can return a new status UNKNOWN, or response empty HTTP 202 ACCEPTED.
+With the parameter ACCEPT_UNKNOWN_TRANSACTION_STATUS, if set to true then the service will response UNKNOWN when a date is not avaibable to compute. By default set to FALSE, then the service will return Htttp202.
 
 2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Set to true the parameter TRANSACTION_STATUS_TRUNCATE_DATES means the service will trucate dates when compares itself, removing hours minutes and seconds. By default set to TRUE.
 
