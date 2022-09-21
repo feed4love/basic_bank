@@ -73,11 +73,11 @@ The file Bank.postman_collection.json include the main commands and paths to the
 A example list of avaibable calls to end points are:
 
     http://test:1234@localhost:8080/api/transaction/
-    http://test:1234@localhost:8080/api/transaction/all
     http://test:1234@localhost:8080/api/transaction/add
-    http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=false -> only 4debug
-    http://test:1234@localhost:8080/api/transaction/reference/REF-TEST?descending_amount=false
+    http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=false
     http://test:1234@localhost:8080/api/transaction/status
+    http://test:1234@localhost:8080/api/transaction/all -> 4debug
+    http://test:1234@localhost:8080/api/transaction/reference/REF-TEST?descending_amount=false  -> 4debug
 
 # Author
 2022 Enrique AC
