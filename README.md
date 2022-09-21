@@ -22,9 +22,12 @@ The codes to switch for MongoDB are commented.
 
 7) It is asumme that is needed to have an entity named account to keep data about the credit avaibable and associated with the IBAN Account noted into the transactions.
 
-8) As summary, the main app components are
 
-### Services:
+#### Controller:
+
+• TransactionController
+
+#### Service:
 
 • TransactionService expose the endpoints:
 
@@ -39,6 +42,31 @@ The codes to switch for MongoDB are commented.
 
 
 • AccountService dont serve endpoints.
+
+#### Repository:
+
+• TransactionRepository
+
+• AccountRepository
+
+#### Model:
+
+• Transaction and request/response DTOs
+
+• Account and request/response DTOs
+
+#### Handlers and Exception:
+
+• HTTPResponseHandler (currently TransactionController extends HTTPResponseHandler)
+
+• BadRequestException, HttpAcceptException, HTTPException and NotFoundException
+
+
+#### Test:
+
+• BankApplicationTestsIT
+
+
 
 
 

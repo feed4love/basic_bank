@@ -1,7 +1,6 @@
 package com.inrip.bank.common;
 
 /**
- * @author Enrique AC
  *
  */
 public interface Constants {

@@ -13,8 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * @author Enrique AC
- *
  */
 @Component
 public class TransactionSecurityInterceptor extends HandlerInterceptorAdapter {

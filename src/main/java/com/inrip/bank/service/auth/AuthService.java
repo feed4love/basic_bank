@@ -1,7 +1,6 @@
 package com.inrip.bank.service.auth;
 
 /**
- * @author Enrique AC
  *
  */
 public interface AuthService {

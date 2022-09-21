@@ -27,7 +27,6 @@ import com.inrip.bank.controller.exceptions.HttpAcceptException;
 import com.inrip.bank.controller.exceptions.NotFoundException;
 
 /**
- * @author Enrique AC
  *
  */
 public abstract class HTTPResponseHandler {

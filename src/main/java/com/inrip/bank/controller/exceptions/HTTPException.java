@@ -1,7 +1,6 @@
 package com.inrip.bank.controller.exceptions;
 
 /**
- * @author Enrique AC
  *
  */
 public class HTTPException extends RuntimeException {
