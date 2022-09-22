@@ -137,7 +137,7 @@ A example list of avaibable calls to end points are:
 # Currently working on (main pendings ordered..)
 
 
-• tests for field fee set to null on transactions (shall avoid null pointer exception managing nulls on db and maths)
+• tests for field fee set to null on transactions (shall avoid null pointer exceptions managing nulls and maths)
 
 • transactions between services
 
