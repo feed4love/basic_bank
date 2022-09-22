@@ -22,7 +22,7 @@ import com.inrip.bank.dto.AccountTransactionRequestDTO;
 import com.inrip.bank.dto.AccountTransactionResponseDTO;
 import com.inrip.bank.model.AccountTransaction;
 
-import com.inrip.bank.common.Utils;
+import com.inrip.bank.common.SimpleBankUtils;
 import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
 import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
 import com.inrip.bank.repository.AccountTransactionRepository;
@@ -126,7 +126,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 			//throws exception
 			transaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 			if(transaction.getReference()==null || transaction.getReference().trim().length()<=0){
-				generatedReference = Utils.GenerateUUID();
+				generatedReference = SimpleBankUtils.GenerateUUID();
 				transaction.setReference(generatedReference);
 			}else{				
 				Optional<AccountTransaction> tmpTransactionDTO = this.getTransactionByReference(transaction.getReference());
@@ -136,7 +136,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 			}
 
 			//save to bbdd
-			String UUID = Utils.GenerateUUID();
+			String UUID = SimpleBankUtils.GenerateUUID();
 			transaction.setUid(UUID);
 
 			transaction = (AccountTransaction) mTransactionRepository.save(transaction);

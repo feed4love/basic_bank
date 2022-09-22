@@ -3,7 +3,7 @@ package com.inrip.bank.common;
 /**
  *
  */
-public interface Constants {
+public interface SimpleBankConstants {
 	
 	public static String PARAMTYPE_HEADER = "header";
 	public static String HTTP_METHOD_GET = "GET";

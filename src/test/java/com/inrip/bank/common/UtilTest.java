@@ -62,15 +62,15 @@ public class UtilTest {
         transaction.setAmount(amount);
         transaction.setFee(fee);
         if(when == TRANSACTION_WHEN.TOMORROW){
-            transaction.setDate(Utils.getTomorrow(trucate_dates));
+            transaction.setDate(SimpleBankUtils.getTomorrow(trucate_dates));
         }else
         if(when==TRANSACTION_WHEN.YESTERDAY){
-            transaction.setDate(Utils.getYesterday(trucate_dates));
+            transaction.setDate(SimpleBankUtils.getYesterday(trucate_dates));
         }else
         if(when==TRANSACTION_WHEN.NO_DATE){
             transaction.setDate(null);
         }else{
-            transaction.setDate(Utils.getToday(trucate_dates));
+            transaction.setDate(SimpleBankUtils.getToday(trucate_dates));
         }
         return Optional.of(transaction);
     }    
@@ -89,15 +89,15 @@ public class UtilTest {
         transactionRequestDTO.setAmount(amount);        
         transactionRequestDTO.setFee(Double.valueOf(fee));        
         if(when == TRANSACTION_WHEN.TOMORROW){
-            transactionRequestDTO.setDate(Utils.getTomorrow(trucate_dates));
+            transactionRequestDTO.setDate(SimpleBankUtils.getTomorrow(trucate_dates));
         }else
         if(when==TRANSACTION_WHEN.YESTERDAY){
-            transactionRequestDTO.setDate(Utils.getYesterday(trucate_dates));
+            transactionRequestDTO.setDate(SimpleBankUtils.getYesterday(trucate_dates));
         }else
         if(when==TRANSACTION_WHEN.NO_DATE){
             transactionRequestDTO.setDate(null);
         }else{
-            transactionRequestDTO.setDate(Utils.getToday(trucate_dates));
+            transactionRequestDTO.setDate(SimpleBankUtils.getToday(trucate_dates));
         }
         return transactionRequestDTO;
     }    

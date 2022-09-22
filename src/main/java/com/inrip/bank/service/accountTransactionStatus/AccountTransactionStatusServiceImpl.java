@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.inrip.bank.common.Utils;
+import com.inrip.bank.common.SimpleBankUtils;
 import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
 import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
 import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
@@ -61,7 +61,7 @@ public class AccountTransactionStatusServiceImpl implements AccountTransactionSt
 		Optional<AccountTransaction> optTransaction = null;
 		AccountTransaction transactionDTO = null;
         
-		Date todayDate = Utils.getToday(PARAM_TRANSACTION_STATUS_TRUNCATE_DATES);
+		Date todayDate = SimpleBankUtils.getToday(PARAM_TRANSACTION_STATUS_TRUNCATE_DATES);
 
         optTransaction = mTransactionService.getTransactionByReference(statusRequestDTO.getReference());
 

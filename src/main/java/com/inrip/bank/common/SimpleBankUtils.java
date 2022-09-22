@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-public class Utils {
+public class SimpleBankUtils {
 
     public static String GenerateUUID(){
 		return UUID.randomUUID().toString();

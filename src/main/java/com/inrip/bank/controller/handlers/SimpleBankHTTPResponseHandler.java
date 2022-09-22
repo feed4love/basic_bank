@@ -21,7 +21,7 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpStatusCodeException;
 
-import com.inrip.bank.common.Constants;
+import com.inrip.bank.common.SimpleBankConstants;
 import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
 import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
 import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
@@ -72,7 +72,7 @@ public abstract class SimpleBankHTTPResponseHandler {
 	public void handleNotFoundException(SimpleBankNotFoundException ex, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String code = Constants.HTTP_STATUS_NOT_FOUND_STATUS;
+		String code = SimpleBankConstants.HTTP_STATUS_NOT_FOUND_STATUS;
 		String message = ex.getStatusMessage();
 		int httpStatus = HttpStatus.NOT_FOUND.value();
 		String endUserMessage = ex.getEndUserMessage();
@@ -88,7 +88,7 @@ public abstract class SimpleBankHTTPResponseHandler {
 	public void handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String code = Constants.HTTP_STATUS_BAD_REQUEST_STATUS;
+		String code = SimpleBankConstants.HTTP_STATUS_BAD_REQUEST_STATUS;
 
 		String message = "Invalid character OR characters are specified in the request body.Please double check your request";
 		String debugMessage = message + " More details >> " + ex.getMessage();
@@ -105,7 +105,7 @@ public abstract class SimpleBankHTTPResponseHandler {
 	public void handleBadRequestException(SimpleBankBadRequestException ex, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String code = Constants.HTTP_STATUS_BAD_REQUEST_STATUS;
+		String code = SimpleBankConstants.HTTP_STATUS_BAD_REQUEST_STATUS;
 		String message = ex.getStatusMessage();
 		int httpStatus = HttpStatus.BAD_REQUEST.value();
 		String endUserMessage = ex.getEndUserMessage();
@@ -131,7 +131,7 @@ public abstract class SimpleBankHTTPResponseHandler {
 	public void handleIllegalArgumentException(IllegalArgumentException ex, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String code = Constants.HTTP_STATUS_BAD_REQUEST_STATUS;
+		String code = SimpleBankConstants.HTTP_STATUS_BAD_REQUEST_STATUS;
 		String message = ex.getMessage();
 		int httpStatus = HttpStatus.BAD_REQUEST.value();
 		String endUserMessage = ex.getMessage();
@@ -146,7 +146,7 @@ public abstract class SimpleBankHTTPResponseHandler {
 	public void handleIllegalStateException(IllegalStateException ex, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String code = Constants.HTTP_STATUS_BAD_REQUEST_STATUS;
+		String code = SimpleBankConstants.HTTP_STATUS_BAD_REQUEST_STATUS;
 		String message = ex.getMessage();
 		int httpStatus = HttpStatus.BAD_REQUEST.value();
 		String endUserMessage = ex.getMessage();
@@ -182,7 +182,7 @@ public abstract class SimpleBankHTTPResponseHandler {
 	public void handleMissingServletRequestParameterException(MissingServletRequestParameterException ex,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		String code = Constants.HTTP_STATUS_BAD_REQUEST_STATUS;
+		String code = SimpleBankConstants.HTTP_STATUS_BAD_REQUEST_STATUS;
 		String message = ex.getMessage();
 		int status = HttpStatus.BAD_REQUEST.value();
 
@@ -196,7 +196,7 @@ public abstract class SimpleBankHTTPResponseHandler {
 	public void handleServletRequestBindingException(ServletRequestBindingException ex, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String code = Constants.HTTP_STATUS_BAD_REQUEST_STATUS;
+		String code = SimpleBankConstants.HTTP_STATUS_BAD_REQUEST_STATUS;
 		String message = ex.getMessage();
 		int status = HttpStatus.BAD_REQUEST.value();
 
@@ -252,7 +252,7 @@ public abstract class SimpleBankHTTPResponseHandler {
 	public void handleHttpAcceptException(SimpleBankHttpAcceptException ex, HttpServletRequest request,
 										  HttpServletResponse response) {
 
-		String code = Constants.HTTP_STATUS_ACCEPT_STATUS;
+		String code = SimpleBankConstants.HTTP_STATUS_ACCEPT_STATUS;
 		String message = ex.getStatusMessage();
 		int httpStatus = HttpStatus.ACCEPTED.value();
 		String endUserMessage = ex.getEndUserMessage();

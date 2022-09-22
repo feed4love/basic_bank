@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.util.Assert;
 
-import com.inrip.bank.common.Utils;
+import com.inrip.bank.common.SimpleBankUtils;
 import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
 import com.inrip.bank.dto.AccountTransactionStatusRequestDTO;
 import com.inrip.bank.dto.AccountTransactionStatusResponseDTO;
@@ -74,7 +74,7 @@ public class AccountTransactionStatusLogicalValidator {
 										boolean DEBUG_DATA_ON_RESPONSES) {
 		AccountTransactionStatusResponseDTO statusResponse = null;
 
-        Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
+        Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.before(todayDate) && 
 		    ( statusRequest.getChannel().equals("CLIENT") || statusRequest.getChannel().equals("ATM") ) ) {
 			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?0:transactionDTO.getFee().doubleValue());
@@ -99,7 +99,7 @@ public class AccountTransactionStatusLogicalValidator {
 									boolean truncate,
 									boolean DEBUG_DATA_ON_RESPONSES) {
 		AccountTransactionStatusResponseDTO statusResponse = null;
-		Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
+		Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.before(todayDate) && 
 		    (statusRequest.getChannel().equals("INTERNAL")) ) {
 			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "SETTLED", 
@@ -122,7 +122,7 @@ public class AccountTransactionStatusLogicalValidator {
 										boolean truncate,
 										boolean DEBUG_DATA_ON_RESPONSES) {
 		AccountTransactionStatusResponseDTO statusResponse = null;
-		Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
+		Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.equals(todayDate) &&
 		    ( statusRequest.getChannel().equals("CLIENT") || statusRequest.getChannel().equals("ATM")) ) {
 			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?Double.valueOf(0):transactionDTO.getFee()).doubleValue();
@@ -147,7 +147,7 @@ public class AccountTransactionStatusLogicalValidator {
 					boolean truncate,
 					boolean DEBUG_DATA_ON_RESPONSES) {
 		AccountTransactionStatusResponseDTO statusResponse = null;
-		Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
+		Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.equals(todayDate) &&
 		    ((statusRequest.getChannel().equals("INTERNAL"))) ) {
 			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "PENDING", 
@@ -170,7 +170,7 @@ public class AccountTransactionStatusLogicalValidator {
 									boolean truncate,
 									boolean DEBUG_DATA_ON_RESPONSES) {
 		AccountTransactionStatusResponseDTO statusResponse = null;
-		Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
+		Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.after(todayDate) &&
 		    ((statusRequest.getChannel().equals("CLIENT"))) ) {
 			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?Double.valueOf(0):transactionDTO.getFee()).doubleValue();
@@ -194,7 +194,7 @@ public class AccountTransactionStatusLogicalValidator {
 										boolean truncate,
 										boolean DEBUG_DATA_ON_RESPONSES) {
 		AccountTransactionStatusResponseDTO statusResponse = null;
-		Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
+		Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.after(todayDate) &&
 		    ((statusRequest.getChannel().equals("ATM"))) ) {
 			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?Double.valueOf(0):transactionDTO.getFee()).doubleValue();
@@ -219,7 +219,7 @@ public class AccountTransactionStatusLogicalValidator {
 										boolean truncate,
 										boolean DEBUG_DATA_ON_RESPONSES) {
 		AccountTransactionStatusResponseDTO statusResponse = null;
-		Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
+		Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.after(todayDate) &&
 		    ((statusRequest.getChannel().equals("INTERNAL"))) ) {
 			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "FUTURE", 

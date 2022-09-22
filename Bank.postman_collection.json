@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "All transactions",
+			"name": "Hello",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -35,7 +35,44 @@
 			"response": []
 		},
 		{
-			"name": "Hello",
+			"name": "Search Account by IBAN",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://test:1234@localhost:8080/api/account/1",
+					"protocol": "http",
+					"auth": {
+						"user": "test",
+						"password": "1234"
+					},
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All transactions",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -99,7 +136,7 @@
 			"response": []
 		},
 		{
-			"name": "Search Account IBAN",
+			"name": "Search Transaction by Account IBAN",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -132,7 +169,7 @@
 			"response": []
 		},
 		{
-			"name": "Search By Reference",
+			"name": "Search Transaction By Reference",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -165,7 +202,7 @@
 			"response": []
 		},
 		{
-			"name": "STATUS by Reference",
+			"name": "Transaction Status by Reference",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -196,43 +233,6 @@
 						"api",
 						"transaction",
 						"status"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "ACCOUNT by IBAN",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://test:1234@localhost:8080/api/account/1",
-					"protocol": "http",
-					"auth": {
-						"user": "test",
-						"password": "1234"
-					},
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"account",
-						"1"
 					]
 				}
 			},
