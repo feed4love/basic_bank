@@ -137,13 +137,15 @@ A example list of avaibable calls to end points are:
 # Currently working on (main pendings ordered..)
 
 
-• tests for field fee set to null on transactions (shall avoid null pointer exceptions managing nulls and maths)
+• tests for field fee set to null on transactions (shall avoid null pointer exceptions managing nulls and maths.)
 
-• transactions between services
+• dbm transactional blocks between services.
 
-• JWT Security layer
+• JPA annotation to link entities Account and Transaction.
 
-• apply pattern for pojo factory
+• JWT Security layer.
+
+• apply pattern for pojos factory.
 
 
 # Author
