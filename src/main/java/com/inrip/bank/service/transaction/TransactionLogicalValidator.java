@@ -30,6 +30,9 @@ public class TransactionLogicalValidator {
 		Assert.hasText(request.getAccount_iban(), "Account IBAN is required");
 		Assert.notNull(request.getAmount(), "Amount is required");
 		//Assert.isTrue(request.getAmount().doubleValue()>=0, "Positive amount is required");
+
+		if(request.getFee()==null)
+			request.setFee(Double.valueOf(0));
 	}
 
 }

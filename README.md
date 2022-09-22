@@ -20,8 +20,9 @@ The codes to switch for MongoDB are commented.
 
 6) Security. Here is choosen for the API rest the Basic Authorization. Neverless is well known better methods such Oauth2.0 , JWT, among others. Any case regarding this matter is decided at this stage to implement the Basic Auth and move forwad with next requirements. The parameters to configre the access to the API are bank.basic.auth.username and bank.basic.auth.password .
 
-7) It is asumme that is needed to have an entity named account to keep data about the credit avaibable and associated with the IBAN Account noted into the transactions.
+7) Is asummed that is needed to have an entity Account to keep the information regarding credit and IBAN. For the simple task to keep the credit possitive , and to validate or to deny a transaction according this rule. Negative fee is allowed, the only restriction is to have. No api endpoits has been implemented to interrogate the Account entity.
 
+8) When the optional fee is received to null, the service shall manage the null without alter the entity data (e.g. setting 0 to the field fee when isnt provided)
 
 #### Controller:
 
@@ -65,9 +66,6 @@ The codes to switch for MongoDB are commented.
 #### Test:
 
 • BankApplicationTestsIT
-
-
-
 
 
 # Configuration parameters
