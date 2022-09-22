@@ -159,8 +159,9 @@ public class AccountController extends SimpleBankHTTPResponseHandler {
 
 		mLogger.info("Init - getAccountByAccountIban <" + account_iban + ">");
 		
-		AccountRequestDTO accountRequestDTO = new AccountRequestDTO();
-		accountRequestDTO.setAccountiban(account_iban);
+		AccountRequestDTO accountRequestDTO = AccountRequestDTO.Builder.newInstance()
+													.setAccountiban(account_iban)
+													.build();
 
 		optAccountResponseDTO = mAccountService.findAccountByAccountIban(accountRequestDTO);
 		if(optAccountResponseDTO.isPresent())

@@ -89,19 +89,30 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 			 * BLOQUE ACCOUNT: Get the account to done credit
 			 * 
 			 */
-			AccountRequestDTO accountRequest = new AccountRequestDTO();
-			accountRequest.setAccountiban(transactionRequestDTO.getAccount_iban());
-			Optional<AccountResponseDTO> account = mAccountService.findAccountByAccountIban(accountRequest);
+			AccountRequestDTO accountRequestDTO = AccountRequestDTO.Builder.newInstance()
+													.setAccountiban(transactionRequestDTO.getAccount_iban())
+													.build();
+
+			//AccountRequestDTO accountRequest = new AccountRequestDTO();
+			//accountRequest.setAccountiban(transactionRequestDTO.getAccount_iban());
+
+			Optional<AccountResponseDTO> account = mAccountService.findAccountByAccountIban(accountRequestDTO);
 			if(account.isPresent()) {
 				mLogger.debug("Account exists <" + account.get().toString() + ">");
 			}else
 			if(PARAM_ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS){
 				mLogger.debug("Account do nto exists , but created");
-				AccountRequestDTO newAccountRequest = new AccountRequestDTO();
+
+				AccountRequestDTO newAccountRequestDTO = AccountRequestDTO.Builder.newInstance()
+														.setAccountiban(transactionRequestDTO.getAccount_iban())
+														.setCredit(Double.valueOf(0))
+														.build();
+
+				/*AccountRequestDTO newAccountRequest = new AccountRequestDTO();
 				newAccountRequest.setAccountiban(transactionRequestDTO.getAccount_iban());
-				newAccountRequest.setCredit(Double.valueOf(0));
+				newAccountRequest.setCredit(Double.valueOf(0));*/
 				
-				Optional<AccountResponseDTO> tmpAccount = mAccountService.addAccount(newAccountRequest);
+				Optional<AccountResponseDTO> tmpAccount = mAccountService.addAccount(newAccountRequestDTO);
 				if(tmpAccount.isPresent())
 					mAccount = tmpAccount.get();
 				else

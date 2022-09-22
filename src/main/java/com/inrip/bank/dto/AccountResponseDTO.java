@@ -6,44 +6,58 @@ package com.inrip.bank.dto;
  */
 public class AccountResponseDTO {
 	
-	private String uid;
+	private final String uid;
+	private final String accountiban;
+	private final Double credit;
 
-	private String accountiban;
+    public AccountResponseDTO(Builder builder) {
+        this.uid         = builder.uid;
+        this.accountiban = builder.accountiban;
+		this.credit      = builder.credit;
+    }
 
-	private Double credit;
+    public static class Builder {
+		private String uid;
+		private String accountiban;
+		private Double credit;
+			
+		private Builder() {}
+		public static Builder newInstance() {
+            return new Builder();
+        }
+		public Builder setUid(String uid) {
+			this.uid = uid;
+			return this;
+		}
+		public Builder setAccountiban(String account_iban) {
+			this.accountiban = account_iban;
+			return this;
+		}
+		public Builder setCredit(Double credit) {
+			this.credit = credit;
+			return this;
+		}
+		public AccountResponseDTO build() {
+			return new AccountResponseDTO(this);
+		}
+
+	}
 	
-	
-	public AccountResponseDTO(){		
-	}	
-
 	public String getUid() {
 		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 
 	public String getAccountiban() {
 		return accountiban;
 	}
 
-	public void setAccountiban(String accountiban) {
-		this.accountiban = accountiban;
-	}
-
 	public Double getCredit() {
 		return credit;
 	}
 
-	public void setCredit(Double credit) {
-		this.credit = credit;
-	}
-
 	@Override
 	public String toString() {
-		return "AccountResponseDTO [accountiban=" + accountiban + ", credit=***, uid=" + uid + "]";
+		return "AccountResponseDTO [accountiban=" + accountiban + ", credit=" + credit + ", uid=" + uid + "]";
 	}
-
 
 }
