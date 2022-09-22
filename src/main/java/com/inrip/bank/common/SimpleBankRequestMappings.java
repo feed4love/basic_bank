@@ -5,7 +5,7 @@ package com.inrip.bank.common;
  *
  */
 public interface SimpleBankRequestMappings {	
-	public static String REQUEST_CONTEXT = "/api/account";
+	public static String REQUEST_CONTEXT = "/account";
 	public static String SERVICE_STATUS = "/";	
 	public static String SEARCH_BY_ACCOUNT_IBAN = "/transaction/iban/{account_iban}";	
 	public static String ADD_TRANSACTION = "/transaction/add";
