@@ -10,7 +10,7 @@ package com.inrip.bank.dto;
 	}
  *
  */
-public class StatusRequestDTO {
+public class AccountTransactionStatusRequestDTO {
 
 	private String reference;
 	private String channel;

@@ -1,8 +1,8 @@
-package com.inrip.bank.service.transaction;
+package com.inrip.bank.service.accountTransaction;
 
 import org.springframework.util.Assert;
 
-import com.inrip.bank.dto.TransactionRequestDTO;
+import com.inrip.bank.dto.AccountTransactionRequestDTO;
 
 /**
  * @author Enrique AC
@@ -19,13 +19,13 @@ import com.inrip.bank.dto.TransactionRequestDTO;
 		• description (optional): The description of the transaction
  * 
  */
-public class TransactionLogicalValidator {
+public class AccountTransactionLogicalValidator {
 
 	/**
-	 * @param TransactionRequestDTO
+	 * @param AccountTransactionRequestDTO
 	 * 
  	 */
-	public static void validateTransactionRequest(TransactionRequestDTO request) {
+	public static void validateTransactionRequest(AccountTransactionRequestDTO request) {
 		Assert.notNull(request, "Transaction Request cannot be null");		
 		Assert.hasText(request.getAccount_iban(), "Account IBAN is required");
 		Assert.notNull(request.getAmount(), "Amount is required");

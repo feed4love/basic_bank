@@ -3,7 +3,7 @@ package com.inrip.bank.controller.exceptions;
 /**
  *
  */
-public class HTTPException extends RuntimeException {
+public class SimpleBankHTTPException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,18 +15,18 @@ public class HTTPException extends RuntimeException {
 
 	private boolean logException = true;
 
-	public HTTPException(String statusMessage) {
+	public SimpleBankHTTPException(String statusMessage) {
 		super();
 		this.statusMessage = statusMessage;
 	}
 
-	public HTTPException(String statusMessage, String endUserMessage) {
+	public SimpleBankHTTPException(String statusMessage, String endUserMessage) {
 		super(endUserMessage);
 		this.statusMessage = statusMessage;
 		this.endUserMessage = endUserMessage;				
 	}
 
-	public HTTPException(String statusMessage, String endUserMessage, String externalMessage) {
+	public SimpleBankHTTPException(String statusMessage, String endUserMessage, String externalMessage) {
 		super();
 		this.statusMessage = statusMessage;
 		this.endUserMessage = endUserMessage;

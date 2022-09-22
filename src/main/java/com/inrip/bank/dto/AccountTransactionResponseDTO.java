@@ -10,7 +10,7 @@ import java.util.Date;
  *
  */
 @JsonInclude(Include.NON_NULL)
-public class TransactionResponseDTO {
+public class AccountTransactionResponseDTO {
 
 	private String reference;
 	private String account_iban;
@@ -19,7 +19,7 @@ public class TransactionResponseDTO {
 	private Double fee;
 	private String description;
 
-	public TransactionResponseDTO() {
+	public AccountTransactionResponseDTO() {
 	}
 
 	public String getReference() {

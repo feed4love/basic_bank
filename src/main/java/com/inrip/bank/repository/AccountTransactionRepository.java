@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /*import org.springframework.data.mongodb.repository.MongoRepository;
 */
 
-import com.inrip.bank.model.Transaction;
+import com.inrip.bank.model.AccountTransaction;
 
 /**
  * @author Enrique AC
@@ -21,9 +21,9 @@ import com.inrip.bank.model.Transaction;
  */
 
 @Repository
-public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+public interface AccountTransactionRepository extends JpaRepository<AccountTransaction, Long> {
 //public interface TransactionRepository<T, I extends Serializable> extends MongoRepository<Transaction, String> {        
-    Optional<Transaction> findByReference(String reference);
-    List<Transaction> findByReference(String reference, Sort sort);
-    List<Transaction> findAllByAccountiban(String accountiban, Sort sort);       
+    Optional<AccountTransaction> findByReference(String reference);
+    List<AccountTransaction> findByReference(String reference, Sort sort);
+    List<AccountTransaction> findAllByAccountiban(String accountiban, Sort sort);       
 }

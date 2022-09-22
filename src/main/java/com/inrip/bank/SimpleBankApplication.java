@@ -8,10 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = { "com.inrip.bank" })
-public class BankApplication {
+public class SimpleBankApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BankApplication.class, args);
+		SpringApplication.run(SimpleBankApplication.class, args);
 	}
 
 	@PostConstruct

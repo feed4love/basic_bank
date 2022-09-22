@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.inrip.bank.service.auth.TransactionSecurityInterceptor;
+import com.inrip.bank.service.auth.SimpleBankSecurityInterceptor;
 
 /*import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,7 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SpringMVCConfig implements WebMvcConfigurer  {
 
 	@Autowired
-	TransactionSecurityInterceptor transactionSecurityInterceptor;
+	SimpleBankSecurityInterceptor transactionSecurityInterceptor;
 
 	@Override
 	public void addInterceptors(final InterceptorRegistry registry) {

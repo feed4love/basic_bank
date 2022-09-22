@@ -5,7 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import com.inrip.bank.service.transaction.TransactionService;
+import com.inrip.bank.service.accountTransaction.AccountTransactionService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 public class ApplicationListenerInitialize implements ApplicationListener<ApplicationReadyEvent>  {
      
     @Autowired
-    TransactionService mTransactionService;
+    AccountTransactionService mTransactionService;
 
     private static final Logger mLogger = LogManager.getLogger(ApplicationListenerInitialize.class);
  

@@ -1,4 +1,4 @@
-package com.inrip.bank.service.transactionStatus;
+package com.inrip.bank.service.accountTransactionStatus;
 
 import java.util.Date;
 import java.util.Optional;
@@ -14,29 +14,29 @@ import org.springframework.web.client.HttpServerErrorException.InternalServerErr
 import org.springframework.web.server.ResponseStatusException;
 
 import com.inrip.bank.common.Utils;
-import com.inrip.bank.controller.exceptions.BadRequestException;
-import com.inrip.bank.controller.exceptions.HttpAcceptException;
-import com.inrip.bank.controller.exceptions.NotFoundException;
-import com.inrip.bank.dto.StatusRequestDTO;
-import com.inrip.bank.dto.StatusResponseDTO;
-import com.inrip.bank.model.Transaction;
-import com.inrip.bank.service.transaction.TransactionService;
-import com.inrip.bank.service.transaction.TransactionStatusLogicalValidator;
+import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
+import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
+import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
+import com.inrip.bank.dto.AccountTransactionStatusRequestDTO;
+import com.inrip.bank.dto.AccountTransactionStatusResponseDTO;
+import com.inrip.bank.model.AccountTransaction;
+import com.inrip.bank.service.accountTransaction.AccountTransactionService;
+import com.inrip.bank.service.accountTransaction.AccountTransactionStatusLogicalValidator;
 
 /**
  * @author Enrique AC
  *
  */
 @Service
-public class TransactionStatusServiceImpl implements TransactionStatusService {
+public class AccountTransactionStatusServiceImpl implements AccountTransactionStatusService {
 
-	private static final Logger mLogger = LogManager.getLogger(TransactionStatusServiceImpl.class);
+	private static final Logger mLogger = LogManager.getLogger(AccountTransactionStatusServiceImpl.class);
 
 	/*@Autowired
 	private TransactionRepository mTransactionRepository;*/
 
 	@Autowired
-	private TransactionService mTransactionService;
+	private AccountTransactionService mTransactionService;
 
 	
 	@Value("${bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS}")
@@ -49,75 +49,75 @@ public class TransactionStatusServiceImpl implements TransactionStatusService {
 	private boolean PARAM_DEBUG_DATA_ON_RESPONSES;
 
 	@Override
-	public StatusResponseDTO getTransactionStatus(StatusRequestDTO statusRequestDTO) {
+	public AccountTransactionStatusResponseDTO getTransactionStatus(AccountTransactionStatusRequestDTO statusRequestDTO) {
 		mLogger.info("Init - getTransactionStatus");
 		
 		//throws exception
 		// if field channel is null , then shall do something before continue
 		// then, at this case and stage throws http202 ACCEPTED
-		TransactionStatusLogicalValidator.validateStatusRequest(statusRequestDTO);		
+		AccountTransactionStatusLogicalValidator.validateStatusRequest(statusRequestDTO);		
 		
-		StatusResponseDTO statusResponseDTO = null;        
-		Optional<Transaction> optTransaction = null;
-		Transaction transactionDTO = null;
+		AccountTransactionStatusResponseDTO statusResponseDTO = null;        
+		Optional<AccountTransaction> optTransaction = null;
+		AccountTransaction transactionDTO = null;
         
 		Date todayDate = Utils.getToday(PARAM_TRANSACTION_STATUS_TRUNCATE_DATES);
 
         optTransaction = mTransactionService.getTransactionByReference(statusRequestDTO.getReference());
 
 		//Bussines rule A, if match then return the response
-		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_A(statusRequestDTO, 
+		statusResponseDTO = AccountTransactionStatusLogicalValidator.doBusinessRule_A(statusRequestDTO, 
 																optTransaction, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;
 		transactionDTO = optTransaction.get();		
 
 		//Bussines rule B, if match then return the response
-		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_B(statusRequestDTO, 
+		statusResponseDTO = AccountTransactionStatusLogicalValidator.doBusinessRule_B(statusRequestDTO, 
 																transactionDTO, todayDate, 
 																PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
         //Bussines rule C, if match then return the response
-		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_C(
+		statusResponseDTO = AccountTransactionStatusLogicalValidator.doBusinessRule_C(
 					statusRequestDTO, transactionDTO, todayDate, 
 					PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
         //Bussines rule D, if match then return the response
-		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_D(
+		statusResponseDTO = AccountTransactionStatusLogicalValidator.doBusinessRule_D(
 					statusRequestDTO, transactionDTO, todayDate, 
 					PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
         //Bussines rule E, if match then return the response
-		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_E(
+		statusResponseDTO = AccountTransactionStatusLogicalValidator.doBusinessRule_E(
 					statusRequestDTO, transactionDTO, todayDate, PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, 
 					PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
         //Bussines rule F, if match then return the response
-		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_F(
+		statusResponseDTO = AccountTransactionStatusLogicalValidator.doBusinessRule_F(
 					statusRequestDTO, transactionDTO, todayDate, PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, 
 					PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
         //Bussines rule G, if match then return the response
-		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_G(
+		statusResponseDTO = AccountTransactionStatusLogicalValidator.doBusinessRule_G(
 					statusRequestDTO, transactionDTO, todayDate, 
 					PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
         //Bussines rule H, if match then return the response
-		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_H(
+		statusResponseDTO = AccountTransactionStatusLogicalValidator.doBusinessRule_H(
 						statusRequestDTO, transactionDTO, todayDate, 
 						PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;
 
 		if(!PARAM_ACCEPT_UNKNOWN_TRANSACTION_STATUS){
-			throw new HttpAcceptException("NO_DATE_YET", "Until can't compute null dates");
+			throw new SimpleBankHttpAcceptException("NO_DATE_YET", "Until can't compute null dates");
 		}
 		
-		statusResponseDTO = new StatusResponseDTO(statusRequestDTO.getReference(), "UNKNOWN");
+		statusResponseDTO = new AccountTransactionStatusResponseDTO(statusRequestDTO.getReference(), "UNKNOWN");
 		return statusResponseDTO;		
 	}
 

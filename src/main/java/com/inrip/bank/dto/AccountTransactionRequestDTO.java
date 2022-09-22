@@ -6,7 +6,7 @@ import java.util.Date;
  * @author Enrique AC
  *
  */
-public class TransactionRequestDTO {
+public class AccountTransactionRequestDTO {
 
 	private String uid;
 	private String reference;
@@ -16,7 +16,7 @@ public class TransactionRequestDTO {
 	private Double fee;
 	private String description;
 
-	public TransactionRequestDTO() {
+	public AccountTransactionRequestDTO() {
 	}
 
 	public String getUid() {

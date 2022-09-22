@@ -22,22 +22,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpStatusCodeException;
 
 import com.inrip.bank.common.Constants;
-import com.inrip.bank.controller.exceptions.BadRequestException;
-import com.inrip.bank.controller.exceptions.HttpAcceptException;
-import com.inrip.bank.controller.exceptions.NotFoundException;
+import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
+import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
+import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
 
 /**
  *
  */
-public abstract class HTTPResponseHandler {
+public abstract class SimpleBankHTTPResponseHandler {
 
-	private static final Logger mLogger = LogManager.getLogger(HTTPResponseHandler.class);
+	private static final Logger mLogger = LogManager.getLogger(SimpleBankHTTPResponseHandler.class);
 
 	private static final String STATUS_CODE = "StatusCode";
 	private static final String STATUS_INTERNAL_MESSAGE = "StatusInternal";
 	private static final String STATUS_END_USER_MESSAGE = "StatusMessage";
 
-	public HTTPResponseHandler() {
+	public SimpleBankHTTPResponseHandler() {
 	}
 
 	public void setStatusHeaders(HttpServletResponse response, int httpStatus, String code, String message) {
@@ -68,8 +68,8 @@ public abstract class HTTPResponseHandler {
 		setStatusHeaders(response, status, "SUCCESS", "Success");
 	}
 
-	@ExceptionHandler(NotFoundException.class)
-	public void handleNotFoundException(NotFoundException ex, HttpServletRequest request,
+	@ExceptionHandler(SimpleBankNotFoundException.class)
+	public void handleNotFoundException(SimpleBankNotFoundException ex, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		String code = Constants.HTTP_STATUS_NOT_FOUND_STATUS;
@@ -101,8 +101,8 @@ public abstract class HTTPResponseHandler {
 
 	}
 
-	@ExceptionHandler(BadRequestException.class)
-	public void handleBadRequestException(BadRequestException ex, HttpServletRequest request,
+	@ExceptionHandler(SimpleBankBadRequestException.class)
+	public void handleBadRequestException(SimpleBankBadRequestException ex, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		String code = Constants.HTTP_STATUS_BAD_REQUEST_STATUS;
@@ -248,8 +248,8 @@ public abstract class HTTPResponseHandler {
 
 	}
 
-	@ExceptionHandler(HttpAcceptException.class)
-	public void handleHttpAcceptException(HttpAcceptException ex, HttpServletRequest request,
+	@ExceptionHandler(SimpleBankHttpAcceptException.class)
+	public void handleHttpAcceptException(SimpleBankHttpAcceptException ex, HttpServletRequest request,
 										  HttpServletResponse response) {
 
 		String code = Constants.HTTP_STATUS_ACCEPT_STATUS;

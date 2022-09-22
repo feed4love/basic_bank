@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import com.inrip.bank.common.Utils;
 import com.inrip.bank.dto.AccountRequestDTO;
 import com.inrip.bank.dto.AccountResponseDTO;
-import com.inrip.bank.dto.TransactionRequestDTO;
+import com.inrip.bank.dto.AccountTransactionRequestDTO;
 import com.inrip.bank.model.Account;
 import com.inrip.bank.repository.AccountRepository;
 
@@ -34,7 +34,7 @@ public class AccountServiceImpl  implements AccountService {
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public AccountResponseDTO updateCreditByTransactionRequest(TransactionRequestDTO transactionRequestDTO) throws Exception {
+    public AccountResponseDTO updateCreditByTransactionRequest(AccountTransactionRequestDTO transactionRequestDTO) throws Exception {
         AccountResponseDTO responseAccount = null;
         Optional<Account> optAccount = null;    
 

@@ -46,7 +46,7 @@ public class Account {
         cascade = CascadeType.ALL,
         orphanRemoval = true
     )
-    List<Transaction> transactions = new ArrayList<Transaction>();
+    List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();
 	
 	public Account(){		
 	}	

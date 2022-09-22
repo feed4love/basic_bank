@@ -31,18 +31,18 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.inrip.bank.common.RequestMappings;
+import com.inrip.bank.common.SimpleBankRequestMappings;
 import com.inrip.bank.common.UtilTest;
-import com.inrip.bank.controller.TransactionController;
-import com.inrip.bank.dto.StatusRequestDTO;
-import com.inrip.bank.dto.TransactionRequestDTO;
+import com.inrip.bank.controller.AccountController;
+import com.inrip.bank.dto.AccountTransactionStatusRequestDTO;
+import com.inrip.bank.dto.AccountTransactionRequestDTO;
 import com.inrip.bank.model.Account;
-import com.inrip.bank.model.Transaction;
+import com.inrip.bank.model.AccountTransaction;
 import com.inrip.bank.repository.AccountRepository;
-import com.inrip.bank.repository.TransactionRepository;
-import com.inrip.bank.service.transaction.TransactionService;
-import com.inrip.bank.service.transaction.TransactionTransformer;
-import com.inrip.bank.service.transactionStatus.TransactionStatusService;
+import com.inrip.bank.repository.AccountTransactionRepository;
+import com.inrip.bank.service.accountTransaction.AccountTransactionService;
+import com.inrip.bank.service.accountTransaction.AccountTransactionTransformer;
+import com.inrip.bank.service.accountTransactionStatus.AccountTransactionStatusService;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -69,7 +69,7 @@ import static com.inrip.bank.common.UtilTest.TRANSACTION_STATUS.FUTURE;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(SpringExtension.class)
-class BankApplicationTestsIT {
+class SimpleBankApplicationTestsIT {
 
     @Autowired
 	private WebApplicationContext webApplicationContext;
@@ -80,13 +80,13 @@ class BankApplicationTestsIT {
 	MockMvc mMockMvc;
 
     @Mock
-    private TransactionService mTransactionService;
+    private AccountTransactionService mTransactionService;
 
     @Mock
-    private TransactionStatusService mTransactionStatusService;
+    private AccountTransactionStatusService mTransactionStatusService;
 
     @MockBean
-    private TransactionRepository mTransactionRepository;
+    private AccountTransactionRepository mTransactionRepository;
 
     @MockBean
     private AccountRepository mAccountRepository;
@@ -95,7 +95,7 @@ class BankApplicationTestsIT {
     private ObjectMapper mObjectMapper;
 
     @InjectMocks
-    private TransactionController mTransactionController;
+    private AccountController mTransactionController;
 
     @BeforeAll
     public void init(){        
@@ -121,7 +121,7 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_service_is_running() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.SERVICE_STATUS;        
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.SERVICE_STATUS;        
         MvcResult result = this.mMockMvc.perform(get(url)
                                .contentType(MediaType.TEXT_PLAIN_VALUE) 
                                .with(httpBasic("test", "1234")) )
@@ -141,10 +141,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_add_transaction() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        TransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
-        Transaction transactionResponse = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
+        AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account account = new Account();
         account.setAccountiban(transactionRequestDTO.getAccount_iban());
@@ -174,10 +174,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_add_transaction_reference_is_duplicated() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        TransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
-        Transaction transactionResponse = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
+        AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
         
         Account account = new Account();
         account.setAccountiban(transactionRequestDTO.getAccount_iban());
@@ -204,11 +204,11 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_add_transaction_no_account_iban() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        TransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
         transactionRequestDTO.setAccount_iban(null);
-        Transaction transactionResponse = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+        AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         when(mTransactionRepository.save(any())).thenReturn(transactionResponse);
 
@@ -228,11 +228,11 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_add_transaction_no_reference_and_is_generated() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        TransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
         transactionRequestDTO.setReference(null);
-        Transaction transactionResponse = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+        AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
         
         Account account = new Account();
         account.setAccountiban(transactionRequestDTO.getAccount_iban());
@@ -287,8 +287,8 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleA() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
-        StatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
         
         statusRequestDTO = UtilTest.getFakeStatusRequestDTO(CLIENT);
         this.mMockMvc.perform(get(url)
@@ -335,10 +335,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleB() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
         true, Double.valueOf(10), Double.valueOf(2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -376,10 +376,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleB2_field_fee_is_null() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
                                                         true, 
                                                         Double.valueOf(10), 
                                                         null);
@@ -420,10 +420,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleC() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
                     true,Double.valueOf( 10), Double.valueOf(2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -454,10 +454,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleC2_field_fee_is_null() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
                     true,Double.valueOf( 10), null);
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -487,10 +487,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleD() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
                                 true, Double.valueOf(10),Double.valueOf( 2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -531,10 +531,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleD2_field_fee_is_null() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
                                 true, Double.valueOf(10), null);
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -578,10 +578,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleE() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
                                 true,Double.valueOf( 10),Double.valueOf( 2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -613,10 +613,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleE2_field_fee_is_null() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
                                 true,Double.valueOf( 10),null);
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -646,10 +646,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleF() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                                 true,Double.valueOf( 10),Double.valueOf( 2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -679,10 +679,10 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleF2_field_fee_is_null() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                                 true,Double.valueOf( 10), null);
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -713,10 +713,10 @@ class BankApplicationTestsIT {
     */
     @Test
     public void test_case_status_ruleG() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                     true, Double.valueOf(10), Double.valueOf(2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -746,10 +746,10 @@ class BankApplicationTestsIT {
     */
     @Test
     public void test_case_status_ruleG_field_fee_is_null() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                     true, Double.valueOf(10), null);
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -782,10 +782,10 @@ class BankApplicationTestsIT {
     */
     @Test
     public void test_case_status_ruleH() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                             true, Double.valueOf(10), Double.valueOf(2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -816,10 +816,10 @@ class BankApplicationTestsIT {
     */
     @Test
     public void test_case_status_ruleH2_field_fee_is_null() throws Exception {
-        StatusRequestDTO statusRequestDTO = null;
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+        AccountTransactionStatusRequestDTO statusRequestDTO = null;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+        Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                             true, Double.valueOf(10), Double.valueOf(2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
@@ -844,11 +844,11 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_credit_after_transaction_is_posivite() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        TransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
         transactionRequestDTO.setReference(null);
-        Transaction mockTransaction = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+        AccountTransaction mockTransaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account mockAccount = new Account();
         mockAccount.setAccountiban(transactionRequestDTO.getAccount_iban());
@@ -882,11 +882,11 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_credit_after_transaction_is_negative() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        TransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
         transactionRequestDTO.setReference(null);
-        Transaction mockTransaction = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+        AccountTransaction mockTransaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account mockAccount = new Account();
         
@@ -921,11 +921,11 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_credit_after_transaction_is_zero() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        TransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
         transactionRequestDTO.setReference(null);
-        Transaction transaction = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+        AccountTransaction transaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account account = new Account();
         account.setAccountiban(transactionRequestDTO.getAccount_iban());
@@ -959,11 +959,11 @@ class BankApplicationTestsIT {
      */
     @Test
     public void test_case_total_result_credit_nagetive_fee_and_amount() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        TransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
         transactionRequestDTO.setReference(null);
-        Transaction transaction = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+        AccountTransaction transaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account account = new Account();
         account.setAccountiban(transactionRequestDTO.getAccount_iban());

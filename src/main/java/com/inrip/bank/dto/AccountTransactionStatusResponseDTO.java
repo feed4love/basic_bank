@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  *
  */
 @JsonInclude(Include.NON_NULL)
-public class StatusResponseDTO {
+public class AccountTransactionStatusResponseDTO {
 
 	private String reference;
 	private String status;
@@ -28,18 +28,18 @@ public class StatusResponseDTO {
 	private Double fee;
 	private String debug;
 
-	public StatusResponseDTO(String reference, String status) {
+	public AccountTransactionStatusResponseDTO(String reference, String status) {
 		this.reference = reference;
 		this.status = status;
 	}
 
-	public StatusResponseDTO(String reference, String status, Double amount) {
+	public AccountTransactionStatusResponseDTO(String reference, String status, Double amount) {
 		this.reference = reference;
 		this.status = status;
 		this.amount = amount;
 	}
 
-	public StatusResponseDTO(String reference, String status, Double amount, Double fee) {
+	public AccountTransactionStatusResponseDTO(String reference, String status, Double amount, Double fee) {
 		this.reference = reference;
 		this.status = status;
 		this.amount = amount;

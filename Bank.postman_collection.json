@@ -14,7 +14,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://test:1234@localhost:8080/api/transaction/",
+					"raw": "http://test:1234@localhost:8080/api/account/transaction/all",
 					"protocol": "http",
 					"auth": {
 						"user": "test",
@@ -26,8 +26,9 @@
 					"port": "8080",
 					"path": [
 						"api",
+						"account",
 						"transaction",
-						""
+						"all"
 					]
 				}
 			},
@@ -42,7 +43,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://test:1234@localhost:8080/api/transaction/all",
+					"raw": "http://test:1234@localhost:8080/api/account/transaction/all",
 					"protocol": "http",
 					"auth": {
 						"user": "test",
@@ -54,6 +55,7 @@
 					"port": "8080",
 					"path": [
 						"api",
+						"account",
 						"transaction",
 						"all"
 					]
@@ -68,7 +70,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \r\n    \"reference\":\"1\",\r\n    \"account_iban\":\"1\",\r\n    \"date\":\"2022-09-19T20:55:42.000Z\",\r\n    \"amount\":1,\r\n    \"fee\":1\r\n}",
+					"raw": "{   \r\n    \"reference\":\"1\",\r\n    \"account_iban\":\"1\",\r\n    \"date\":\"2022-09-19T20:55:42.000Z\",\r\n    \"amount\":2,\r\n    \"fee\":1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -76,7 +78,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://test:1234@localhost:8080/api/transaction/add",
+					"raw": "http://test:1234@localhost:8080/api/account/transaction/add",
 					"protocol": "http",
 					"auth": {
 						"user": "test",
@@ -88,6 +90,7 @@
 					"port": "8080",
 					"path": [
 						"api",
+						"account",
 						"transaction",
 						"add"
 					]
@@ -101,7 +104,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=false",
+					"raw": "http://test:1234@localhost:8080/api/account/transaction/iban/1?descending_amount=false",
 					"protocol": "http",
 					"auth": {
 						"user": "test",
@@ -113,9 +116,10 @@
 					"port": "8080",
 					"path": [
 						"api",
+						"account",
 						"transaction",
 						"iban",
-						"IBAN-001"
+						"1"
 					],
 					"query": [
 						{
@@ -133,7 +137,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://test:1234@localhost:8080/api/transaction/reference/REF-003?descending_amount=false",
+					"raw": "http://test:1234@localhost:8080/api/account/transaction/reference/1?descending_amount=false",
 					"protocol": "http",
 					"auth": {
 						"user": "test",
@@ -145,9 +149,10 @@
 					"port": "8080",
 					"path": [
 						"api",
+						"account",
 						"transaction",
 						"reference",
-						"REF-003"
+						"1"
 					],
 					"query": [
 						{
@@ -160,7 +165,7 @@
 			"response": []
 		},
 		{
-			"name": "Status by Reference",
+			"name": "STATUS by Reference",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -169,7 +174,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"reference\": \"1as0sa0\",\r\n    \"channel\": \"CLIENT\"\r\n}",
+					"raw": "{\r\n    \"reference\": \"1\",\r\n    \"channel\": \"CLIENT\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -191,6 +196,43 @@
 						"api",
 						"transaction",
 						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ACCOUNT by IBAN",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://test:1234@localhost:8080/api/account/1",
+					"protocol": "http",
+					"auth": {
+						"user": "test",
+						"password": "1234"
+					},
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"1"
 					]
 				}
 			},

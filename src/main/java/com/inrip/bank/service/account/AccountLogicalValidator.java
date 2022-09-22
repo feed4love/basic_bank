@@ -2,9 +2,9 @@ package com.inrip.bank.service.account;
 
 import org.springframework.util.Assert;
 
-import com.inrip.bank.controller.exceptions.BadRequestException;
+import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
 import com.inrip.bank.dto.AccountRequestDTO;
-import com.inrip.bank.dto.TransactionRequestDTO;
+import com.inrip.bank.dto.AccountTransactionRequestDTO;
 import com.inrip.bank.model.Account;
 
 /**
@@ -33,13 +33,13 @@ public class AccountLogicalValidator {
 		Assert.hasText(request.getAccountiban(), "Account IBAN is required");				
 	}
 
-	public static Double validateToAcceptTransaction(Account account, TransactionRequestDTO transactionRequestDTO, boolean ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
+	public static Double validateToAcceptTransaction(Account account, AccountTransactionRequestDTO transactionRequestDTO, boolean ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
 		Double dTotal = Double.valueOf(0);
 		dTotal = ApplyCreditRule(transactionRequestDTO.getAmount(),
 								 transactionRequestDTO.getFee(),
 								 account.getCredit(), ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS);
 		if(dTotal.doubleValue() < 0d) {
-			throw new BadRequestException("ACCOUNT_NOMONEY", "A transaction that leaves the total account balance bellow 0 is not allowed");
+			throw new SimpleBankBadRequestException("ACCOUNT_NOMONEY", "A transaction that leaves the total account balance bellow 0 is not allowed");
 		}
 		return dTotal;
 	}

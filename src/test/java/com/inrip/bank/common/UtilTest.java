@@ -2,9 +2,9 @@ package com.inrip.bank.common;
 
 import java.util.Optional;
 
-import com.inrip.bank.dto.StatusRequestDTO;
-import com.inrip.bank.dto.TransactionRequestDTO;
-import com.inrip.bank.model.Transaction;
+import com.inrip.bank.dto.AccountTransactionStatusRequestDTO;
+import com.inrip.bank.dto.AccountTransactionRequestDTO;
+import com.inrip.bank.model.AccountTransaction;
 
 public class UtilTest {
     
@@ -45,18 +45,18 @@ public class UtilTest {
         NO_DATE
     }
 
-    public static StatusRequestDTO getFakeStatusRequestDTO(TRANSACTION_CHANNEL channel) {
-        StatusRequestDTO statusRequestDTO = new StatusRequestDTO();
+    public static AccountTransactionStatusRequestDTO getFakeStatusRequestDTO(TRANSACTION_CHANNEL channel) {
+        AccountTransactionStatusRequestDTO statusRequestDTO = new AccountTransactionStatusRequestDTO();
         statusRequestDTO.setReference(UtilTest.DEF_TEST_REFERENCE);
         statusRequestDTO.setChannel(channel.getTRANSACTION_CHANNEL());
         return statusRequestDTO;
     }
 
-    public static Optional<Transaction> getFakeOptionalTransaction(
+    public static Optional<AccountTransaction> getFakeOptionalTransaction(
                            TRANSACTION_WHEN when, 
                            boolean trucate_dates, 
                            Double amount, Double fee) {
-        Transaction transaction = new Transaction();
+        AccountTransaction transaction = new AccountTransaction();
         transaction.setReference(DEF_TEST_REFERENCE);
         transaction.setAccountiban(DEF_TEST_ACCOUNT_IBAN);                
         transaction.setAmount(amount);
@@ -75,15 +75,15 @@ public class UtilTest {
         return Optional.of(transaction);
     }    
 
-    public static TransactionRequestDTO getFakeTransactionRequestDTO() {
+    public static AccountTransactionRequestDTO getFakeTransactionRequestDTO() {
         return getFakeTransactionRequestDTO(TRANSACTION_WHEN.TODAY, false, 10.0, 2.0);
     }
-    public static TransactionRequestDTO getFakeTransactionRequestDTO(
+    public static AccountTransactionRequestDTO getFakeTransactionRequestDTO(
                                   TRANSACTION_WHEN when,
                                   boolean trucate_dates, 
                                   double amount, 
                                   double fee) {
-        TransactionRequestDTO transactionRequestDTO = new TransactionRequestDTO();
+        AccountTransactionRequestDTO transactionRequestDTO = new AccountTransactionRequestDTO();
         transactionRequestDTO.setAccount_iban(DEF_TEST_ACCOUNT_IBAN);
         transactionRequestDTO.setReference(DEF_TEST_REFERENCE);
         transactionRequestDTO.setAmount(amount);        

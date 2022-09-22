@@ -10,7 +10,7 @@ import org.springframework.util.StringUtils;
  *
  */
 @Service
-public class AuthServiceImpl implements AuthService {
+public class SimpleBankAuthServiceImpl implements SimpleBankAuthService {
 
 	@Override
 	public Boolean validateBasicAuthentication(String appUserName, String appPassword, String basicAuthHeaderValue) {

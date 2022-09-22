@@ -1,4 +1,4 @@
-package com.inrip.bank.service.transaction;
+package com.inrip.bank.service.accountTransaction;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +18,14 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import com.inrip.bank.dto.AccountRequestDTO;
 import com.inrip.bank.dto.AccountResponseDTO;
-import com.inrip.bank.dto.TransactionRequestDTO;
-import com.inrip.bank.dto.TransactionResponseDTO;
-import com.inrip.bank.model.Transaction;
+import com.inrip.bank.dto.AccountTransactionRequestDTO;
+import com.inrip.bank.dto.AccountTransactionResponseDTO;
+import com.inrip.bank.model.AccountTransaction;
 
 import com.inrip.bank.common.Utils;
-import com.inrip.bank.controller.exceptions.BadRequestException;
-import com.inrip.bank.controller.exceptions.NotFoundException;
-import com.inrip.bank.repository.TransactionRepository;
+import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
+import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
+import com.inrip.bank.repository.AccountTransactionRepository;
 import com.inrip.bank.service.account.AccountService;
 
 
@@ -39,12 +39,12 @@ import com.inrip.bank.service.account.AccountService;
  *
  */
 @Service
-public class TransactionServiceImpl implements TransactionService {
+public class AccountTransactionServiceImpl implements AccountTransactionService {
 
-	private static final Logger mLogger = LogManager.getLogger(TransactionServiceImpl.class);
+	private static final Logger mLogger = LogManager.getLogger(AccountTransactionServiceImpl.class);
 
 	@Autowired
-	private TransactionRepository mTransactionRepository;
+	private AccountTransactionRepository mTransactionRepository;
 
 	@Autowired
 	private AccountService mAccountService;
@@ -57,14 +57,14 @@ public class TransactionServiceImpl implements TransactionService {
 	 */
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<TransactionResponseDTO> getAllTransactions() {
+	public List<AccountTransactionResponseDTO> getAllTransactions() {
 		mLogger.info("Init - list all transactions");
-		TransactionResponseDTO responseDTO;
-		List<Transaction> listTransactions;
-		List<TransactionResponseDTO> listTransactionsResponseDTO;
+		AccountTransactionResponseDTO responseDTO;
+		List<AccountTransaction> listTransactions;
+		List<AccountTransactionResponseDTO> listTransactionsResponseDTO;
 
 		listTransactions = mTransactionRepository.findAll();
-		listTransactionsResponseDTO = TransactionTransformer.listTransactionToResponseDTO(listTransactions);
+		listTransactionsResponseDTO = AccountTransactionTransformer.listTransactionToResponseDTO(listTransactions);
 
 		mLogger.info("End- transactions recovered <" + listTransactionsResponseDTO.size() + ">");
 		return listTransactionsResponseDTO;
@@ -72,13 +72,13 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public TransactionResponseDTO addTransaction(TransactionRequestDTO transactionRequestDTO) throws Exception  {		
-		TransactionResponseDTO responseDTO = null;
-		Transaction            transaction = null;
+	public AccountTransactionResponseDTO addTransaction(AccountTransactionRequestDTO transactionRequestDTO) throws Exception  {		
+		AccountTransactionResponseDTO responseDTO = null;
+		AccountTransaction            transaction = null;
 		String                 generatedReference = null;
 
 		mLogger.info("Init - create transaction");
-		TransactionLogicalValidator.validateTransactionRequest(transactionRequestDTO);
+		AccountTransactionLogicalValidator.validateTransactionRequest(transactionRequestDTO);
 
 		try {
 
@@ -105,7 +105,7 @@ public class TransactionServiceImpl implements TransactionService {
 				if(tmpAccount.isPresent())
 					mAccount = tmpAccount.get();
 				else
-					throw new BadRequestException("ACCOUNT_OUTOFSYNCH", "Need synchronize Accounts");
+					throw new SimpleBankBadRequestException("ACCOUNT_OUTOFSYNCH", "Need synchronize Accounts");
 			}
 
 			/*
@@ -124,14 +124,14 @@ public class TransactionServiceImpl implements TransactionService {
 			 * 
 			 */
 			//throws exception
-			transaction = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+			transaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 			if(transaction.getReference()==null || transaction.getReference().trim().length()<=0){
 				generatedReference = Utils.GenerateUUID();
 				transaction.setReference(generatedReference);
 			}else{				
-				Optional<Transaction> tmpTransactionDTO = this.getTransactionByReference(transaction.getReference());
+				Optional<AccountTransaction> tmpTransactionDTO = this.getTransactionByReference(transaction.getReference());
 				if (tmpTransactionDTO.isPresent()) {
-					throw new BadRequestException("INVALID_REFERENCE", "The provided Field<reference> is not valid");
+					throw new SimpleBankBadRequestException("INVALID_REFERENCE", "The provided Field<reference> is not valid");
 				}
 			}
 
@@ -139,15 +139,15 @@ public class TransactionServiceImpl implements TransactionService {
 			String UUID = Utils.GenerateUUID();
 			transaction.setUid(UUID);
 
-			transaction = (Transaction) mTransactionRepository.save(transaction);
+			transaction = (AccountTransaction) mTransactionRepository.save(transaction);
 			transaction.setUid(UUID);
 			if(generatedReference!=null)
 				transaction.setReference(generatedReference);
 
-		}catch(BadRequestException br) {
+		}catch(SimpleBankBadRequestException br) {
 			mLogger.info("Error found : " + br.getMessage().toString());			
 			throw br;
-		}catch (NotFoundException nf) {
+		}catch (SimpleBankNotFoundException nf) {
 			mLogger.info("Server Error found : " + nf.getMessage().toString());			
 			throw nf;
 		}catch (HttpServerErrorException hse) {
@@ -157,47 +157,47 @@ public class TransactionServiceImpl implements TransactionService {
 			mLogger.error("Error found : " + e.getMessage().toString());			
 			throw e;
 		}		
-		responseDTO = TransactionTransformer.transactionToResponseDto(transaction);
+		responseDTO = AccountTransactionTransformer.transactionToResponseDto(transaction);
 		mLogger.info("End - Successfully add the transaction");
 		return responseDTO;
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<TransactionResponseDTO> getTransactionByAccountIban(String strAccountIban, boolean descending_amount) {		
+	public List<AccountTransactionResponseDTO> getTransactionByAccountIban(String strAccountIban, boolean descending_amount) {		
 		mLogger.info("Init - getTransactionByAccountIban");
-		List<TransactionResponseDTO> listTransactionsResponseDTO;
-		List<Transaction>            listTransaction = null;
+		List<AccountTransactionResponseDTO> listTransactionsResponseDTO;
+		List<AccountTransaction>            listTransaction = null;
 		
 		Direction direction = Direction.ASC;
 		if (descending_amount)
 			direction = Direction.DESC;
 
 		listTransaction             = mTransactionRepository.findAllByAccountiban(strAccountIban, Sort.by(direction, "amount"));
-		listTransactionsResponseDTO = TransactionTransformer.listTransactionToResponseDTO(listTransaction);
+		listTransactionsResponseDTO = AccountTransactionTransformer.listTransactionToResponseDTO(listTransaction);
 
 		mLogger.info("End - Successfully returned <" + listTransactionsResponseDTO.size() + "> transactions by account_iban");
 		return listTransactionsResponseDTO;
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<TransactionResponseDTO> getAllTransactionByReference(String strReference, boolean descending_amount) {
-		List<Transaction> listTransactions = null;
-		List<TransactionResponseDTO> listTransactionsResponseDTO;
+	public List<AccountTransactionResponseDTO> getAllTransactionByReference(String strReference, boolean descending_amount) {
+		List<AccountTransaction> listTransactions = null;
+		List<AccountTransactionResponseDTO> listTransactionsResponseDTO;
 
 		Direction direction = Direction.ASC;
 		if (descending_amount)
 			direction = Direction.DESC;
 		listTransactions = mTransactionRepository.findByReference(strReference, Sort.by(direction, "id"));
 
-		listTransactionsResponseDTO = TransactionTransformer.listTransactionToResponseDTO(listTransactions);
+		listTransactionsResponseDTO = AccountTransactionTransformer.listTransactionToResponseDTO(listTransactions);
 		
 		return listTransactionsResponseDTO;
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public Optional<Transaction> getTransactionByReference(String strReference){
-		Optional<Transaction> optTransaction = null;
+	public Optional<AccountTransaction> getTransactionByReference(String strReference){
+		Optional<AccountTransaction> optTransaction = null;
 		optTransaction = mTransactionRepository.findByReference(strReference);
 		return optTransaction;
 	}

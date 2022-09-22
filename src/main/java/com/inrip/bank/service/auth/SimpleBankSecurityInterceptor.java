@@ -15,9 +15,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 /**
  */
 @Component
-public class TransactionSecurityInterceptor extends HandlerInterceptorAdapter {
+public class SimpleBankSecurityInterceptor extends HandlerInterceptorAdapter {
 
-	private final Logger mLogger = LogManager.getLogger(TransactionSecurityInterceptor.class);
+	private final Logger mLogger = LogManager.getLogger(SimpleBankSecurityInterceptor.class);
 
 	private static final String AUTH_HEADER_PARAMETER_AUTHERIZATION = "authorization";
 
@@ -28,7 +28,7 @@ public class TransactionSecurityInterceptor extends HandlerInterceptorAdapter {
 	private String password;
 
 	@Autowired
-	private AuthService authService;
+	private SimpleBankAuthService authService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

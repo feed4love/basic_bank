@@ -31,10 +31,10 @@ import org.springframework.data.mongodb.core.mapping.Document;-*
  *
  */
 
-@Entity(name = "Transaction")
-@Table(name = "simple_bank_transaction")
+@Entity(name = "AccountTransaction")
+@Table(name = "simple_bank_account_transaction")
 //@Document(collection = "transaction")
-public class Transaction {
+public class AccountTransaction {
 
 	@Id
 	@Column(name="id")
@@ -62,7 +62,7 @@ public class Transaction {
     private Account account;
 
 
-	public Transaction(){		
+	public AccountTransaction(){		
 	}
 
 	public Account getAccount() {
@@ -73,7 +73,7 @@ public class Transaction {
 		this.account = account;
 	}	
 
-	public Transaction(String reference){
+	public AccountTransaction(String reference){
 		this.reference = reference;
 	}
 

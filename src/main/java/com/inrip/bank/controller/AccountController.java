@@ -19,18 +19,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inrip.bank.common.RequestMappings;
-import com.inrip.bank.controller.exceptions.HttpAcceptException;
-import com.inrip.bank.controller.handlers.HTTPResponseHandler;
+import com.inrip.bank.common.SimpleBankRequestMappings;
+import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
+import com.inrip.bank.controller.handlers.SimpleBankHTTPResponseHandler;
 import com.inrip.bank.dto.AccountRequestDTO;
 import com.inrip.bank.dto.AccountResponseDTO;
-import com.inrip.bank.dto.StatusRequestDTO;
-import com.inrip.bank.dto.StatusResponseDTO;
-import com.inrip.bank.dto.TransactionRequestDTO;
-import com.inrip.bank.dto.TransactionResponseDTO;
+import com.inrip.bank.dto.AccountTransactionStatusRequestDTO;
+import com.inrip.bank.dto.AccountTransactionStatusResponseDTO;
+import com.inrip.bank.dto.AccountTransactionRequestDTO;
+import com.inrip.bank.dto.AccountTransactionResponseDTO;
 import com.inrip.bank.service.account.AccountService;
-import com.inrip.bank.service.transaction.TransactionService;
-import com.inrip.bank.service.transactionStatus.TransactionStatusService;
+import com.inrip.bank.service.accountTransaction.AccountTransactionService;
+import com.inrip.bank.service.accountTransactionStatus.AccountTransactionStatusService;
 
 import javassist.NotFoundException;
 
@@ -40,16 +40,16 @@ import javassist.NotFoundException;
  */
 
 @RestController
-@RequestMapping(RequestMappings.REQUEST_CONTEXT)
-public class TransactionController extends HTTPResponseHandler {
+@RequestMapping(SimpleBankRequestMappings.REQUEST_CONTEXT)
+public class AccountController extends SimpleBankHTTPResponseHandler {
 
-	private static final Logger mLogger = LogManager.getLogger(TransactionController.class);
-
-	@Autowired
-	private TransactionService mTransactionService;
+	private static final Logger mLogger = LogManager.getLogger(AccountController.class);
 
 	@Autowired
-	private TransactionStatusService mTransactionStatusService;
+	private AccountTransactionService mTransactionService;
+
+	@Autowired
+	private AccountTransactionStatusService mTransactionStatusService;
 
 	@Autowired
 	private AccountService mAccountService;
@@ -64,7 +64,7 @@ public class TransactionController extends HTTPResponseHandler {
 	 * check if the servicio is running on REQUEST_CONTEXT y CONTEXT_PATH
 	 *
 	 */
-	@RequestMapping(value = RequestMappings.SERVICE_STATUS, method = RequestMethod.GET)
+	@RequestMapping(value = SimpleBankRequestMappings.SERVICE_STATUS, method = RequestMethod.GET)
 	public @ResponseBody String helloWorld() {
 		return PARAM_REST_RUNNING;
 	}
@@ -73,12 +73,12 @@ public class TransactionController extends HTTPResponseHandler {
 	 * extra: list all transacciones (4debug)
 	 *
 	 */
-	@RequestMapping(value = RequestMappings.LIST_ALL, method = RequestMethod.GET)
-	public @ResponseBody List<TransactionResponseDTO> listAllTransactions() {
+	@RequestMapping(value = SimpleBankRequestMappings.LIST_ALL, method = RequestMethod.GET)
+	public @ResponseBody List<AccountTransactionResponseDTO> listAllTransactions() {
 		if(!PARAM_DEBUG_API_METHODS)
 			return null;
 
-		List<TransactionResponseDTO> listTransactionResponseDTO = new ArrayList<TransactionResponseDTO>();
+		List<AccountTransactionResponseDTO> listTransactionResponseDTO = new ArrayList<AccountTransactionResponseDTO>();
 		mLogger.info("Init - listAllTransactions");
 		listTransactionResponseDTO = mTransactionService.getAllTransactions();
 		return  listTransactionResponseDTO;
@@ -88,8 +88,8 @@ public class TransactionController extends HTTPResponseHandler {
 	 * List transaction filtering by account_iban and sort ascending or descending
 	 *
 	 */
-	@RequestMapping(value = RequestMappings.SEARCH_BY_ACCOUNT_IBAN, method = RequestMethod.GET)
-	public @ResponseBody List<TransactionResponseDTO> searchTransactionByAccountIban(
+	@RequestMapping(value = SimpleBankRequestMappings.SEARCH_BY_ACCOUNT_IBAN, method = RequestMethod.GET)
+	public @ResponseBody List<AccountTransactionResponseDTO> searchTransactionByAccountIban(
 							@PathVariable String account_iban,
 							@RequestParam(name="descending_amount", required=false, defaultValue="false") boolean descending_amount
 							) {		
@@ -102,15 +102,15 @@ public class TransactionController extends HTTPResponseHandler {
 	 * @throws NotFoundException
 	 *
 	 */
-	@RequestMapping(value = RequestMappings.SEARCH_BY_REFERENCE, method = RequestMethod.GET)
-	public @ResponseBody List<TransactionResponseDTO> searchTransactionByReference(
+	@RequestMapping(value = SimpleBankRequestMappings.SEARCH_BY_REFERENCE, method = RequestMethod.GET)
+	public @ResponseBody List<AccountTransactionResponseDTO> searchTransactionByReference(
 							@PathVariable String reference,
 							@RequestParam(name="descending_amount", required=false, defaultValue="false") boolean descending_amount
 							) throws NotFoundException {		
 		if(!PARAM_DEBUG_API_METHODS)
 			return null;
 					
-		List<TransactionResponseDTO> resp = new ArrayList<TransactionResponseDTO>();
+		List<AccountTransactionResponseDTO> resp = new ArrayList<AccountTransactionResponseDTO>();
 		mLogger.info("Init - searchTransactionByReference descending<" + descending_amount + ">");
 		resp = mTransactionService.getAllTransactionByReference(reference, descending_amount);
 		return resp;
@@ -121,10 +121,10 @@ public class TransactionController extends HTTPResponseHandler {
 	 * 
 	 * 
 	 */
-	@RequestMapping(value = RequestMappings.ADD_TRANSACTION, method = RequestMethod.POST)
-	public @ResponseBody TransactionResponseDTO addTransaction(@RequestBody TransactionRequestDTO requestDTO) throws Exception {		
+	@RequestMapping(value = SimpleBankRequestMappings.ADD_TRANSACTION, method = RequestMethod.POST)
+	public @ResponseBody AccountTransactionResponseDTO addTransaction(@RequestBody AccountTransactionRequestDTO requestDTO) throws Exception {		
 		mLogger.info("Init - addTransaction <" + requestDTO.toString() + ">");
-		TransactionResponseDTO transactionResponseDTO  = mTransactionService.addTransaction(requestDTO);
+		AccountTransactionResponseDTO transactionResponseDTO  = mTransactionService.addTransaction(requestDTO);
 		return transactionResponseDTO;
 	}
 
@@ -134,10 +134,10 @@ public class TransactionController extends HTTPResponseHandler {
 	 *  Filter by account_iban
 	 *  Sort by amount (ascending/descending)
 	 */
-	@RequestMapping(value = RequestMappings.TRANSACTION_STATUS, method = RequestMethod.GET, produces="application/json")	
+	@RequestMapping(value = SimpleBankRequestMappings.TRANSACTION_STATUS, method = RequestMethod.GET, produces="application/json")	
 	@ResponseBody
-	public StatusResponseDTO transactionStatus(@RequestBody StatusRequestDTO statusRequestDTO) {	
-		StatusResponseDTO resp = null;
+	public AccountTransactionStatusResponseDTO transactionStatus(@RequestBody AccountTransactionStatusRequestDTO statusRequestDTO) {	
+		AccountTransactionStatusResponseDTO resp = null;
 	
 		mLogger.info("Init - transactionStatus <" + statusRequestDTO.toString() + ">");
 		resp = mTransactionStatusService.getTransactionStatus(statusRequestDTO);	
@@ -149,7 +149,7 @@ public class TransactionController extends HTTPResponseHandler {
 	 *  Obtain an Account 
 	 *  Filter by account_iban
 	 */
-	@RequestMapping(value = RequestMappings.SEARCH_ACCOUNT_BY_IBAN, 
+	@RequestMapping(value = SimpleBankRequestMappings.SEARCH_ACCOUNT_BY_IBAN, 
 	                method = RequestMethod.GET, 
 					produces="application/json")
 	@ResponseBody

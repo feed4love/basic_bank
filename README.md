@@ -30,47 +30,57 @@ The codes to switch for MongoDB are commented.
 
 #### Controller
 
-• TransactionController
+• AccountController
 
 #### Service
 
-• TransactionService serve the endpoints:
+• AccountTransactionService serve the endpoints:
 
-    http://test:1234@localhost:8080/api/transaction/
-    http://test:1234@localhost:8080/api/transaction/add
-    http://test:1234@localhost:8080/api/transaction/iban/IBAN-001
-    http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=true
+    http://test:1234@localhost:8080/api/account/
+    http://test:1234@localhost:8080/api/account/transaction/add
+    http://test:1234@localhost:8080/api/account/transaction/iban/{account_iban}
+    http://test:1234@localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=true
 
-• TransactionStatusService serve the endpoint:
+• AccountTransactionStatusService serve the endpoint:
 
-    http://test:1234@localhost:8080/api/transaction/status
+    http://test:1234@localhost:8080/api/account/transaction/status
 
 
-• AccountService , is not exposed.
+• AccountService , is not exposed (for debug):
+
+    http://test:1234@localhost:8080/api/account/{account_iban}
+
+#### Test
+
+• SimpleBankApplicationTestsIT
 
 #### Repository
 
-• TransactionRepository
-
 • AccountRepository
+
+• AccountTransactionRepository
 
 #### Model
 
-• Transaction and request/response DTOs
+• AccountTransaction and request/response DTOs
 
 • Account and request/response DTOs
 
 #### Handlers and Exception
 
-• HTTPResponseHandler (currently TransactionController extends HTTPResponseHandler)
+• SimpleBankHTTPResponseHandler (currently AccountController extends SimpleBankHTTPResponseHandler)
 
-• BadRequestException, HttpAcceptException, HTTPException and NotFoundException
+• SimpleBankBadRequestException, SimpleBankHttpAcceptException, SimpleBankHTTPException and SimpleBankNotFoundException
 
+#### Configuration and Initialize
 
-#### Test
+• SpringMVCConfig adds the Interceptor TransactionSecurityInterceptor.
 
-• BankApplicationTestsIT
+• ApplicationListenerInitialize , as H2 is a dbm in memory here is able to load the dabase for dev.
 
+• MongoDBConfig the main class to configure the connection to MongoDB Cluster.
+
+• SimpleBankRequestMappings where will be mounted the restful endpoints.
 
 # Configuration parameters
 The file application.properties has the next list of configurable parameters:
@@ -99,7 +109,7 @@ Default configuration:
 
     server.port=8080
 
-    bank.basic.message.alive=Transaction REST API is running
+    bank.basic.message.alive=SimpleBank REST API is running
     bank.basic.auth.username=test
     bank.basic.auth.password=1234
 
@@ -123,18 +133,6 @@ Set them to the default values:
 
 # API URL
 The file Bank.postman_collection.json include the main commands and paths to the api.
-A example list of avaibable calls to end points are:
-
-    http://test:1234@localhost:8080/api/transaction/
-    http://test:1234@localhost:8080/api/transaction/add
-    http://test:1234@localhost:8080/api/transaction/iban/IBAN-001
-    http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=true
-    http://test:1234@localhost:8080/api/transaction/status
-
-    Disable by debug:
-    http://test:1234@localhost:8080/api/transaction/all
-    http://test:1234@localhost:8080/api/transaction/reference/REF-TEST?descending_amount=false
-
 
 # Currently working on (main pendings ordered..)
 
@@ -145,7 +143,7 @@ A example list of avaibable calls to end points are:
 
 • (done) JPA annotation to link entities Account and Transaction.
 
-• refactor Transaction class name and methods --QOL -> Transaction to AccountTransaction<=Account
+• (done) refactor Transaction class name and methods --QOL -> Transaction to AccountTransaction<=Account
 
 • apply Builder pattern for a pojos factory.
 
