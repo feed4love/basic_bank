@@ -44,7 +44,7 @@ The codes to switch for MongoDB are commented.
     http://test:1234@localhost:8080/api/transaction/status
 
 
-• AccountService is not exposed.
+• AccountService , is not exposed.
 
 #### Repository
 
