@@ -38,7 +38,7 @@ public class AccountLogicalValidator {
 		if(ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
 
 			dTotal = ApplyCreditRule(Double.valueOf(transactionRequestDTO.getAmount()).doubleValue(),
-			                         Double.valueOf(transactionRequestDTO.getFee()).doubleValue(),
+			                         Double.valueOf(transactionRequestDTO.getFee()==null?0:transactionRequestDTO.getFee()).doubleValue(),
 									 account.getCredit().doubleValue());
 
 			if(dTotal.doubleValue() < 0d) {
@@ -51,7 +51,7 @@ public class AccountLogicalValidator {
 		Double dTotal = Double.valueOf(0);
 		if(ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
 			dTotal = ApplyCreditRule(Double.valueOf(transactionRequestDTO.getAmount()).doubleValue(),
-			                         Double.valueOf(transactionRequestDTO.getFee()).doubleValue(),
+			                         Double.valueOf(transactionRequestDTO.getFee()==null?0:transactionRequestDTO.getFee()).doubleValue(),
 									 account.getCredit().doubleValue());
 		}
 		return dTotal;

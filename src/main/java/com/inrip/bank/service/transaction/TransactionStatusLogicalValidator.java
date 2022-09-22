@@ -70,7 +70,7 @@ public class TransactionStatusLogicalValidator {
         Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.before(todayDate) && 
 		    ( statusRequest.getChannel().equals("CLIENT") || statusRequest.getChannel().equals("ATM") ) ) {
-			double total = transactionDTO.getAmount().doubleValue() - transactionDTO.getFee().doubleValue();
+			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?0:transactionDTO.getFee().doubleValue());
 			statusResponse = new StatusResponseDTO(statusRequest.getReference(), "SETTLED", 
 			                                       Double.valueOf(total) );
 			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_B");
@@ -118,7 +118,7 @@ public class TransactionStatusLogicalValidator {
 		Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.equals(todayDate) &&
 		    ( statusRequest.getChannel().equals("CLIENT") || statusRequest.getChannel().equals("ATM")) ) {
-			double total = transactionDTO.getAmount().doubleValue() - transactionDTO.getFee().doubleValue();
+			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?Double.valueOf(0):transactionDTO.getFee()).doubleValue();
 			statusResponse = new StatusResponseDTO(statusRequest.getReference(), "PENDING", 
 			                                       Double.valueOf(total));
 			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_D");
@@ -166,7 +166,7 @@ public class TransactionStatusLogicalValidator {
 		Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.after(todayDate) &&
 		    ((statusRequest.getChannel().equals("CLIENT"))) ) {
-			double total = transactionDTO.getAmount().doubleValue() - transactionDTO.getFee().doubleValue();
+			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?Double.valueOf(0):transactionDTO.getFee()).doubleValue();
 			statusResponse = new StatusResponseDTO(statusRequest.getReference(), "FUTURE", 
 			                                       Double.valueOf(total));
 			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_F");
@@ -190,7 +190,7 @@ public class TransactionStatusLogicalValidator {
 		Date transactionDate = Utils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.after(todayDate) &&
 		    ((statusRequest.getChannel().equals("ATM"))) ) {
-			double total = transactionDTO.getAmount().doubleValue() - transactionDTO.getFee().doubleValue();
+			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?Double.valueOf(0):transactionDTO.getFee()).doubleValue();
 			statusResponse = new StatusResponseDTO(statusRequest.getReference(), "PENDING", 
 			                                       Double.valueOf(total));
 			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_G");

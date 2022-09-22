@@ -26,8 +26,8 @@ public class TransactionTransformer {
 		transaction.setReference(transactionRequest.getReference());
 		transaction.setAccountiban(transactionRequest.getAccount_iban());
 		transaction.setDate( transactionRequest.getDate() );
-		transaction.setAmount(Double.valueOf(transactionRequest.getAmount()));
-		transaction.setFee(Double.valueOf(transactionRequest.getFee()));
+		transaction.setAmount(transactionRequest.getAmount());
+		transaction.setFee(transactionRequest.getFee());
 		transaction.setDescription(transactionRequest.getDescription());
 		return transaction;
 	}

@@ -30,9 +30,9 @@ public class TransactionLogicalValidator {
 		Assert.hasText(request.getAccount_iban(), "Account IBAN is required");
 		Assert.notNull(request.getAmount(), "Amount is required");
 
-		//kiskilla: eliminar y mantener el null en la db
-		if(request.getFee()==null)
-			request.setFee(Double.valueOf(0));
+		//ñapa: 
+		//if(request.getFee()==null)
+		//	request.setFee(Double.valueOf(0));
 
 	}
 
