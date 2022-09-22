@@ -49,13 +49,8 @@ public class TransactionServiceImpl implements TransactionService {
 	@Autowired
 	private AccountService mAccountService;
 	
-    public TransactionServiceImpl(TransactionRepository transactionRepository) {
-        this.mTransactionRepository = transactionRepository;
-    }
-
 	@Value("${bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS}")
 	private boolean PARAM_ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS;
-
 	
 	/*
 	 * List all transactions
