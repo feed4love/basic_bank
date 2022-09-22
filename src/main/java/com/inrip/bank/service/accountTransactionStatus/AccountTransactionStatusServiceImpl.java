@@ -117,7 +117,9 @@ public class AccountTransactionStatusServiceImpl implements AccountTransactionSt
 			throw new SimpleBankHttpAcceptException("NO_DATE_YET", "Until can't compute null dates");
 		}
 		
-		statusResponseDTO = new AccountTransactionStatusResponseDTO(statusRequestDTO.getReference(), "UNKNOWN");
+		statusResponseDTO = AccountTransactionStatusResponseDTO.Builder.newInstance()
+								.setReference("UNKNOWN").build();
+		//statusResponseDTO = new AccountTransactionStatusResponseDTO(statusRequestDTO.getReference(), "UNKNOWN");
 		return statusResponseDTO;		
 	}
 

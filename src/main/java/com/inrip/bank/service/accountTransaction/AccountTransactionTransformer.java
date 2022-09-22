@@ -33,13 +33,21 @@ public class AccountTransactionTransformer {
 	}
 
 	public static AccountTransactionResponseDTO transactionToResponseDto(AccountTransaction transaction) {
-		AccountTransactionResponseDTO response = new AccountTransactionResponseDTO();						
+		AccountTransactionResponseDTO response = AccountTransactionResponseDTO.Builder.newInstance()
+													.setReference(transaction.getReference())
+													.setAccount_iban(transaction.getAccountiban())
+													.setDate(transaction.getDate())
+													.setAmount(transaction.getAmount())
+													.setFee(transaction.getFee())
+													.setDescription(transaction.getDescription())
+													.build();
+		/*AccountTransactionResponseDTO response = new AccountTransactionResponseDTO();						
 		response.setReference(transaction.getReference());
 		response.setAccount_iban(transaction.getAccountiban());
 		response.setDate(transaction.getDate());
 		response.setAmount(transaction.getAmount());
 		response.setFee(transaction.getFee());
-		response.setDescription(transaction.getDescription());
+		response.setDescription(transaction.getDescription());*/
 		return response;
 	}
 	

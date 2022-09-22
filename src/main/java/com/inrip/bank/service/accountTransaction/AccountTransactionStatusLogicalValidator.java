@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.util.Assert;
 
+import com.inrip.bank.common.SimpleBankConstants;
 import com.inrip.bank.common.SimpleBankUtils;
 import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
 import com.inrip.bank.dto.AccountTransactionStatusRequestDTO;
@@ -54,9 +55,18 @@ public class AccountTransactionStatusLogicalValidator {
 													 boolean DEBUG_DATA_ON_RESPONSES) {
 		AccountTransactionStatusResponseDTO statusResponse = null;
 		if (!optTransactionDTO.isPresent()) {
-			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "INVALID");
+
+			String debug_txt = null;
 			if(DEBUG_DATA_ON_RESPONSES)
-				statusResponse.setDebug("doBusinessRule_A");			
+				debug_txt = "doBusinessRule_A";
+
+			statusResponse = AccountTransactionStatusResponseDTO.Builder.newInstance()
+								.setReference(statusRequest.getReference())
+								.setStatus(SimpleBankConstants.TRANSACTION_STATUS.INVALID.get())
+								.setDebug(debug_txt)
+								.build();
+			//statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "INVALID");
+
 		}
 		return statusResponse;
 	}
@@ -78,9 +88,19 @@ public class AccountTransactionStatusLogicalValidator {
 		if( transactionDate!=null && transactionDate.before(todayDate) && 
 		    ( statusRequest.getChannel().equals("CLIENT") || statusRequest.getChannel().equals("ATM") ) ) {
 			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?0:transactionDTO.getFee().doubleValue());
-			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "SETTLED", 
-			                                       Double.valueOf(total) );
-			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_B");
+
+			String debug_txt = null;
+			if(DEBUG_DATA_ON_RESPONSES)
+				debug_txt = "doBusinessRule_B";
+
+			statusResponse = AccountTransactionStatusResponseDTO.Builder.newInstance()
+								.setReference(statusRequest.getReference())
+								.setStatus(SimpleBankConstants.TRANSACTION_STATUS.SETTLED.get())
+								.setAmount(Double.valueOf(total))
+								.setDebug(debug_txt)
+								.build();
+			//statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "SETTLED",  Double.valueOf(total) );
+			//if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_B");
 		}
 		return statusResponse;
 	}
@@ -102,9 +122,22 @@ public class AccountTransactionStatusLogicalValidator {
 		Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.before(todayDate) && 
 		    (statusRequest.getChannel().equals("INTERNAL")) ) {
-			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "SETTLED", 
+
+			String debug_txt = null;
+			if(DEBUG_DATA_ON_RESPONSES)
+				debug_txt = "doBusinessRule_C";
+
+			statusResponse = AccountTransactionStatusResponseDTO.Builder.newInstance()
+								.setReference(statusRequest.getReference())
+								.setStatus(SimpleBankConstants.TRANSACTION_STATUS.SETTLED.get())
+								.setAmount(Double.valueOf(transactionDTO.getAmount()))
+								.setFee(transactionDTO.getFee())
+								.setDebug(debug_txt)
+								.build();				
+
+			/*statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "SETTLED", 
 			                                    transactionDTO.getAmount(), transactionDTO.getFee());
-			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_C");
+			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_C");*/
 		}
 		return statusResponse;
 	}
@@ -126,9 +159,21 @@ public class AccountTransactionStatusLogicalValidator {
 		if( transactionDate!=null && transactionDate.equals(todayDate) &&
 		    ( statusRequest.getChannel().equals("CLIENT") || statusRequest.getChannel().equals("ATM")) ) {
 			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?Double.valueOf(0):transactionDTO.getFee()).doubleValue();
-			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "PENDING", 
+
+			String debug_txt = null;
+			if(DEBUG_DATA_ON_RESPONSES)
+				debug_txt = "doBusinessRule_D";
+
+			statusResponse = AccountTransactionStatusResponseDTO.Builder.newInstance()
+								.setReference(statusRequest.getReference())
+								.setStatus(SimpleBankConstants.TRANSACTION_STATUS.PENDING.get())
+								.setAmount(Double.valueOf(total))								
+								.setDebug(debug_txt)
+								.build();		
+
+			/*statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "PENDING", 
 			                                       Double.valueOf(total));
-			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_D");
+			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_D");*/
 		}
 		return statusResponse;
 	}
@@ -150,9 +195,22 @@ public class AccountTransactionStatusLogicalValidator {
 		Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.equals(todayDate) &&
 		    ((statusRequest.getChannel().equals("INTERNAL"))) ) {
-			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "PENDING", 
+
+			String debug_txt = null;
+			if(DEBUG_DATA_ON_RESPONSES)
+				debug_txt = "doBusinessRule_E";
+
+			statusResponse = AccountTransactionStatusResponseDTO.Builder.newInstance()
+				.setReference(statusRequest.getReference())
+				.setStatus(SimpleBankConstants.TRANSACTION_STATUS.PENDING.get())
+				.setAmount(transactionDTO.getAmount())
+				.setFee(transactionDTO.getFee())
+				.setDebug(debug_txt)
+				.build();		
+
+			/*statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "PENDING", 
 			                                    transactionDTO.getAmount(), transactionDTO.getFee());
-			if(DEBUG_DATA_ON_RESPONSES)  statusResponse.setDebug("doBusinessRule_E");
+			if(DEBUG_DATA_ON_RESPONSES)  statusResponse.setDebug("doBusinessRule_E");*/
 		}
 		return statusResponse;
 	}
@@ -174,9 +232,21 @@ public class AccountTransactionStatusLogicalValidator {
 		if( transactionDate!=null && transactionDate.after(todayDate) &&
 		    ((statusRequest.getChannel().equals("CLIENT"))) ) {
 			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?Double.valueOf(0):transactionDTO.getFee()).doubleValue();
-			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "FUTURE", 
+
+			String debug_txt = null;
+			if(DEBUG_DATA_ON_RESPONSES)
+				debug_txt = "doBusinessRule_F";
+
+			statusResponse = AccountTransactionStatusResponseDTO.Builder.newInstance()
+				.setReference(statusRequest.getReference())
+				.setStatus(SimpleBankConstants.TRANSACTION_STATUS.FUTURE.get())
+				.setAmount(Double.valueOf(total))				
+				.setDebug(debug_txt)
+				.build();	
+
+			/*statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "FUTURE", 
 			                                       Double.valueOf(total));
-			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_F");
+			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_F");*/
 		}
 		return statusResponse;
 	}
@@ -198,9 +268,21 @@ public class AccountTransactionStatusLogicalValidator {
 		if( transactionDate!=null && transactionDate.after(todayDate) &&
 		    ((statusRequest.getChannel().equals("ATM"))) ) {
 			double total = transactionDTO.getAmount().doubleValue() - (transactionDTO.getFee()==null?Double.valueOf(0):transactionDTO.getFee()).doubleValue();
-			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "PENDING", 
+
+			String debug_txt = null;
+			if(DEBUG_DATA_ON_RESPONSES)
+				debug_txt = "doBusinessRule_G";
+
+			statusResponse = AccountTransactionStatusResponseDTO.Builder.newInstance()
+				.setReference(statusRequest.getReference())
+				.setStatus(SimpleBankConstants.TRANSACTION_STATUS.PENDING.get())
+				.setAmount(Double.valueOf(total))				
+				.setDebug(debug_txt)
+				.build();	
+
+			/*statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "PENDING", 
 			                                       Double.valueOf(total));
-			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_G");
+			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_G");*/
 		}
 		return statusResponse;
 	}
@@ -222,9 +304,22 @@ public class AccountTransactionStatusLogicalValidator {
 		Date transactionDate = SimpleBankUtils.TransformDateIfExists(transactionDTO.getDate(), truncate);
 		if( transactionDate!=null && transactionDate.after(todayDate) &&
 		    ((statusRequest.getChannel().equals("INTERNAL"))) ) {
-			statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "FUTURE", 
+
+			String debug_txt = null;
+			if(DEBUG_DATA_ON_RESPONSES)
+				debug_txt = "doBusinessRule_H";
+
+			statusResponse = AccountTransactionStatusResponseDTO.Builder.newInstance()
+				.setReference(statusRequest.getReference())
+				.setStatus(SimpleBankConstants.TRANSACTION_STATUS.FUTURE.get())
+				.setAmount(transactionDTO.getAmount())				
+				.setFee(transactionDTO.getFee())
+				.setDebug(debug_txt)
+				.build();	
+								
+			/*statusResponse = new AccountTransactionStatusResponseDTO(statusRequest.getReference(), "FUTURE", 
 			                                    transactionDTO.getAmount(), transactionDTO.getFee());
-			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_H");
+			if(DEBUG_DATA_ON_RESPONSES) statusResponse.setDebug("doBusinessRule_H");*/
 		}
 		return statusResponse;
 	}

@@ -32,4 +32,20 @@ public interface SimpleBankConstants {
 	public static String DATE_FORMAT = "yyyy-MM-dd";
 	public static String DATE_FORMAT_REGX = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
 
+
+	public enum TRANSACTION_STATUS  {
+        INVALID("INVALID"),
+        SETTLED("SETTLED"),
+        PENDING("PENDING"),
+        FUTURE("FUTURE");
+        private String status;    
+        TRANSACTION_STATUS(String status) {
+            this.status = status;
+        }    
+        public String get() {
+            return status;
+        }
+    }
+
+	
 }

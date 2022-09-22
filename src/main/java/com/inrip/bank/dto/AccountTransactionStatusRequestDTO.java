@@ -12,24 +12,48 @@ package com.inrip.bank.dto;
  */
 public class AccountTransactionStatusRequestDTO {
 
-	private String reference;
-	private String channel;
+	private final String reference;
+	private final String channel;
 
+	public AccountTransactionStatusRequestDTO(String reference, String channel) {
+		this.reference = reference;
+		this.channel = channel;
+	}
+	public AccountTransactionStatusRequestDTO(Builder builder) {		
+        this.reference  = builder.reference;        
+        this.channel    = builder.channel;
+    }
+
+	public static class Builder {
+		private String reference;
+		private String channel;
+	
+		private Builder() {}
+		public static Builder newInstance() {
+            return new Builder();
+        }		
+		public AccountTransactionStatusRequestDTO build() {
+			return new AccountTransactionStatusRequestDTO(this);
+		}
+		public Builder setReference(String reference) {
+			this.reference = reference;
+			return this;
+		}
+		public Builder setChannel(String channel) {
+			this.channel = channel;
+			return this;
+		}
+	}
 	public String getReference() {
 		return reference;
 	}
-
-	public void setReference(String reference) {
-		this.reference = reference;
-	}
-
 	public String getChannel() {
 		return channel;
 	}
-
-	public void setChannel(String channel) {
-		this.channel = channel;
-	}
 	
+	@Override
+	public String toString() {
+		return "AccountTransactionStatusRequestDTO [channel=" + channel + ", reference=" + reference + "]";
+	}
 
 }

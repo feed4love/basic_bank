@@ -57,7 +57,7 @@ public class AccountResponseDTO {
 
 	@Override
 	public String toString() {
-		return "AccountResponseDTO [accountiban=" + accountiban + ", credit=" + credit + ", uid=" + uid + "]";
+		return "AccountResponseDTO [accountiban=" + accountiban + ", credit=***, uid=" + uid + "]";
 	}
 
 }

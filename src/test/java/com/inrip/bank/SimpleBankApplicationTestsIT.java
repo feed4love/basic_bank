@@ -143,7 +143,7 @@ class SimpleBankApplicationTestsIT {
     public void test_add_transaction() throws Exception {
         String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(true, true);
         AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account account = new Account();
@@ -176,7 +176,7 @@ class SimpleBankApplicationTestsIT {
     public void test_add_transaction_reference_is_duplicated() throws Exception {
         String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(true, true);
         AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
         
         Account account = new Account();
@@ -206,8 +206,10 @@ class SimpleBankApplicationTestsIT {
     public void test_add_transaction_no_account_iban() throws Exception {
         String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
-        transactionRequestDTO.setAccount_iban(null);
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(false, true);
+        /*AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
+        transactionRequestDTO.setAccount_iban(null);*/
+
         AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         when(mTransactionRepository.save(any())).thenReturn(transactionResponse);
@@ -230,8 +232,10 @@ class SimpleBankApplicationTestsIT {
     public void test_add_transaction_no_reference_and_is_generated() throws Exception {
         String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
-        transactionRequestDTO.setReference(null);
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(true, false);
+        /*AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
+        transactionRequestDTO.setReference(null);*/
+
         AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
         
         Account account = new Account();
@@ -841,13 +845,16 @@ class SimpleBankApplicationTestsIT {
 
     /*
      * Test Case - test_case_credit_after_transaction_is_posivite
+     * kiskilla: revisar
      */
     @Test
     public void test_case_credit_after_transaction_is_posivite() throws Exception {
         String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
-        transactionRequestDTO.setReference(null);
+        AccountTransactionRequestDTO transactionRequestDTO = UtilTest.getFakeTransactionRequestDTO(true, false);
+        /*AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
+        transactionRequestDTO.setReference(null);*/
+
         AccountTransaction mockTransaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account mockAccount = new Account();
@@ -856,8 +863,8 @@ class SimpleBankApplicationTestsIT {
         /*
          *   MAIN FUNTION DATA PARAMETERS FOR RESULT
          */
-        transactionRequestDTO.setAmount   (Double.valueOf(10));
-        transactionRequestDTO.setFee   (Double.valueOf(2));        
+        //transactionRequestDTO.setAmount   (Double.valueOf(10));
+        //transactionRequestDTO.setFee   (Double.valueOf(2));        
         mockAccount.setCredit    (Double.valueOf(0));
         mockTransaction.setAmount(Double.valueOf(10));
         mockTransaction.setFee   (Double.valueOf(2));
@@ -884,8 +891,10 @@ class SimpleBankApplicationTestsIT {
     public void test_case_credit_after_transaction_is_negative() throws Exception {
         String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
-        transactionRequestDTO.setReference(null);
+        
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(
+                                        true, false, TODAY,false, -10, 2);        
+        //transactionRequestDTO.setReference(null);
         AccountTransaction mockTransaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account mockAccount = new Account();
@@ -894,8 +903,8 @@ class SimpleBankApplicationTestsIT {
         /*
          *   MAIN FUNTION DATA PARAMETERS FOR RESULT
          */
-        transactionRequestDTO.setAmount   (Double.valueOf(-10));
-        transactionRequestDTO.setFee   (Double.valueOf(2));
+        //transactionRequestDTO.setAmount   (Double.valueOf(-10));
+        //transactionRequestDTO.setFee   (Double.valueOf(2));
         mockTransaction.setAmount(Double.valueOf(-10));        
         mockTransaction.setFee   (Double.valueOf(2));
         mockAccount.setAccountiban(transactionRequestDTO.getAccount_iban());
@@ -923,8 +932,10 @@ class SimpleBankApplicationTestsIT {
     public void test_case_credit_after_transaction_is_zero() throws Exception {
         String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
-        transactionRequestDTO.setReference(null);
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(
+                                        true, false, TODAY,false, -8, 2);
+        //transactionRequestDTO.setReference(null);
+
         AccountTransaction transaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account account = new Account();
@@ -933,8 +944,8 @@ class SimpleBankApplicationTestsIT {
         /*
          *   MAIN FUNTION DATA PARAMETERS FOR RESULT
          */
-        transactionRequestDTO.setAmount   (Double.valueOf(-8));
-        transactionRequestDTO.setFee   (Double.valueOf(2));
+        //transactionRequestDTO.setAmount   (Double.valueOf(-8));
+        //transactionRequestDTO.setFee   (Double.valueOf(2));
         account.setCredit    (Double.valueOf(10));
         transaction.setAmount(Double.valueOf(-8));
         transaction.setFee   (Double.valueOf(2));
@@ -961,8 +972,10 @@ class SimpleBankApplicationTestsIT {
     public void test_case_total_result_credit_nagetive_fee_and_amount() throws Exception {
         String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
-        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
-        transactionRequestDTO.setReference(null);
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(
+                                        true, false, TODAY,false, -10, -10);
+        //AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
+        //transactionRequestDTO.setReference(null);
         AccountTransaction transaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account account = new Account();
@@ -971,8 +984,8 @@ class SimpleBankApplicationTestsIT {
         /*
          *   MAIN FUNTION DATA PARAMETERS FOR RESULT
          */
-        transactionRequestDTO.setAmount   (Double.valueOf(-10));
-        transactionRequestDTO.setFee   (Double.valueOf(-10));
+        /*transactionRequestDTO.setAmount   (Double.valueOf(-10));
+        transactionRequestDTO.setFee   (Double.valueOf(-10));*/
         account.setCredit    (Double.valueOf(0));
         transaction.setAmount(Double.valueOf(-10));
         transaction.setFee   (Double.valueOf(-10));

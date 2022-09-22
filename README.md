@@ -207,7 +207,7 @@ The file Bank.postman_collection.json include the main commands and paths to the
 
 • (done) refactor Transaction class name and methods --QOL -> Transaction to AccountTransaction<=Account
 
-• apply Builder pattern for a pojos factory.
+• (done) apply Builder pattern for a pojos factory.
 
 • JWT Security layer instead of Basic.
 

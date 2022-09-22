@@ -1,5 +1,6 @@
 package com.inrip.bank.common;
 
+import java.util.Date;
 import java.util.Optional;
 
 import com.inrip.bank.dto.AccountTransactionStatusRequestDTO;
@@ -8,8 +9,8 @@ import com.inrip.bank.model.AccountTransaction;
 
 public class UtilTest {
     
-    protected static final String DEF_TEST_REFERENCE    = "REF-TEST-001";
-    protected static final String DEF_TEST_ACCOUNT_IBAN = "IBAN-TEST-001";
+    protected static String DEF_TEST_REFERENCE    = "REF-TEST-001";
+    protected static String DEF_TEST_ACCOUNT_IBAN = "IBAN-TEST-001";
 
     public enum TRANSACTION_CHANNEL  {
         CLIENT("CLIENT"), 
@@ -46,9 +47,13 @@ public class UtilTest {
     }
 
     public static AccountTransactionStatusRequestDTO getFakeStatusRequestDTO(TRANSACTION_CHANNEL channel) {
-        AccountTransactionStatusRequestDTO statusRequestDTO = new AccountTransactionStatusRequestDTO();
+        AccountTransactionStatusRequestDTO statusRequestDTO = AccountTransactionStatusRequestDTO.Builder.newInstance()
+                                                                .setReference(UtilTest.DEF_TEST_REFERENCE)
+                                                                .setChannel(channel.getTRANSACTION_CHANNEL())
+                                                                .build();
+        /*AccountTransactionStatusRequestDTO statusRequestDTO = new AccountTransactionStatusRequestDTO();
         statusRequestDTO.setReference(UtilTest.DEF_TEST_REFERENCE);
-        statusRequestDTO.setChannel(channel.getTRANSACTION_CHANNEL());
+        statusRequestDTO.setChannel(channel.getTRANSACTION_CHANNEL());*/
         return statusRequestDTO;
     }
 
@@ -75,21 +80,52 @@ public class UtilTest {
         return Optional.of(transaction);
     }    
 
-    public static AccountTransactionRequestDTO getFakeTransactionRequestDTO() {
-        return getFakeTransactionRequestDTO(TRANSACTION_WHEN.TODAY, false, 10.0, 2.0);
+    public static AccountTransactionRequestDTO getFakeTransactionRequestDTO(boolean account_iban, boolean reference) {
+        return getFakeTransactionRequestDTO(account_iban, reference, TRANSACTION_WHEN.TODAY, false, 10.0, 2.0);
     }
     public static AccountTransactionRequestDTO getFakeTransactionRequestDTO(
+                                  boolean account_iban, 
+                                  boolean reference,
                                   TRANSACTION_WHEN when,
                                   boolean trucate_dates, 
                                   double amount, 
                                   double fee) {
-        AccountTransactionRequestDTO transactionRequestDTO = new AccountTransactionRequestDTO();
+
+        String txt_acount_iban = null, txt_reference = null;
+
+        if(account_iban)
+            txt_acount_iban = DEF_TEST_ACCOUNT_IBAN;
+        if(reference)
+            txt_reference = DEF_TEST_REFERENCE;
+                            
+        Date date = null;
+        if(when == TRANSACTION_WHEN.TOMORROW){
+            date = SimpleBankUtils.getTomorrow(trucate_dates);
+        }else
+        if(when==TRANSACTION_WHEN.YESTERDAY){
+            date = SimpleBankUtils.getYesterday(trucate_dates);            
+        }else
+        if(when==TRANSACTION_WHEN.NO_DATE){
+            date = null;            
+        }else{
+            date = SimpleBankUtils.getToday(trucate_dates);
+        }
+                            
+        AccountTransactionRequestDTO transactionRequestDTO = AccountTransactionRequestDTO.Builder.newInstance()
+                                            .setAccount_iban(txt_acount_iban)
+                                            .setReference(txt_reference)
+                                            .setAmount(amount)
+                                            .setFee(Double.valueOf(fee))
+                                            .setDate(date)
+                                            .build();
+
+        /*AccountTransactionRequestDTO transactionRequestDTO = new AccountTransactionRequestDTO();
         transactionRequestDTO.setAccount_iban(DEF_TEST_ACCOUNT_IBAN);
         transactionRequestDTO.setReference(DEF_TEST_REFERENCE);
         transactionRequestDTO.setAmount(amount);        
-        transactionRequestDTO.setFee(Double.valueOf(fee));        
-        if(when == TRANSACTION_WHEN.TOMORROW){
-            transactionRequestDTO.setDate(SimpleBankUtils.getTomorrow(trucate_dates));
+        transactionRequestDTO.setFee(Double.valueOf(fee));*/
+        /*if(when == TRANSACTION_WHEN.TOMORROW){
+            transactionRequestDTO.setDate(SimpleBankUtils.getTomorrow(trucate_dates));            
         }else
         if(when==TRANSACTION_WHEN.YESTERDAY){
             transactionRequestDTO.setDate(SimpleBankUtils.getYesterday(trucate_dates));
@@ -98,7 +134,7 @@ public class UtilTest {
             transactionRequestDTO.setDate(null);
         }else{
             transactionRequestDTO.setDate(SimpleBankUtils.getToday(trucate_dates));
-        }
+        }*/
         return transactionRequestDTO;
     }    
 
