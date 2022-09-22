@@ -165,7 +165,7 @@ File application.properties has the next list of configurable parameters:
 
 • bank.basic.DEBUG_DATA_ON_RESPONSES if set to true the service will add several debug information at the json response. Currently included at the StatusResponseDTO to track the constraint applied to calculate the status. By default set to FALSE.
 
-• bank.basic.DEBUG_API_METHODS if set to true the service will accept debuging api calls to the endpoints:
+• bank.basic.DEBUG_API_METHODS if set to true the service will accept debuging api calls to the endpoints from externals:
 
     /api/account/{account_iban} -> search an account by account_iban.
     /api/account/transaction/all -> retrieve all transactions.
