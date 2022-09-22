@@ -132,12 +132,10 @@ public class TransactionController extends HTTPResponseHandler {
 	@ResponseBody
 	public StatusResponseDTO transactionStatus(@RequestBody StatusRequestDTO statusRequestDTO) {	
 		StatusResponseDTO resp = null;
-		try{
-			mLogger.info("Init - transactionStatus <" + statusRequestDTO.toString() + ">");
-			resp = mTransactionStatusService.getTransactionStatus(statusRequestDTO);	
-		}catch(HttpAcceptException e){
-			mLogger.info("Init - transactionStatus <" + statusRequestDTO.toString() + ">");
-		}
+	
+		mLogger.info("Init - transactionStatus <" + statusRequestDTO.toString() + ">");
+		resp = mTransactionStatusService.getTransactionStatus(statusRequestDTO);	
+		
 		return resp;
 	}
 
