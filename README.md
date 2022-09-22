@@ -26,7 +26,7 @@ The codes to switch for MongoDB are commented.
 
 9) Similar with the channel field in the account status requests, at this case the asumption is returns void http202 ACCEPTED.
 
-10) It is assumen by the model class than transaction is child from account need to save credit and validate or deny a transaction. The endpoint are contructed following this assumption, but they are listening on different services.
+10) It is assumen according the model class than a transaction is a child from parent account, assumed that is need to keep record of the credit avaibable for an account_iban , and validate or deny a transaction before it occurs. Could be nice to contruct an interceptor to validate the transactions by the Account service, but following the rule simple code at this stage here is an estandart implementation. The endpoints are contructed following this assumptions, but they are listening on separated services.
 
 # Main components
 
