@@ -140,10 +140,12 @@ The codes to switch for MongoDB are commented.
 
 • MongoDBConfig the main class to configure the connection to MongoDB Cluster.
 
-• SimpleBankRequestMappings where will be mounted the restful endpoints.
+• SimpleBankRequestMappings where the restful endpoints will mount before the servlet conetxt path.
 
 # Configuration parameters
-The file application.properties has the next list of configurable parameters:
+File application.properties has the next list of configurable parameters:
+
+• server.servlet.context-path is the main mount point for the endpoints
 
 • server.port is by default to 8080
 
@@ -167,7 +169,8 @@ The file application.properties has the next list of configurable parameters:
 
 Default configuration:
 
-    server.port=8080
+    server.port=8080    
+    server.servlet.context-path=/api
 
     bank.basic.message.alive=SimpleBank REST API is running
     bank.basic.auth.username=test
