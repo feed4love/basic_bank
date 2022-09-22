@@ -24,7 +24,9 @@ The codes to switch for MongoDB are commented.
 
 8) When the optional fee is received to null, the service shall manage the null without alter the entity data (e.g. setting 0 to the field fee when isnt provided)
 
-#### Controller:
+# Main App components
+
+#### Controller
 
 • TransactionController
 
