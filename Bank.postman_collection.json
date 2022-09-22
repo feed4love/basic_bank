@@ -6,35 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "Status",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://test:1234@localhost:8080/api/account/transaction/all",
-					"protocol": "http",
-					"auth": {
-						"user": "test",
-						"password": "1234"
-					},
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"account",
-						"transaction",
-						"all"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "All transactions",
 			"request": {
 				"auth": {
