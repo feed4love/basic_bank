@@ -145,7 +145,7 @@ A example list of avaibable calls to end points are:
 
 • JWT Security layer.
 
-• apply pattern for pojos factory.
+• apply Builder pattern for pojos factory.
 
 
 # Author
