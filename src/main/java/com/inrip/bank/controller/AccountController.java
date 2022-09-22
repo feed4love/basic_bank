@@ -121,7 +121,7 @@ public class AccountController extends SimpleBankHTTPResponseHandler {
 	 * 
 	 * 
 	 */
-	@RequestMapping(value = SimpleBankRequestMappings.ADD_TRANSACTION, method = RequestMethod.POST)
+	@RequestMapping(value = SimpleBankRequestMappings.ADD_TRANSACTION, method = RequestMethod.PUT)
 	public @ResponseBody AccountTransactionResponseDTO addTransaction(@RequestBody AccountTransactionRequestDTO requestDTO) throws Exception {		
 		mLogger.info("Init - addTransaction <" + requestDTO.toString() + ">");
 		AccountTransactionResponseDTO transactionResponseDTO  = mTransactionService.addTransaction(requestDTO);

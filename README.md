@@ -52,7 +52,6 @@ The codes to switch for MongoDB are commented.
     Payload:
     SimpleBank REST API is running
 
-
     http://test:1234@localhost:8080/api/account/{account_iban}
     Payload:
     {
@@ -62,7 +61,7 @@ The codes to switch for MongoDB are commented.
     }    
 
     http://test:1234@localhost:8080/api/account/transaction/add
-    Payload POST request:
+    Payload PUT request:
     {   
         "reference":"1",
         "account_iban":"1",
