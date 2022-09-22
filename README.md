@@ -143,10 +143,9 @@ A example list of avaibable calls to end points are:
 
 • JPA annotation to link entities Account and Transaction.
 
-• JWT Security layer.
-
 • apply Builder pattern for pojos factory.
 
+• JWT Security layer.
 
 # Author
 2022, Enrique AC
