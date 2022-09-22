@@ -55,12 +55,12 @@ public class UtilTest {
     public static Optional<Transaction> getFakeOptionalTransaction(
                            TRANSACTION_WHEN when, 
                            boolean trucate_dates, 
-                           double amount, double fee) {
+                           Double amount, Double fee) {
         Transaction transaction = new Transaction();
         transaction.setReference(DEF_TEST_REFERENCE);
         transaction.setAccountiban(DEF_TEST_ACCOUNT_IBAN);                
-        transaction.setAmount(Double.valueOf(amount));
-        transaction.setFee(Double.valueOf(fee));
+        transaction.setAmount(amount);
+        transaction.setFee(fee);
         if(when == TRANSACTION_WHEN.TOMORROW){
             transaction.setDate(Utils.getTomorrow(trucate_dates));
         }else

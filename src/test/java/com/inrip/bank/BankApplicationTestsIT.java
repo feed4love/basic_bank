@@ -338,7 +338,8 @@ class BankApplicationTestsIT {
         StatusRequestDTO statusRequestDTO = null;
         String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, true, 10, 2);
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
+        true, Double.valueOf(10), Double.valueOf(2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
         
@@ -367,6 +368,47 @@ class BankApplicationTestsIT {
     }
 
     /*
+     * Test Case B2 - test_case_status_ruleB2_field_fee_is_null
+     *	Given: A transaction that is stored in our system
+     *	When: fee field is null
+     *	Then: The system returns the status 'SETTLED' And the amount substracting the fee		
+     * 
+     */
+    @Test
+    public void test_case_status_ruleB2_field_fee_is_null() throws Exception {
+        StatusRequestDTO statusRequestDTO = null;
+        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
+                                                        true, 
+                                                        Double.valueOf(10), 
+                                                        null);
+
+        when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
+        
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(CLIENT);
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(transaction.get().getReference()))
+                        .andExpect(jsonPath("status").value(SETTLED.get()));
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(ATM);  
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(transaction.get().getReference()))
+                        .andExpect(jsonPath("status").value(SETTLED.get()));
+                                        
+    }
+
+    /*
      * Test Case C - test_case_status_ruleC
 	 *	Given: A transaction that is stored in our system
 	 *	When: I check the status from INTERNAL channel
@@ -381,7 +423,8 @@ class BankApplicationTestsIT {
         StatusRequestDTO statusRequestDTO = null;
         String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, true, 10, 2);
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
+                    true,Double.valueOf( 10), Double.valueOf(2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
 
@@ -399,6 +442,40 @@ class BankApplicationTestsIT {
                         .andReturn();
     }
 
+        /*
+     * Test Case C2 - test_case_status_ruleC2_field_fee_is_null
+	 *	Given: A transaction that is stored in our system
+	 *	When: I check the status from INTERNAL channel
+	 *	And the transaction date is before today
+	 *	Then: The system returns the status 'SETTLED'
+ 	 *	And the amount
+ 	 *	And the fee
+     * 
+     */
+    @Test
+    public void test_case_status_ruleC2_field_fee_is_null() throws Exception {
+        StatusRequestDTO statusRequestDTO = null;
+        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
+                    true,Double.valueOf( 10), null);
+
+        when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(INTERNAL);
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(transaction.get().getReference()))
+                        .andExpect(jsonPath("status").value(SETTLED.get()))
+                        .andExpect(jsonPath("amount").value(transaction.get().getAmount()))                                                
+                        .andReturn();
+    }
+
+
     /*
      * Test Case D - test_case_status_ruleD
 	 * Given: A transaction that is stored in our system
@@ -413,7 +490,8 @@ class BankApplicationTestsIT {
         StatusRequestDTO statusRequestDTO = null;
         String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, true, 10, 2);
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
+                                true, Double.valueOf(10),Double.valueOf( 2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
 
@@ -442,6 +520,52 @@ class BankApplicationTestsIT {
                         .andReturn();                        
     }
 
+        /*
+     * Test Case D2 - test_case_status_ruleD2_field_fee_is_null
+	 * Given: A transaction that is stored in our system
+	 * When: I check the status from CLIENT or ATM channel
+	 * 	And the transaction date is equals to today
+ 	 * Then: The system returns the status 'PENDING'
+ 	 * 	And the amount substracting the fee
+     * 
+     */
+    @Test
+    public void test_case_status_ruleD2_field_fee_is_null() throws Exception {
+        StatusRequestDTO statusRequestDTO = null;
+        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
+                                true, Double.valueOf(10), null);
+
+        when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(CLIENT);        
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(transaction.get().getReference()))
+                        .andExpect(jsonPath("status").value(PENDING.get()))
+                        .andExpect(jsonPath("amount").value(transaction.get().getAmount().doubleValue() 
+                                                            - (transaction.get().getFee()==null?Double.valueOf(0):transaction.get().getFee()).doubleValue()) )
+                        .andReturn();
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(ATM);
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(transaction.get().getReference()))
+                        .andExpect(jsonPath("status").value(PENDING.get()))
+                        .andExpect(jsonPath("amount").value(transaction.get().getAmount().doubleValue() 
+                                                            - (transaction.get().getFee()==null?Double.valueOf(0):transaction.get().getFee()).doubleValue()) )
+                        .andReturn();                        
+    }
+
     /*
      * Test Case E - test_case_status_ruleE
      * Given: A transaction that is stored in our system
@@ -457,7 +581,8 @@ class BankApplicationTestsIT {
         StatusRequestDTO statusRequestDTO = null;
         String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, true, 10, 2);
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
+                                true,Double.valueOf( 10),Double.valueOf( 2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
 
@@ -476,6 +601,40 @@ class BankApplicationTestsIT {
 
     }
 
+        /*
+     * Test Case E2 - test_case_status_ruleE2_field_fee_is_null
+     * Given: A transaction that is stored in our system
+     * When: I check the status from INTERNAL channel
+     *   And the transaction date is equals to today
+     * Then: The system returns the status 'PENDING'
+     *   And the amount
+     *   And the fee
+     * 
+     */
+    @Test
+    public void test_case_status_ruleE2_field_fee_is_null() throws Exception {
+        StatusRequestDTO statusRequestDTO = null;
+        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
+                                true,Double.valueOf( 10),null);
+
+        when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(INTERNAL);        
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(transaction.get().getReference()))
+                        .andExpect(jsonPath("status").value(PENDING.get()))
+                        .andExpect(jsonPath("amount").value(transaction.get().getAmount() ))                        
+                        .andReturn();
+
+    }
+
     /*
      * Test Case F - test_case_status_ruleF
      * Given: A transaction that is stored in our system
@@ -490,7 +649,8 @@ class BankApplicationTestsIT {
         StatusRequestDTO statusRequestDTO = null;
         String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, true, 10, 2);
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+                                                true,Double.valueOf( 10),Double.valueOf( 2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
 
@@ -504,6 +664,40 @@ class BankApplicationTestsIT {
                         .andExpect(jsonPath("reference").value(transaction.get().getReference()))
                         .andExpect(jsonPath("status").value(FUTURE.get()))
                         .andExpect(jsonPath("amount").value(transaction.get().getAmount().doubleValue() - transaction.get().getFee().doubleValue() ))                
+                        .andReturn();
+
+    }
+
+        /*
+     * Test Case F2 - test_case_status_ruleF2_field_fee_is_null
+     * Given: A transaction that is stored in our system
+     * When: I check the status from CLIENT channel
+     *   And the transaction date is greater than today
+     * Then: The system returns the status 'FUTURE'
+     *   And the amount substracting the fee
+     * 
+     */
+    @Test
+    public void test_case_status_ruleF2_field_fee_is_null() throws Exception {
+        StatusRequestDTO statusRequestDTO = null;
+        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+                                                true,Double.valueOf( 10), null);
+
+        when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(CLIENT);
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(transaction.get().getReference()))
+                        .andExpect(jsonPath("status").value(FUTURE.get()))
+                        .andExpect(jsonPath("amount").value(transaction.get().getAmount().doubleValue() 
+                                                            - (transaction.get().getFee()==null?Double.valueOf(0):transaction.get().getFee().doubleValue() )))
                         .andReturn();
 
     }
@@ -522,7 +716,8 @@ class BankApplicationTestsIT {
         StatusRequestDTO statusRequestDTO = null;
         String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, true, 10, 2);
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+                                    true, Double.valueOf(10), Double.valueOf(2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
 
@@ -540,6 +735,39 @@ class BankApplicationTestsIT {
 
     }
 
+    /*
+    * Test Case G2 - test_case_status_ruleG_field_fee_is_null
+    * Given: A transaction that is stored in our system
+    * When: I check the status from ATM channel
+    * And the transaction date is greater than today
+    * Then: The system returns the status 'PENDING'
+    * And the amount substracting the fee
+    * 
+    */
+    @Test
+    public void test_case_status_ruleG_field_fee_is_null() throws Exception {
+        StatusRequestDTO statusRequestDTO = null;
+        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+                                    true, Double.valueOf(10), null);
+
+        when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(ATM);
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(transaction.get().getReference()))
+                        .andExpect(jsonPath("status").value(PENDING.get()))
+                        .andExpect(jsonPath("amount").value(transaction.get().getAmount().doubleValue() 
+                                                        - (transaction.get().getFee()==null?Double.valueOf(0):transaction.get().getFee()).doubleValue() ))
+                        .andReturn();
+
+    }
 
     
 
@@ -557,7 +785,8 @@ class BankApplicationTestsIT {
         StatusRequestDTO statusRequestDTO = null;
         String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
 
-        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, true, 10, 2);
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+                                            true, Double.valueOf(10), Double.valueOf(2));
 
         when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
 
@@ -575,6 +804,40 @@ class BankApplicationTestsIT {
                         .andReturn();
 
     }    
+
+        /*
+    * Test Case H2 - test_case_status_ruleH2_field_fee_is_null
+    * Given: A transaction that is stored in our system
+    * When: I check the status from INTERNAL channel
+    * And the transaction date is greater than today
+    * Then: The system returns the status 'FUTURE'
+    * And the amount
+    * And the fee
+    */
+    @Test
+    public void test_case_status_ruleH2_field_fee_is_null() throws Exception {
+        StatusRequestDTO statusRequestDTO = null;
+        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.TRANSACTION_STATUS;
+
+        Optional<Transaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
+                                            true, Double.valueOf(10), Double.valueOf(2));
+
+        when(mTransactionRepository.findByReference(transaction.get().getReference())).thenReturn(transaction);
+
+        statusRequestDTO = UtilTest.getFakeStatusRequestDTO(INTERNAL);  
+        this.mMockMvc.perform(get(url)
+                        .with(httpBasic("test", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)                                           
+                        .content(mObjectMapper.writeValueAsString(statusRequestDTO)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith("application/json"))
+                        .andExpect(jsonPath("reference").value(transaction.get().getReference()))
+                        .andExpect(jsonPath("status").value(FUTURE.get()))
+                        .andExpect(jsonPath("amount").value(transaction.get().getAmount() ))
+                        .andReturn();
+
+    }    
+
 
     /*
      * Test Case - test_case_credit_after_transaction_is_posivite
