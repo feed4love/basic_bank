@@ -39,7 +39,7 @@ The codes to switch for MongoDB are commented.
     http://test:1234@localhost:8080/api/transaction/iban/IBAN-001
     http://test:1234@localhost:8080/api/transaction/iban/IBAN-001?descending_amount=true
 
-• TransactionService serve the endpoint:
+• TransactionStatusService serve the endpoint:
 
     http://test:1234@localhost:8080/api/transaction/status
 
