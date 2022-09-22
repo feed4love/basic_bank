@@ -30,7 +30,7 @@ The codes to switch for MongoDB are commented.
 
 • TransactionController
 
-#### Service:
+#### Service
 
 • TransactionService serve the endpoints:
 
@@ -46,26 +46,26 @@ The codes to switch for MongoDB are commented.
 
 • AccountService is not exposed.
 
-#### Repository:
+#### Repository
 
 • TransactionRepository
 
 • AccountRepository
 
-#### Model:
+#### Model
 
 • Transaction and request/response DTOs
 
 • Account and request/response DTOs
 
-#### Handlers and Exception:
+#### Handlers and Exception
 
 • HTTPResponseHandler (currently TransactionController extends HTTPResponseHandler)
 
 • BadRequestException, HttpAcceptException, HTTPException and NotFoundException
 
 
-#### Test:
+#### Test
 
 • BankApplicationTestsIT
 
