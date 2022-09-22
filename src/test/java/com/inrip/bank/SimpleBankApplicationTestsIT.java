@@ -154,7 +154,7 @@ class SimpleBankApplicationTestsIT {
         when(mAccountRepository.findOneByAccountiban(any())).thenReturn(Optional.of(account));
         when(mAccountRepository.save(any())).thenReturn(account);
 
-        this.mMockMvc.perform(post(url)
+        this.mMockMvc.perform(put(url)
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
@@ -188,7 +188,7 @@ class SimpleBankApplicationTestsIT {
         when(mAccountRepository.findOneByAccountiban(any())).thenReturn(Optional.of(account));
         when(mAccountRepository.save(any())).thenReturn(account);
 
-        this.mMockMvc.perform(post(url)
+        this.mMockMvc.perform(put(url)
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
@@ -212,7 +212,7 @@ class SimpleBankApplicationTestsIT {
 
         when(mTransactionRepository.save(any())).thenReturn(transactionResponse);
 
-        this.mMockMvc.perform(post(url)
+        this.mMockMvc.perform(put(url)
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
@@ -242,7 +242,7 @@ class SimpleBankApplicationTestsIT {
         when(mAccountRepository.findOneByAccountiban(any())).thenReturn(Optional.of(account));
         when(mAccountRepository.save(any())).thenReturn(account);
 
-        this.mMockMvc.perform(post(url)
+        this.mMockMvc.perform(put(url)
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
@@ -866,7 +866,7 @@ class SimpleBankApplicationTestsIT {
         when(mAccountRepository.save(any())).thenReturn(mockAccount);
         when(mTransactionRepository.save(any())).thenReturn(mockTransaction);
 
-        this.mMockMvc.perform(post(url)
+        this.mMockMvc.perform(put(url)
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
@@ -905,7 +905,7 @@ class SimpleBankApplicationTestsIT {
         when(mAccountRepository.save(any())).thenReturn(mockAccount);
         when(mTransactionRepository.save(any())).thenReturn(mockTransaction);
 
-        this.mMockMvc.perform(post(url)
+        this.mMockMvc.perform(put(url)
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
@@ -943,7 +943,7 @@ class SimpleBankApplicationTestsIT {
         when(mAccountRepository.save(any())).thenReturn(account);
         when(mTransactionRepository.save(any())).thenReturn(transaction);
 
-        this.mMockMvc.perform(post(url)
+        this.mMockMvc.perform(put(url)
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
@@ -981,7 +981,7 @@ class SimpleBankApplicationTestsIT {
         when(mAccountRepository.save(any())).thenReturn(account);
         when(mTransactionRepository.save(any())).thenReturn(transaction);
 
-        this.mMockMvc.perform(post(url)
+        this.mMockMvc.perform(put(url)
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
