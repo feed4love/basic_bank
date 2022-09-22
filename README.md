@@ -15,7 +15,7 @@ The integration test of the rest controller are written with JUnit5 and Mockito.
 
 4) Entity transaction keep data to match requeriments about transaction and status logic.
 
-5) The database is working currently is H2, but initial develop has been started with Atlas, the MongoDb Cluster for nono E/R database. But the cluster of Mongo require to configure each client Ip address to accept connections, so the most portable option is to use H2.
+5) The database is working currently is H2, but initial develop has been started with Atlas, the MongoDb Cluster for nono E/R database. But the cluster of Nono requires to configure each client Ip address to accept connections, so the most portable option is to use H2.
 The codes to switch for MongoDB are commented.
 
 6) Security. Here is choosen for the API rest the Basic Authorization. Neverless is well known better methods such Oauth2.0 , JWT, among others. Any case regarding this matter is decided at this stage to implement the Basic Auth and move forwad with next requirements. The parameters to configre the access to the API are bank.basic.auth.username and bank.basic.auth.password .
