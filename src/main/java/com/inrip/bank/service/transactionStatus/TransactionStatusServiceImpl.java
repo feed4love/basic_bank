@@ -65,56 +65,56 @@ public class TransactionStatusServiceImpl implements TransactionStatusService {
 
         optTransaction = mTransactionService.getTransactionByReference(statusRequestDTO.getReference());
 
-		//Bussines rule A
+		//Bussines rule A, if match then return the response
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_A(statusRequestDTO, 
 																optTransaction, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;
 		transactionDTO = optTransaction.get();		
 
-		//Bussines rule B
+		//Bussines rule B, if match then return the response
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_B(statusRequestDTO, 
 																transactionDTO, todayDate, 
 																PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
-        //Bussines rule C
+        //Bussines rule C, if match then return the response
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_C(
 					statusRequestDTO, transactionDTO, todayDate, 
 					PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
-        //Bussines rule D
+        //Bussines rule D, if match then return the response
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_D(
 					statusRequestDTO, transactionDTO, todayDate, 
 					PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
-        //Bussines rule E
+        //Bussines rule E, if match then return the response
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_E(
 					statusRequestDTO, transactionDTO, todayDate, PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, 
 					PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
-        //Bussines rule F
+        //Bussines rule F, if match then return the response
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_F(
 					statusRequestDTO, transactionDTO, todayDate, PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, 
 					PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
-        //Bussines rule G
+        //Bussines rule G, if match then return the response
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_G(
 					statusRequestDTO, transactionDTO, todayDate, 
 					PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
-        //Bussines rule H
+        //Bussines rule H, if match then return the response
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_H(
 						statusRequestDTO, transactionDTO, todayDate, 
 						PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;
 
 		if(!PARAM_ACCEPT_UNKNOWN_TRANSACTION_STATUS){
-			throw new HttpAcceptException("NO_DATE_YET", "Until can compute null dates");
+			throw new HttpAcceptException("NO_DATE_YET", "Until can't compute null dates");
 		}
 		
 		statusResponseDTO = new StatusResponseDTO(statusRequestDTO.getReference(), "UNKNOWN");
