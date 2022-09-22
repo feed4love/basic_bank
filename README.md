@@ -39,7 +39,6 @@ The codes to switch for MongoDB are commented.
 • AccountService , exposed for debug (is not mandatory):
 
     http://test:1234@localhost:8080/api/account/{account_iban}
-
     Payload
     {
         "uid": "d2d6180c-55bb-48b4-9f28-13fe6d7625f8",
@@ -49,15 +48,66 @@ The codes to switch for MongoDB are commented.
 
 • AccountTransactionService serve the endpoints:
 
-    http://test:1234@localhost:8080/api/account/
+    http://test:1234@localhost:8080/api/account/    
+    Payload:
+    SimpleBank REST API is running
+
+
+    http://test:1234@localhost:8080/api/account/{account_iban}
+    Payload:
+    {
+        "uid": "1a215417-00e1-4860-b774-e606c0343bc0",
+        "accountiban": "1",
+        "credit": 1.0
+    }    
+
     http://test:1234@localhost:8080/api/account/transaction/add
+    Payload POST request:
+    {   
+        "reference":"1",
+        "account_iban":"1",
+        "date":"2022-09-19T20:55:42.000Z",
+        "amount":2,
+        "fee":1
+    }
+
     http://test:1234@localhost:8080/api/account/transaction/iban/{account_iban}
+    Payload:
+    [
+        {
+            "reference": "1",
+            "account_iban": "1",
+            "date": "2022-09-19T20:55:42.000+0000",
+            "amount": 2.0,
+            "fee": 1.0
+        },
+        {
+            "reference": "2",
+            "account_iban": "1",
+            "date": "2022-09-19T20:55:42.000+0000",
+            "amount": 2.0,
+            "fee": 1.0
+        }
+    ]
+
     http://test:1234@localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=true
 
 • AccountTransactionStatusService serve the endpoint:
 
     http://test:1234@localhost:8080/api/account/transaction/status
+    Payload request:
+    {
+        "reference": "1",
+        "channel": "CLIENT"
+    }    
 
+    Payload response:
+    {
+        "reference": "1",
+        "status": "SETTLED",
+        "amount": 1.0,
+        "debug": "doBusinessRule_B"
+    }    
 
 #### Test
 
