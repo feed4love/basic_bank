@@ -40,6 +40,13 @@ The codes to switch for MongoDB are commented.
 
     http://test:1234@localhost:8080/api/account/{account_iban}
 
+    Payload
+    {
+        "uid": "d2d6180c-55bb-48b4-9f28-13fe6d7625f8",
+        "accountiban": "1",
+        "credit": 1.0
+    }    
+
 • AccountTransactionService serve the endpoints:
 
     http://test:1234@localhost:8080/api/account/
