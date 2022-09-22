@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.inrip.bank.common.Utils;
 import com.inrip.bank.dto.AccountRequestDTO;
 import com.inrip.bank.dto.AccountResponseDTO;
 import com.inrip.bank.dto.TransactionRequestDTO;
@@ -75,6 +76,7 @@ public class AccountServiceImpl  implements AccountService {
         AccountResponseDTO accountResponseDTO = null;
 
         Account account = AccountTransformer.accountRequestDtoToAccount(accountRequestDTO);
+        account.setUid(Utils.GenerateUUID());
         account = (Account) mAccountRepository.save(account);
 
         accountResponseDTO = AccountTransformer.accountToResponseDTO(account);        

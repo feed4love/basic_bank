@@ -53,7 +53,9 @@ public class TransactionStatusServiceImpl implements TransactionStatusService {
 		mLogger.info("Init - getTransactionStatus");
 		
 		//throws exception
-		TransactionStatusLogicalValidator.validateStatusRequest(statusRequestDTO);	
+		// if field channel is null , then shall do something before continue
+		// then, at this case and stage throws http202 ACCEPTED
+		TransactionStatusLogicalValidator.validateStatusRequest(statusRequestDTO);		
 		
 		StatusResponseDTO statusResponseDTO = null;        
 		Optional<Transaction> optTransaction = null;
@@ -65,14 +67,14 @@ public class TransactionStatusServiceImpl implements TransactionStatusService {
 
 		//Bussines rule A
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_A(statusRequestDTO, 
-								optTransaction, PARAM_DEBUG_DATA_ON_RESPONSES);
+																optTransaction, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;
 		transactionDTO = optTransaction.get();		
 
 		//Bussines rule B
 		statusResponseDTO = TransactionStatusLogicalValidator.doBusinessRule_B(statusRequestDTO, 
-										transactionDTO, todayDate, 
-										PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
+																transactionDTO, todayDate, 
+																PARAM_TRANSACTION_STATUS_TRUNCATE_DATES, PARAM_DEBUG_DATA_ON_RESPONSES);
 		if(statusResponseDTO!=null) return statusResponseDTO;		
 
         //Bussines rule C

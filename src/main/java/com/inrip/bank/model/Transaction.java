@@ -5,9 +5,11 @@ import java.util.Date;
 /* para H2 */
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 // para mongo
@@ -29,8 +31,8 @@ import org.springframework.data.mongodb.core.mapping.Document;-*
  *
  */
 
-@Entity
-@Table
+@Entity(name = "Transaction")
+@Table(name = "simple_bank_transaction")
 //@Document(collection = "transaction")
 public class Transaction {
 
@@ -39,9 +41,10 @@ public class Transaction {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	//the external uid to share
 	private String uid;
 
-	//@TextIndexed
+	//@TextIndexed ## 4mongo
 	private String reference;
 
 	private String accountiban;
@@ -54,8 +57,21 @@ public class Transaction {
 
 	private String description;
 
+	//relation with account many to one
+	@ManyToOne(fetch = FetchType.LAZY)
+    private Account account;
+
+
 	public Transaction(){		
 	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}	
 
 	public Transaction(String reference){
 		this.reference = reference;

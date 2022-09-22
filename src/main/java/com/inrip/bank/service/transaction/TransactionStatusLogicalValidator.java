@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.util.Assert;
 
 import com.inrip.bank.common.Utils;
+import com.inrip.bank.controller.exceptions.HttpAcceptException;
 import com.inrip.bank.dto.StatusRequestDTO;
 import com.inrip.bank.dto.StatusResponseDTO;
 import com.inrip.bank.model.Transaction;
@@ -30,11 +31,17 @@ public class TransactionStatusLogicalValidator {
 	public static void validateStatusRequest(StatusRequestDTO request) {
 		Assert.notNull(request, "Transaction Status Request cannot be null");		
 		Assert.notNull(request.getReference(), "Reference is required");
+
+		//channel == null is allowed
 		Assert.isTrue( request.getChannel()==null || request.getChannel()!=null && (
 													  request.getChannel().equals("CLIENT") ||
 													  request.getChannel().equals("ATM") ||
 													  request.getChannel().equals("INTERNAL")),
 													"Channel is not supported");
+		if(request.getChannel()==null) {
+			throw new HttpAcceptException("Can't compute channel/status");
+		}
+
 	}
 
 	/* A)

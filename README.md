@@ -24,6 +24,8 @@ The codes to switch for MongoDB are commented.
 
 8) When a no mandatory fee is received, the service shall manage nulls instead to alter the null state in the db.
 
+9) Similar with the channel field in the account status requests, at this case the asumption is returns void http202 ACCEPTED.
+
 # Main components
 
 #### Controller
@@ -141,7 +143,7 @@ A example list of avaibable calls to end points are:
 
 • (done) transactional propagation on services.
 
-• JPA annotation to link entities Account and Transaction.
+• (done) JPA annotation to link entities Account and Transaction.
 
 • refactor Transaction class name and methods --QOL -> Transaction to AccountTransaction<=Account
 
