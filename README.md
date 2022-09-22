@@ -145,7 +145,7 @@ The codes to switch for MongoDB are commented.
 # Configuration parameters
 File application.properties has the next list of configurable parameters:
 
-• server.servlet.context-path is the main mount point for the endpoints
+• server.servlet.context-path is the parent mount point for the services exposed
 
 • server.port is by default to 8080
 
