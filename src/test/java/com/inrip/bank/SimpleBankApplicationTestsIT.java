@@ -923,19 +923,17 @@ class SimpleBankApplicationTestsIT {
 
     }
 
-    /*
-     * Test Case - test_case_credit_after_transaction_is_zero
+        /*
+     * Test Case - test_case_credit_after_transaction_is_zero_deny
 	 * IMPORTANT to note that a transaction that leaves the total account balance bellow
      *   0 is not allowed.
      */
     @Test
-    public void test_case_credit_after_transaction_is_zero() throws Exception {
+    public void test_case_credit_after_transaction_is_zero_deny() throws Exception {
         String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(
-                                        true, false, TODAY,false, -8, 2);
-        //transactionRequestDTO.setReference(null);
-
+                                        true, false, TODAY,false, -8, 3);
         AccountTransaction transaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
 
         Account account = new Account();
@@ -944,8 +942,41 @@ class SimpleBankApplicationTestsIT {
         /*
          *   MAIN FUNTION DATA PARAMETERS FOR RESULT
          */
-        //transactionRequestDTO.setAmount   (Double.valueOf(-8));
-        //transactionRequestDTO.setFee   (Double.valueOf(2));
+        account.setCredit    (Double.valueOf(10));
+        transaction.setAmount(Double.valueOf(-8));
+        transaction.setFee   (Double.valueOf(3));
+
+        when(mAccountRepository.findOneByAccountiban(any())).thenReturn(Optional.of(account));
+        when(mAccountRepository.save(any())).thenReturn(account);
+        when(mTransactionRepository.save(any())).thenReturn(transaction);
+
+        this.mMockMvc.perform(put(url)
+                     .with(httpBasic("test", "1234"))
+                     .contentType(MediaType.APPLICATION_JSON)                      
+                     .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
+                     .andExpect(status().isBadRequest());
+
+    }
+
+    /*
+     * Test Case - test_case_credit_after_transaction_is_zero_accept
+	 * IMPORTANT to note that a transaction that leaves the total account balance bellow
+     *   0 is not allowed.
+     */
+    @Test
+    public void test_case_credit_after_transaction_is_zero_accept() throws Exception {
+        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+
+        AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(
+                                        true, false, TODAY,false, -8, 2);
+        AccountTransaction transaction = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
+
+        Account account = new Account();
+        account.setAccountiban(transactionRequestDTO.getAccount_iban());
+
+        /*
+         *   MAIN FUNTION DATA PARAMETERS FOR RESULT
+         */
         account.setCredit    (Double.valueOf(10));
         transaction.setAmount(Double.valueOf(-8));
         transaction.setFee   (Double.valueOf(2));
