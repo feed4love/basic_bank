@@ -134,17 +134,16 @@ A example list of avaibable calls to end points are:
     http://test:1234@localhost:8080/api/transaction/reference/REF-TEST?descending_amount=false
 
 
-# Currently working on (main pendings..)
+# Currently working on (main pendings ordered..)
 
 
 • tests for field fee set to null on transactions (shall avoid null pointer exception managing nulls on db and maths)
 
-• JWT Security layer
-
 • transactions between services
 
-• apply pattern for pojo factory
+• JWT Security layer
 
+• apply pattern for pojo factory
 
 
 # Author
