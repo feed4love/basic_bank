@@ -205,9 +205,9 @@ The file Bank.postman_collection.json include the main commands and paths to the
 
 • (done) JPA annotation to link entities Account and Transaction.
 
-• (done) refactor Transaction class name and methods --QOL -> Transaction to AccountTransaction<=Account
+• (done) refactor Transaction class name and methods --QOL -> Transaction to AccountTransaction<=Account.
 
-• (done) apply Builder pattern for a pojos factory.
+• (done) apply Builder pattern to pojos.
 
 • JWT Security layer instead of Basic.
 
