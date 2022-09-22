@@ -26,13 +26,19 @@ The codes to switch for MongoDB are commented.
 
 9) Similar with the channel field in the account status requests, at this case the asumption is returns void http202 ACCEPTED.
 
+10) It is assumen by the model class than transaction is child from account need to save credit and validate or deny a transaction. The endpoint are contructed following this assumption, but they are listening on different services.
+
 # Main components
 
 #### Controller
 
 • AccountController
 
-#### Service
+#### Services
+
+• AccountService , exposed for debug (is not mandatory):
+
+    http://test:1234@localhost:8080/api/account/{account_iban}
 
 • AccountTransactionService serve the endpoints:
 
@@ -46,15 +52,11 @@ The codes to switch for MongoDB are commented.
     http://test:1234@localhost:8080/api/account/transaction/status
 
 
-• AccountService , is not exposed (for debug):
-
-    http://test:1234@localhost:8080/api/account/{account_iban}
-
 #### Test
 
 • SimpleBankApplicationTestsIT
 
-#### Repository
+#### Repositories
 
 • AccountRepository
 
@@ -62,9 +64,9 @@ The codes to switch for MongoDB are commented.
 
 #### Model
 
-• AccountTransaction and request/response DTOs
-
 • Account and request/response DTOs
+
+• AccountTransaction and request/response DTOs
 
 #### Handlers and Exception
 
@@ -135,7 +137,6 @@ Set them to the default values:
 The file Bank.postman_collection.json include the main commands and paths to the api.
 
 # Currently working on (main pendings ordered..)
-
 
 • (done) tests for field fee set to null on transactions (shall avoid null pointer exceptions managing nulls and maths.)
 
