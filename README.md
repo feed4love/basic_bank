@@ -139,7 +139,7 @@ A example list of avaibable calls to end points are:
 
 • (done) tests for field fee set to null on transactions (shall avoid null pointer exceptions managing nulls and maths.)
 
-• test transactional blocks between services.
+• (done) transactional propagation on services.
 
 • JPA annotation to link entities Account and Transaction.
 
