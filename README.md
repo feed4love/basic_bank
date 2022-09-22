@@ -38,7 +38,7 @@ The codes to switch for MongoDB are commented.
 
 #### Services
 
-• AccountService , exposed for debug serve the endpoint (not mandatory 4debug):
+• AccountService , exposed for debug serve the endpoint (not mandatory):
 
     http://test:1234@localhost:8080/api/account/{account_iban}
     Payload
