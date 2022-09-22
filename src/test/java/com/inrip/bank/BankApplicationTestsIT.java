@@ -252,38 +252,6 @@ class BankApplicationTestsIT {
 
     }
 
-        /*
-     * Test Case - test_add_transaction_with_empty_field_fee
-     * Expected: OK
-     * Description:
-     *      create a transaction with no fee, the system assign and stores 0
-     */
-    @Test
-    public void test_add_transaction_no_reference_and_is_generated() throws Exception {
-        String url = RequestMappings.REQUEST_CONTEXT + RequestMappings.ADD_TRANSACTION;
-
-        TransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
-        transactionRequestDTO.setReference(null);
-        Transaction transactionResponse = TransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
-        
-        Account account = new Account();
-        account.setAccountiban(transactionRequestDTO.getAccount_iban());
-        account.setCredit(Double.valueOf(10000000.1632));
-
-        when(mTransactionRepository.save(any())).thenReturn(transactionResponse);
-        when(mAccountRepository.findOneByAccountiban(any())).thenReturn(Optional.of(account));
-        when(mAccountRepository.save(any())).thenReturn(account);
-
-        this.mMockMvc.perform(post(url)
-                     .with(httpBasic("test", "1234"))
-                     .contentType(MediaType.APPLICATION_JSON)                      
-                     .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
-                     .andExpect(status().isOk())
-                     .andExpect(jsonPath("$.reference").isNotEmpty())
-                     ;
-
-    }
-
     /*
      * Extra: find by reference, test DISABLE for debug purpouses
      */

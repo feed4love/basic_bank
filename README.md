@@ -24,7 +24,7 @@ The codes to switch for MongoDB are commented.
 
 8) When the optional fee is received to null, the service shall manage the null without alter the entity data (e.g. setting 0 to the field fee when isnt provided)
 
-# Main App components
+# Main components
 
 #### Controller
 
@@ -132,6 +132,20 @@ A example list of avaibable calls to end points are:
     Disable by debug:
     http://test:1234@localhost:8080/api/transaction/all
     http://test:1234@localhost:8080/api/transaction/reference/REF-TEST?descending_amount=false
+
+
+# Currently working on (main pendings..)
+
+
+• tests for field fee set to null on transactions (shall avoid null pointer exception managing nulls on db and maths)
+
+• JWT Security layer
+
+• transactions between services
+
+• apply pattern for pojo factory
+
+
 
 # Author
 2022 Enrique AC

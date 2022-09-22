@@ -29,10 +29,11 @@ public class TransactionLogicalValidator {
 		Assert.notNull(request, "Transaction Request cannot be null");		
 		Assert.hasText(request.getAccount_iban(), "Account IBAN is required");
 		Assert.notNull(request.getAmount(), "Amount is required");
-		//Assert.isTrue(request.getAmount().doubleValue()>=0, "Positive amount is required");
 
+		//kiskilla: eliminar y mantener el null en la db
 		if(request.getFee()==null)
 			request.setFee(Double.valueOf(0));
+
 	}
 
 }
