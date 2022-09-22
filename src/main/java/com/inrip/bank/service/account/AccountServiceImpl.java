@@ -3,6 +3,8 @@ package com.inrip.bank.service.account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -30,8 +32,8 @@ public class AccountServiceImpl  implements AccountService {
 	private boolean PARAM_ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS;
 
     @Override
-    @Transactional
-    public AccountResponseDTO updateCreditByTransactionRequest(TransactionRequestDTO transactionRequestDTO) {
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+    public AccountResponseDTO updateCreditByTransactionRequest(TransactionRequestDTO transactionRequestDTO) throws Exception {
         AccountResponseDTO responseAccount = null;
         Optional<Account> optAccount = null;    
 
@@ -66,7 +68,7 @@ public class AccountServiceImpl  implements AccountService {
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Optional<AccountResponseDTO> addAccount(AccountRequestDTO accountRequestDTO) {
         mLogger.info("Init - addAccount");
         Assert.hasText(accountRequestDTO.getAccountiban(), "cant create an account without the account_iban");
@@ -82,7 +84,7 @@ public class AccountServiceImpl  implements AccountService {
 
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
     public Optional<AccountResponseDTO> findAccountByAccountIban(AccountRequestDTO accountRequestDTO) {
         Optional<Account> optAccount = null;        
         AccountResponseDTO accountResponseDTO = null;

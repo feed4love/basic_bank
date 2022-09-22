@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.web.client.HttpServerErrorException;
 
 import com.inrip.bank.dto.AccountRequestDTO;
@@ -59,7 +61,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 * List all transactions
 	 */
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<TransactionResponseDTO> getAllTransactions() {
 		mLogger.info("Init - list all transactions");
 		TransactionResponseDTO responseDTO;
@@ -74,7 +76,7 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public TransactionResponseDTO addTransaction(TransactionRequestDTO transactionRequestDTO) throws Exception  {		
 		TransactionResponseDTO responseDTO = null;
 		Transaction            transaction = null;
@@ -140,10 +142,9 @@ public class TransactionServiceImpl implements TransactionService {
 
 			//save to bbdd
 			String UUID = Utils.GenerateUUID();
-			transaction.setUid(UUID);			
-			transaction = (Transaction) mTransactionRepository.save(transaction);
+			transaction.setUid(UUID);
 
-			//patch test cases, if mockito mocks save method, reasign the uuid and the reference generated
+			transaction = (Transaction) mTransactionRepository.save(transaction);
 			transaction.setUid(UUID);
 			if(generatedReference!=null)
 				transaction.setReference(generatedReference);
@@ -167,7 +168,7 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<TransactionResponseDTO> getTransactionByAccountIban(String strAccountIban, boolean descending_amount) {		
 		mLogger.info("Init - getTransactionByAccountIban");
 		List<TransactionResponseDTO> listTransactionsResponseDTO;
@@ -184,7 +185,7 @@ public class TransactionServiceImpl implements TransactionService {
 		return listTransactionsResponseDTO;
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<TransactionResponseDTO> getAllTransactionByReference(String strReference, boolean descending_amount) {
 		List<Transaction> listTransactions = null;
 		List<TransactionResponseDTO> listTransactionsResponseDTO;
@@ -199,7 +200,7 @@ public class TransactionServiceImpl implements TransactionService {
 		return listTransactionsResponseDTO;
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public Optional<Transaction> getTransactionByReference(String strReference){
 		Optional<Transaction> optTransaction = null;
 		optTransaction = mTransactionRepository.findByReference(strReference);

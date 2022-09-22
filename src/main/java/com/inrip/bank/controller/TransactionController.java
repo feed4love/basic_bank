@@ -2,6 +2,7 @@ package com.inrip.bank.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,10 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.inrip.bank.common.RequestMappings;
 import com.inrip.bank.controller.exceptions.HttpAcceptException;
 import com.inrip.bank.controller.handlers.HTTPResponseHandler;
+import com.inrip.bank.dto.AccountRequestDTO;
+import com.inrip.bank.dto.AccountResponseDTO;
 import com.inrip.bank.dto.StatusRequestDTO;
 import com.inrip.bank.dto.StatusResponseDTO;
 import com.inrip.bank.dto.TransactionRequestDTO;
 import com.inrip.bank.dto.TransactionResponseDTO;
+import com.inrip.bank.service.account.AccountService;
 import com.inrip.bank.service.transaction.TransactionService;
 import com.inrip.bank.service.transactionStatus.TransactionStatusService;
 
@@ -46,6 +50,9 @@ public class TransactionController extends HTTPResponseHandler {
 
 	@Autowired
 	private TransactionStatusService mTransactionStatusService;
+
+	@Autowired
+	private AccountService mAccountService;
 
 	@Value("${bank.basic.message.alive}")
 	private String PARAM_REST_RUNNING;
@@ -83,8 +90,7 @@ public class TransactionController extends HTTPResponseHandler {
 	 */
 	@RequestMapping(value = RequestMappings.SEARCH_BY_ACCOUNT_IBAN, method = RequestMethod.GET)
 	public @ResponseBody List<TransactionResponseDTO> searchTransactionByAccountIban(
-							@PathVariable    			
-							String account_iban,
+							@PathVariable String account_iban,
 							@RequestParam(name="descending_amount", required=false, defaultValue="false") boolean descending_amount
 							) {		
 		mLogger.info("Init - searchTransactionByAccountIban descending<" + descending_amount + ">");
@@ -137,6 +143,30 @@ public class TransactionController extends HTTPResponseHandler {
 		resp = mTransactionStatusService.getTransactionStatus(statusRequestDTO);	
 		
 		return resp;
+	}
+
+	/**
+	 *  Obtain an Account 
+	 *  Filter by account_iban
+	 */
+	@RequestMapping(value = RequestMappings.SEARCH_ACCOUNT_BY_IBAN, 
+	                method = RequestMethod.GET, 
+					produces="application/json")
+	@ResponseBody
+	public AccountResponseDTO getAccountByAccountIban(@PathVariable String account_iban) {	
+		AccountResponseDTO accountResponseDTO = null;	
+		Optional<AccountResponseDTO> optAccountResponseDTO = null;	
+
+		mLogger.info("Init - getAccountByAccountIban <" + account_iban + ">");
+		
+		AccountRequestDTO accountRequestDTO = new AccountRequestDTO();
+		accountRequestDTO.setAccountiban(account_iban);
+
+		optAccountResponseDTO = mAccountService.findAccountByAccountIban(accountRequestDTO);
+		if(optAccountResponseDTO.isPresent())
+			accountResponseDTO = optAccountResponseDTO.get();
+		
+		return accountResponseDTO;
 	}
 
 
