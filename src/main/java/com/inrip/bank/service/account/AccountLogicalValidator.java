@@ -33,32 +33,36 @@ public class AccountLogicalValidator {
 		Assert.hasText(request.getAccountiban(), "Account IBAN is required");				
 	}
 
-	public static void validateToAcceptTransaction(Account account, TransactionRequestDTO transactionRequestDTO, boolean ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
+	public static Double validateToAcceptTransaction(Account account, TransactionRequestDTO transactionRequestDTO, boolean ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
 		Double dTotal = Double.valueOf(0);
-		if(ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
-
-			dTotal = ApplyCreditRule(Double.valueOf(transactionRequestDTO.getAmount()).doubleValue(),
-			                         Double.valueOf(transactionRequestDTO.getFee()==null?0:transactionRequestDTO.getFee()).doubleValue(),
-									 account.getCredit().doubleValue());
-
-			if(dTotal.doubleValue() < 0d) {
-				throw new BadRequestException("ACCOUNT_NOMONEY", "A transaction that leaves the total account balance bellow 0 is not allowed");
-			}
-		}
-	}
-
-	public static Double obtainCreditAfterTransaction(Account account, TransactionRequestDTO transactionRequestDTO, boolean ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
-		Double dTotal = Double.valueOf(0);
-		if(ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
-			dTotal = ApplyCreditRule(Double.valueOf(transactionRequestDTO.getAmount()).doubleValue(),
-			                         Double.valueOf(transactionRequestDTO.getFee()==null?0:transactionRequestDTO.getFee()).doubleValue(),
-									 account.getCredit().doubleValue());
+		dTotal = ApplyCreditRule(transactionRequestDTO.getAmount(),
+								 transactionRequestDTO.getFee(),
+								 account.getCredit(), ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS);
+		if(dTotal.doubleValue() < 0d) {
+			throw new BadRequestException("ACCOUNT_NOMONEY", "A transaction that leaves the total account balance bellow 0 is not allowed");
 		}
 		return dTotal;
-	}	
+	}
 
-	private static Double ApplyCreditRule(double amount, double fee, double credit) {
-		double result  = (credit - fee) + amount;
+	/*public static Double obtainCreditAfterTransaction(Account account, TransactionRequestDTO transactionRequestDTO, boolean ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
+		Double dTotal = Double.valueOf(0);
+		dTotal = ApplyCreditRule(transactionRequestDTO.getAmount(),
+								 transactionRequestDTO.getFee(),
+								 account.getCredit(), ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS);
+		return dTotal;
+	}	*/
+
+	private static Double ApplyCreditRule(Double dAmount, 
+									      Double dFee, 
+										  Double dCredit, 
+										  boolean ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
+		double amount = 0, fee = 0, credit = 0, result = 0;
+		if(ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS) {
+			amount = (dAmount==null?0:dAmount.doubleValue());
+			fee    = (dFee==null?0:dFee.doubleValue());
+			credit = (dCredit==null?0:dCredit.doubleValue());
+		}
+		result  = (credit - fee) + amount;
 		return Double.valueOf(result);
 	}
 

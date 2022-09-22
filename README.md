@@ -139,13 +139,15 @@ A example list of avaibable calls to end points are:
 
 • (done) tests for field fee set to null on transactions (shall avoid null pointer exceptions managing nulls and maths.)
 
-• dbm transactional blocks between services.
+• test transactional blocks between services.
 
 • JPA annotation to link entities Account and Transaction.
 
-• apply Builder pattern for pojos factory.
+• refactor Transaction class name and methods --QOL -> Transaction to AccountTransaction<=Account
 
-• JWT Security layer.
+• apply Builder pattern for a pojos factory.
+
+• JWT Security layer instead of Basic.
 
 # Author
 2022, Enrique AC

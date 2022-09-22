@@ -137,6 +137,8 @@ public class TransactionServiceImpl implements TransactionService {
 					throw new BadRequestException("INVALID_REFERENCE", "The provided Field<reference> is not valid");
 				}
 			}
+
+			//save to bbdd
 			String UUID = Utils.GenerateUUID();
 			transaction.setUid(UUID);			
 			transaction = (Transaction) mTransactionRepository.save(transaction);
@@ -145,7 +147,6 @@ public class TransactionServiceImpl implements TransactionService {
 			transaction.setUid(UUID);
 			if(generatedReference!=null)
 				transaction.setReference(generatedReference);
-			
 
 		}catch(BadRequestException br) {
 			mLogger.info("Error found : " + br.getMessage().toString());			
@@ -193,15 +194,18 @@ public class TransactionServiceImpl implements TransactionService {
 			direction = Direction.DESC;
 		listTransactions = mTransactionRepository.findByReference(strReference, Sort.by(direction, "id"));
 
-		/*if(descending_amount)
-			listTransactions= findByReferenceDESC(strReference);
-		else
-			listTransactions= findByReferenceASC(strReference);*/
-		
 		listTransactionsResponseDTO = TransactionTransformer.listTransactionToResponseDTO(listTransactions);
 		
 		return listTransactionsResponseDTO;
 	}
+
+	@Transactional(readOnly = true)
+	public Optional<Transaction> getTransactionByReference(String strReference){
+		Optional<Transaction> optTransaction = null;
+		optTransaction = mTransactionRepository.findByReference(strReference);
+		return optTransaction;
+	}
+
 
 	/*public List<Transaction> findByReferenceASC(String strReference) {
 		List<Transaction> listTransactions = null;
@@ -214,13 +218,6 @@ public class TransactionServiceImpl implements TransactionService {
 		listTransactions = mTransactionRepository.findByReference(strReference, Sort.by(Direction.DESC, "id"));
 		return listTransactions;
 	}*/
-
-	@Transactional(readOnly = true)
-	public Optional<Transaction> getTransactionByReference(String strReference){
-		Optional<Transaction> optTransaction = null;
-		optTransaction = mTransactionRepository.findByReference(strReference);
-		return optTransaction;
-	}
 
 
 }

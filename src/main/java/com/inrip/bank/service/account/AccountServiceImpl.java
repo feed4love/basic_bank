@@ -39,31 +39,28 @@ public class AccountServiceImpl  implements AccountService {
         Assert.notNull(transactionRequestDTO.getAccount_iban(), "account_iban is mandatory for the operation");
         
         /*
-         * obtenemos la cuenta, si no se encuentra se lanza excepcion
+         * get account or exception
          */
         optAccount = mAccountRepository.findOneByAccountiban(transactionRequestDTO.getAccount_iban());
         Account account = optAccount.get();
-        Assert.notNull(account, "No esxiste cuenta asociada o la peticion se esta realizando fuera del contexto de una transaccion");
+        Assert.notNull(account, "The request is not valid or it is out of scope");
 
         /*
-         * si hay cuenta , pasamos los filtros para validar la trsaccion, idenpendientemente de las comprobacions de otros servicios
-         * obtenemos el resultado que es el credito final de la cuenta descontando la transaccion
+         * check filter validator before continue to save credit, or BadRequestException
          */
-        AccountLogicalValidator.validateToAcceptTransaction(account, transactionRequestDTO, 
-                                        PARAM_ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS);
+        Double dCreditAfterTransaction = AccountLogicalValidator.validateToAcceptTransaction(
+                                            account, 
+                                            transactionRequestDTO, 
+                                            PARAM_ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS);
 
         /*
-         * salvamos el nuevo credito y retornamos
+         * save credit
          */
-        Double dCreditAfterTransaction = AccountLogicalValidator.obtainCreditAfterTransaction(account, 
-                                        transactionRequestDTO, PARAM_ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS);
-
         account.setCredit(dCreditAfterTransaction);        
         account = (Account) mAccountRepository.save(account);
 
-        //preparamos al salida
+        //return
         responseAccount = AccountTransformer.accountToResponseDTO(account);
-
         mLogger.info("End - updateCreditByTransactionRequest");
         return responseAccount;
     }
