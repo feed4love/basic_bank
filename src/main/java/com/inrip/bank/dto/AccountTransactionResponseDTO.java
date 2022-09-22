@@ -93,5 +93,11 @@ public class AccountTransactionResponseDTO {
 		return description;
 	}
 
+	@Override
+	public String toString() {
+		return "AccountTransactionResponseDTO [account_iban=" + account_iban + ", amount=" + amount + ", date=" + date
+				+ ", description=" + description + ", fee=" + fee + ", reference=" + reference + "]";
+	}
+
 
 }

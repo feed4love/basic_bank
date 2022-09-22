@@ -27,30 +27,6 @@ public class AccountTransactionStatusResponseDTO {
 	private final Double fee;
 	private final String debug;
 
-
-/*
- * 
-	public AccountTransactionStatusResponseDTO(String reference, String status) {
-		this.reference = reference;
-		this.status = status;
-	}
-
-	public AccountTransactionStatusResponseDTO(String reference, String status, Double amount) {
-		this.reference = reference;
-		this.status = status;
-		this.amount = amount;
-	}
-
-	public AccountTransactionStatusResponseDTO(String reference, String status, Double amount, Double fee) {
-		this.reference = reference;
-		this.status = status;
-		this.amount = amount;
-		this.fee = fee;
-	}
-	
- * 
- */
-	
 	public AccountTransactionStatusResponseDTO(Builder builder) {		
         this.reference = builder.reference;
 		this.status    = builder.status;
@@ -58,7 +34,6 @@ public class AccountTransactionStatusResponseDTO {
 		this.fee       = builder.fee;
 		this.debug     = builder.debug;
 	}
-
 
 	public static class Builder {
 		private String reference;
@@ -117,5 +92,12 @@ public class AccountTransactionStatusResponseDTO {
 	public String getDebug() {
 		return debug;
 	}
+
+	@Override
+	public String toString() {
+		return "AccountTransactionStatusResponseDTO [amount=" + amount + ", debug=" + debug + ", fee=" + fee
+				+ ", reference=" + reference + ", status=" + status + "]";
+	}
+
 
 }
