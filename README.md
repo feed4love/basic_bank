@@ -216,10 +216,6 @@ File application.properties has the next list of configurable parameters:
 
 • com.inrip.bank.param.alive_message is the welcome message in the API , accesible at the root path of the servlet context
 
-• bank.basic.auth.username is the username expected in the request headers Basic Auth
-
-• bank.basic.auth.password is the password expected in the request headers Basic Auth
-
 • com.inrip.bank.param.uncomputable_status_transactions_returns_unknown if set to true, then the service will response status UNKNOWN for trasactions without the field date setted. Set it by default to FALSE, then the service will up a HttpAcceptException, then the servlet returns Http 202 ACCEPTED. Such of that, is better the assumption to response HTTP202 ACCEPTED. By default is set to FALSE.
 
 • com.inrip.bank.param.simple_dates_comparision if set to true the service will truncate dates for comparision and according the assumption about the requeriment TODAY. If set to false, then the comparision between dates will complete. Set by default to TRUE.
