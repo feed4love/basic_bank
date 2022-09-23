@@ -3,6 +3,8 @@ package com.inrip.bank.service.accountTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.inrip.bank.dto.AccountTransactionRequestDTO;
 import com.inrip.bank.dto.AccountTransactionResponseDTO;
 import com.inrip.bank.model.AccountTransaction;
@@ -17,6 +19,12 @@ public class AccountTransactionTransformer {
 	public static List<AccountTransactionResponseDTO> listTransactionToResponseDTO(List<AccountTransaction> listTransactions) {
 		List<AccountTransactionResponseDTO> listTransactionResponseDTO = new ArrayList<AccountTransactionResponseDTO>();		
 		listTransactions.forEach(item -> listTransactionResponseDTO.add(AccountTransactionTransformer.transactionToResponseDto(item)));
+		return listTransactionResponseDTO;
+	}
+
+	public static List<AccountTransactionResponseDTO> pagedTransactionToResponseDTO(Page<AccountTransaction> pageTransactions) {
+		List<AccountTransactionResponseDTO> listTransactionResponseDTO = new ArrayList<AccountTransactionResponseDTO>();		
+		pageTransactions.forEach(item -> listTransactionResponseDTO.add(AccountTransactionTransformer.transactionToResponseDto(item)));
 		return listTransactionResponseDTO;
 	}
 

@@ -90,7 +90,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/account/transaction/iban/1?descending_amount=false",
+					"raw": "http://localhost:8080/api/account/transaction/iban/1?descending_amount=true&page=0&limit=2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -106,7 +106,15 @@
 					"query": [
 						{
 							"key": "descending_amount",
-							"value": "false"
+							"value": "true"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "2"
 						}
 					]
 				}

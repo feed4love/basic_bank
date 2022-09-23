@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpStatusCodeException;
 
 import com.inrip.bank.common.SimpleBankConstants;
+import com.inrip.bank.controller.exceptions.ResourceNotFoundException;
 import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
 import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
 import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
@@ -279,6 +280,26 @@ public abstract class SimpleBankHTTPResponseHandler {
 
 	}
 
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public void handleResourceNotFoundException(ResourceNotFoundException ex, HttpServletRequest request,
+										  HttpServletResponse response) {
+
+		String code = SimpleBankConstants.HTTP_STATUS_BAD_REQUEST_STATUS;
+		String message = ex.getMessage();
+		int httpStatus = HttpStatus.BAD_REQUEST.value();
+
+		mLogger.debug(message, ex);
+		
+		String resourceName = ex.getResourceName();
+        String fieldName = ex.getFieldName();
+        String fieldValue = ex.getFieldValue()!=null?String.valueOf(ex.getFieldValue()):"";
+		String txt_ext = String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue);
+
+		constructHeaders(response, code, message, httpStatus, txt_ext, txt_ext);
+
+	}
+
+	
 	
 
 }

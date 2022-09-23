@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,7 @@ import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
 import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
 import com.inrip.bank.repository.AccountTransactionRepository;
 import com.inrip.bank.service.account.AccountService;
-
-
+import com.inrip.bank.controller.exceptions.ResourceNotFoundException;
 /**
  * @author Enrique AC
  * 
@@ -175,17 +176,25 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<AccountTransactionResponseDTO> getTransactionByAccountIban(String strAccountIban, boolean descending_amount) {		
+	public List<AccountTransactionResponseDTO> getTransactionByAccountIban(String strAccountIban, int page, int size, boolean descending_amount) {		
 		mLogger.info("Init - getTransactionByAccountIban");
 		List<AccountTransactionResponseDTO> listTransactionsResponseDTO;
-		List<AccountTransaction>            listTransaction = null;
-		
+		//List<AccountTransaction>            listTransaction = null;
+
 		Direction direction = Direction.ASC;
 		if (descending_amount)
 			direction = Direction.DESC;
 
-		listTransaction             = mTransactionRepository.findAllByAccountiban(strAccountIban, Sort.by(direction, "amount"));
-		listTransactionsResponseDTO = AccountTransactionTransformer.listTransactionToResponseDTO(listTransaction);
+		//listTransaction             = mTransactionRepository.findAllByAccountiban(strAccountIban, Sort.by(direction, "amount"));
+		Page<AccountTransaction> pageAccountTransaction = mTransactionRepository.findAllByAccountiban(
+									strAccountIban, 
+									PageRequest.of(page, size, Sort.by(direction, "amount")));
+
+		if (page > pageAccountTransaction.getTotalPages())
+				throw new ResourceNotFoundException("findAllByAccountiban", "Page", page);
+
+		//listTransactionsResponseDTO = AccountTransactionTransformer.listTransactionToResponseDTO(listTransaction);
+		listTransactionsResponseDTO = AccountTransactionTransformer.pagedTransactionToResponseDTO(pageAccountTransaction);
 
 		mLogger.info("End - Successfully returned <" + listTransactionsResponseDTO.size() + "> transactions by account_iban");
 		return listTransactionsResponseDTO;

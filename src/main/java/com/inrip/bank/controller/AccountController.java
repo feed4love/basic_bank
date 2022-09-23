@@ -67,10 +67,12 @@ public class AccountController extends SimpleBankHTTPResponseHandler {
 	@RequestMapping(value = SimpleBankRequestMappings.SEARCH_BY_ACCOUNT_IBAN, method = RequestMethod.GET)
 	public @ResponseBody List<AccountTransactionResponseDTO> searchTransactionByAccountIban(
 							@PathVariable String account_iban,
+							@RequestParam(value = "page", defaultValue = "0") int page,
+							@RequestParam(value = "limit", defaultValue = "5") int size,
 							@RequestParam(name="descending_amount", required=false, defaultValue="false") boolean descending_amount
 							) {		
 		mLogger.info("Init - searchTransactionByAccountIban descending<" + descending_amount + ">");
-		return mTransactionService.getTransactionByAccountIban(account_iban, descending_amount);
+		return mTransactionService.getTransactionByAccountIban(account_iban, page, size, descending_amount);
 	}
 
 
