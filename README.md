@@ -118,7 +118,7 @@ The codes to switch for MongoDB are commented.
         "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MjAyNTIsImV4cCI6MTY2MzkzODI1Mn0.y5dF9pN29D1M3t8zr3-VuohZRVz3LU8E4FqNV2mnfBCUX4KsJSKMvmIf7YgR1hWwFww-aqKIBLoTGsaOkrW_cw"
     }    
 
-• DebugController will startup and expose the endpoints according the value in the debug the parameter.
+• DebugController will startup and expose the endpoints according the value of com.inrip.bank.param.debug.enabled.
 
     http://localhost:8080/api/debug/account/transaction/all
     Payload:
