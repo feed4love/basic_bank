@@ -160,6 +160,9 @@
 		{
 			"name": "Create User",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -190,6 +193,9 @@
 		{
 			"name": "Login User",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -221,14 +227,7 @@
 			"name": "All transactions (debug)",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MTcyNDAsImV4cCI6MTY2MzkzNTI0MH0.JSWHyepF888Y0dbKXmhVIrzSGRNHzyuQjsyZoYazrD5b9lM48O7ynLK3hVjzYlHd9SacB0_drw4KHQwzwmkMUA",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -254,14 +253,7 @@
 			"name": "Search Account by IBAN (debug)",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MTcyNDAsImV4cCI6MTY2MzkzNTI0MH0.JSWHyepF888Y0dbKXmhVIrzSGRNHzyuQjsyZoYazrD5b9lM48O7ynLK3hVjzYlHd9SacB0_drw4KHQwzwmkMUA",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -285,6 +277,9 @@
 		{
 			"name": "Search Transaction By Reference (debug)",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
