@@ -72,7 +72,7 @@ The codes to switch for MongoDB are commented.
         }
     ]
 
-    http://test:1234@localhost:8080/api/account/transaction/status
+    http://localhost:8080/api/account/transaction/status
     Payload request:
     {
         "reference": "1",
@@ -120,7 +120,7 @@ The codes to switch for MongoDB are commented.
 
 • DebugController will startup and expose the endpoints according the value in the debug the parameter.
 
-    http://test:1234@localhost:8080/api/debug/account/transaction/all
+    http://localhost:8080/api/debug/account/transaction/all
     Payload:
     [
         {
@@ -139,7 +139,7 @@ The codes to switch for MongoDB are commented.
         }
     ]
 
-    http://test:1234@localhost:8080/api/account/{account_iban}
+    http://localhost:8080/api/debug/account/{account_iban}
     Payload:
     {
         "uid": "1a215417-00e1-4860-b774-e606c0343bc0",
@@ -147,7 +147,8 @@ The codes to switch for MongoDB are commented.
         "credit": 1.0
     }    
 
-    http://test:1234@localhost:8080/api/account/{account_iban}
+    http://localhost:8080/api/debug/account/transaction/reference/{reference}
+    http://localhost:8080/api/debug/account/transaction/reference/{reference}?descending_amount=false
     Payload
     {
         "uid": "d2d6180c-55bb-48b4-9f28-13fe6d7625f8",
