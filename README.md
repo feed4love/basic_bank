@@ -241,23 +241,20 @@ File application.properties has the next list of configurable parameters:
 
 Default configuration:
 
-server.port=8080
-server.servlet.context-path=/api
+    server.port=8080
+    server.servlet.context-path=/api
 
-com.inrip.bank.param.alive_message=SimpleBank REST API is running
-com.inrip.bank.param.uncomputable_status_transactions_returns_unknown=false
-com.inrip.bank.param.simple_dates_comparision=true
-com.inrip.bank.param.create_account_iban_if_not_exists=true
-com.inrip.bank.param.validate_credit_before_transacion=true
-com.inrip.bank.param.debug.enabled=false
+    com.inrip.bank.param.alive_message=SimpleBank REST API is running
+    com.inrip.bank.param.uncomputable_status_transactions_returns_unknown=false
+    com.inrip.bank.param.simple_dates_comparision=true
+    com.inrip.bank.param.create_account_iban_if_not_exists=true
+    com.inrip.bank.param.validate_credit_before_transacion=true
+    com.inrip.bank.param.debug.enabled=false
 
-com.inrip.bank.param.secutity.signing_key=your_key
-
-com.inrip.bank.param.secutity.token_prefix=Bearer 
-
-com.inrip.bank.param.secutity.header_string=Authorization
-
-com.inrip.bank.param.secutity.max_items_size_protection=20
+    com.inrip.bank.param.secutity.signing_key=your_key
+    com.inrip.bank.param.secutity.token_prefix=Bearer 
+    com.inrip.bank.param.secutity.header_string=Authorization
+    com.inrip.bank.param.secutity.max_items_size_protection=20
 
 
 # Test cases
