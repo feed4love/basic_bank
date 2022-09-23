@@ -215,7 +215,7 @@ The file Bank.postman_collection.json include the main commands and paths to the
 
 • JWT Security layer instead of Basic.
 
-• pagination on methods on find and findAll (debug)
+• pagination on methods find and findAll (debug)
 
 • debugging instances into a debug apirest controller (debug, configured by a parameter on startup)
 
