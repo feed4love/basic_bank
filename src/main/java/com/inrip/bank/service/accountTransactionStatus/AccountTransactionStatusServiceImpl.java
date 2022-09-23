@@ -14,6 +14,7 @@ import org.springframework.web.client.HttpServerErrorException.InternalServerErr
 import org.springframework.web.server.ResponseStatusException;
 
 import com.inrip.bank.common.SimpleBankUtils;
+import com.inrip.bank.controller.exceptions.ResourceNotFoundException;
 import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
 import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
 import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
@@ -114,7 +115,7 @@ public class AccountTransactionStatusServiceImpl implements AccountTransactionSt
 		if(statusResponseDTO!=null) return statusResponseDTO;
 
 		if(!PARAM_ACCEPT_UNKNOWN_TRANSACTION_STATUS){
-			throw new SimpleBankHttpAcceptException("NO_DATE_YET", "Until can't compute null dates");
+			throw new ResourceNotFoundException("DATE_EMPTY", "date", "empty");
 		}
 		
 		statusResponseDTO = AccountTransactionStatusResponseDTO.Builder.newInstance()
