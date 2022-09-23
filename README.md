@@ -32,6 +32,9 @@ The codes to switch for MongoDB are commented.
 
 12) Basic security has been replaced by JWT security (HS512.) The endpoints are /api/user/register and /api/auth/login. The context paths /api/debug , /api/user and /api/auth are not filtering by JWT. The database is H2, so each time the server start is need to register a new user.
 
+13) All endpoints are not in the requirements or are needs based on asumptions are located at debug controller that will up accoring the value of com.inrip.bank.param.debug.enabled. Also some service will include debug traces on json responses.
+
+
 # Main components
 
 #### Controller
