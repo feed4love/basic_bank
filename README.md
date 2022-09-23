@@ -239,7 +239,7 @@ File application.properties has the next list of configurable parameters:
 
 • com.inrip.bank.param.secutity.max_items_protection is the maximun size of items returned by the endpoints. 
 
-Default configuration:
+Default recommended configuration:
 
     server.port=8080
     server.servlet.context-path=/api
