@@ -102,7 +102,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 				mLogger.debug("Account exists <" + account.get().toString() + ">");
 			}else
 			if(PARAM_ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS){
-				mLogger.debug("Account do nto exists , but created");
+				mLogger.debug("Account dont exists , but created");
 
 				AccountRequestDTO newAccountRequestDTO = AccountRequestDTO.Builder.newInstance()
 														.setAccountiban(transactionRequestDTO.getAccount_iban())
@@ -113,7 +113,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 				if(tmpAccount.isPresent())
 					mAccount = tmpAccount.get();
 				else
-					throw new SimpleBankBadRequestException("ACCOUNT_OUTOFSYNCH", "Need synchronize Accounts");
+					throw new SimpleBankNotFoundException("OUT_OF_SYNCH", "Need to synchronize the accounts");
 			}
 
 			/*

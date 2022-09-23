@@ -85,7 +85,8 @@ public class AccountController extends SimpleBankHTTPResponseHandler {
 	 * 
 	 */
 	@RequestMapping(value = SimpleBankRequestMappings.ADD_TRANSACTION, 
-					method = RequestMethod.PUT)
+					method = RequestMethod.PUT,
+					produces="application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody AccountTransactionResponseDTO addTransaction(@RequestBody AccountTransactionRequestDTO requestDTO) throws Exception {		
 		mLogger.info("Init - addTransaction <" + requestDTO.toString() + ">");
