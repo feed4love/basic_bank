@@ -9,11 +9,11 @@ The integration test of the rest controller are written with JUnit5 and Mockito.
 
 1) Optional dates and nulls at the transactions could cause indeterminated states in the Status according the requirements. It is asummed at this cases the service can return a new status UNKNOWN, or response empty Http204 NO CONTENT.
 
-2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Set to true the parameter TRANSACTION_STATUS_TRUNCATE_DATES means the service will trucate dates when compares itself, removing hours minutes and seconds.
+2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Set to true the parameter com.inrip.bank.param.simple_dates_comparision means the service will trucate dates when compares itself, removing hours minutes and seconds.
 
-3) Entity account keep data to match requeriments about account and credit.
+3) Entity account keep data to match requeriments about account and credit and Entity transaction keep data to match requeriments about transaction and status logic.
 
-4) Entity transaction keep data to match requeriments about transaction and status logic.
+4) Entity User is need to save the user credentials for JWT authentification.
 
 5) The database is working currently is H2, but initial develop has been started with Atlas, the MongoDb Cluster for nono E/R database. But the cluster of Nono requires to configure each client Ip address to accept connections, so the most portable option is to use H2.
 The codes to switch for MongoDB are commented.
