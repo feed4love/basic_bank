@@ -26,7 +26,7 @@ public class JwtTokenUtil implements Serializable {
 	@Value("${com.inrip.bank.param.secutity.signing_key}")
 	private String SIGNING_KEY;
     
-	public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60*60;
+	public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 60;
     
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -72,7 +72,7 @@ public class JwtTokenUtil implements Serializable {
                 .setClaims(claims)
                 .setIssuer("admin")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS))
                 .signWith(SignatureAlgorithm.HS512, SIGNING_KEY)
                 .serializeToJsonWith(new GsonSerializer(gson))
                 .compact();

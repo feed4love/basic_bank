@@ -90,7 +90,40 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/account/transaction/iban/1?descending_amount=true&page=0&limit=2",
+					"raw": "http://localhost:8080/api/account/transaction/iban/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"transaction",
+						"iban",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Transaction by Account IBAN extra",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MTcyNDAsImV4cCI6MTY2MzkzNTI0MH0.JSWHyepF888Y0dbKXmhVIrzSGRNHzyuQjsyZoYazrD5b9lM48O7ynLK3hVjzYlHd9SacB0_drw4KHQwzwmkMUA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/account/transaction/iban/1?descending_amount=true&page=0&size=5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -113,8 +146,8 @@
 							"value": "0"
 						},
 						{
-							"key": "limit",
-							"value": "2"
+							"key": "size",
+							"value": "5"
 						}
 					]
 				}

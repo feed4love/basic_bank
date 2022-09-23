@@ -34,7 +34,7 @@ The codes to switch for MongoDB are commented.
 
 13) All the endpoints that are not included or directly referenced in the requirements, or they are needs based on asumptions, are accesible by a unique controller for this tasks, will startup according the value of com.inrip.bank.param.debug.enabled. Also some service are going to include debug traces on json responses if this parameter is set to true.
 
-14) Pagination on find by account_iba. Setting the parameters page and size will return a set of results paged, including the parameter descending_amount to true will return the collection inverse ordered. By default the page is set to 0, size is set to 5 and order is ascending. When the request set a page where aren't data to response, the service returns Http400 BadRequest.
+14) The endpoint to retrieve transactions by account_iban has been protected to return a maximun of 20 items. The user is allowed to especify on the request url the parameters page and the size. By default, the controller establish page to 0 and size to 5. If the request has set a page where isn't data to response, then the service returns Http400 BadRequest.
 
 # Main components
 
@@ -58,7 +58,7 @@ The codes to switch for MongoDB are commented.
 
     http://localhost:8080/api/account/transaction/iban/{account_iban}
     http://localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=true
-    http://localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=true&page=0&limit=2
+    http://localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=true&page=0&size=19
     Payload:
     [
         {

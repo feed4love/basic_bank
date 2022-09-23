@@ -29,6 +29,9 @@ import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
 import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
 import com.inrip.bank.repository.AccountTransactionRepository;
 import com.inrip.bank.service.account.AccountService;
+
+import javassist.tools.web.BadHttpRequest;
+
 import com.inrip.bank.controller.exceptions.ResourceNotFoundException;
 /**
  * @author Enrique AC
@@ -180,6 +183,9 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 		mLogger.info("Init - getTransactionByAccountIban");
 		List<AccountTransactionResponseDTO> listTransactionsResponseDTO;
 		//List<AccountTransaction>            listTransaction = null;
+
+		if(size>20)
+			throw new SimpleBankBadRequestException("SIZE_NOT_ALLOWED","Size up to 20 for a page is not allowed");
 
 		Direction direction = Direction.ASC;
 		if (descending_amount)
