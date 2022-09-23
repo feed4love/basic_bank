@@ -49,13 +49,6 @@ public class AccountTransactionTransformer {
 													.setFee(transaction.getFee())
 													.setDescription(transaction.getDescription())
 													.build();
-		/*AccountTransactionResponseDTO response = new AccountTransactionResponseDTO();						
-		response.setReference(transaction.getReference());
-		response.setAccount_iban(transaction.getAccountiban());
-		response.setDate(transaction.getDate());
-		response.setAmount(transaction.getAmount());
-		response.setFee(transaction.getFee());
-		response.setDescription(transaction.getDescription());*/
 		return response;
 	}
 	
