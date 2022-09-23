@@ -157,7 +157,7 @@ class SimpleBankApplicationTestsIT {
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
-                     .andExpect(status().isOk())
+                     .andExpect(status().isCreated())
                      .andExpect(jsonPath("$.reference").value(transactionRequestDTO.getReference()))
                      .andExpect(jsonPath("$.account_iban").value(transactionRequestDTO.getAccount_iban()))
                      .andExpect(jsonPath("$.amount").value(transactionRequestDTO.getAmount()))
@@ -249,7 +249,7 @@ class SimpleBankApplicationTestsIT {
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
-                     .andExpect(status().isOk())
+                     .andExpect(status().isCreated())
                      .andExpect(jsonPath("$.reference").isNotEmpty())
                      ;
 
@@ -876,7 +876,7 @@ class SimpleBankApplicationTestsIT {
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
-                     .andExpect(status().isOk());
+                     .andExpect(status().isCreated());
 
 
     }
@@ -988,7 +988,7 @@ class SimpleBankApplicationTestsIT {
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
-                     .andExpect(status().isOk());
+                     .andExpect(status().isCreated());
 
     }
 
@@ -1028,7 +1028,7 @@ class SimpleBankApplicationTestsIT {
                      .with(httpBasic("test", "1234"))
                      .contentType(MediaType.APPLICATION_JSON)                      
                      .content(mObjectMapper.writeValueAsString(transactionRequestDTO)))                     
-                     .andExpect(status().isOk());
+                     .andExpect(status().isCreated());
 
     }
 

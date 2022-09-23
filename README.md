@@ -28,7 +28,7 @@ The codes to switch for MongoDB are commented.
 
 10) It is assumen according the model class than a transaction is a child from parent account, assumed that is need to keep record of the credit avaibable for an account_iban , and validate or deny a transaction before it occurs. There is communication between two services -account and transaction-. The endpoints are contructed following this assumptions, and they are listening on his own instance.
 
-11) Without context hard difficult to know the best way to implement the endpoint ADD_TRANSACTION. As far PUT is less restrictive than POST, the first is the one chosen.
+11) Without context hard difficult to know the best way to implement the endpoint ADD_TRANSACTION. As far PUT is less restrictive than POST, the first is the one chosen. The service return Http201 CREATED is succesful.
 
 12) The Basic Security has been replaced by JWT security (HS512.) The endpoints are /api/user/register and /api/auth/login. The context paths /api/debug , /api/user and /api/auth are not filtering by JWT. The database is H2, so each time the server start is need to register a new user.
 
