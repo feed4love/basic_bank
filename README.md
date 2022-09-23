@@ -11,9 +11,9 @@ The integration test of the rest controller are written with JUnit5 and Mockito.
 
 2) Date comparations could cause conflict regarding the requirement described as 'TODAY' as today (take into account seconds or miliseconds dont make sense, rigth?). Set to true the parameter com.inrip.bank.param.simple_dates_comparision means the service will trucate dates when compares itself, removing hours minutes and seconds.
 
-3) Entity account keep data to match requeriments about account and credit and Entity transaction keep data to match requeriments about transaction and status logic.
+3) Entity account keep data to match requeriments about account and credit.
 
-4) Entity User is need to save the user credentials for JWT authentification.
+4) Entity transaction keep data to match requeriments about transaction and status logic.
 
 5) The database is working currently is H2, but initial develop has been started with Atlas, the MongoDb Cluster for nono E/R database. But the cluster of Nono requires to configure each client Ip address to accept connections, so the most portable option is to use H2.
 The codes to switch for MongoDB are commented.
@@ -35,6 +35,8 @@ The codes to switch for MongoDB are commented.
 13) All the endpoints that are not included or directly referenced in the requirements, or they are needs based on asumptions, are accesible by a unique controller for this tasks, will startup according the value of com.inrip.bank.param.debug.enabled. Also several services are going to include debug traces on json responses if this parameter is set to true.
 
 14) The endpoint to retrieve transactions by account_iban has been protected to return a maximun of items defined by com.inrip.bank.param.security.max_items_size_protection. The client side can especify the page and the size of the result list. By default, the controller set the page to 0 and the size to 5. If the request has set a page where isn't data to response or the items requested are more than the configured protection, then the service will returns empty Http204 NO CONTENT.
+
+15) Entity User is need to save the user credentials for JWT.
 
 # Main components
 
