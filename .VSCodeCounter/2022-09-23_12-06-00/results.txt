@@ -1,0 +1,117 @@
+Date : 2022-09-23 12:06:00
+Directory : d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank
+Total : 58 files,  3669 codes, 806 comments, 1052 blanks, all 5527 lines
+
+Languages
++-----------------+------------+------------+------------+------------+------------+
+| language        | files      | code       | comment    | blank      | total      |
++-----------------+------------+------------+------------+------------+------------+
+| Java            |         52 |      2,954 |        730 |        903 |      4,587 |
+| JSON            |          1 |        311 |          0 |          0 |        311 |
+| Markdown        |          1 |        196 |          0 |         90 |        286 |
+| Batch           |          1 |        102 |         51 |         36 |        189 |
+| XML             |          1 |         91 |         19 |         17 |        127 |
+| Java Properties |          2 |         15 |          6 |          6 |         27 |
++-----------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                                | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                                   |         58 |      3,669 |        806 |      1,052 |      5,527 |
+| .mvn                                                                                                                                                |          1 |          2 |          0 |          1 |          3 |
+| .mvn\wrapper                                                                                                                                        |          1 |          2 |          0 |          1 |          3 |
+| src                                                                                                                                                 |         53 |      2,967 |        736 |        908 |      4,611 |
+| src\main                                                                                                                                            |         51 |      2,241 |        475 |        716 |      3,432 |
+| src\main\java                                                                                                                                       |         50 |      2,228 |        469 |        711 |      3,408 |
+| src\main\java\com                                                                                                                                   |         50 |      2,228 |        469 |        711 |      3,408 |
+| src\main\java\com\inrip                                                                                                                             |         50 |      2,228 |        469 |        711 |      3,408 |
+| src\main\java\com\inrip\bank                                                                                                                        |         50 |      2,228 |        469 |        711 |      3,408 |
+| src\main\java\com\inrip\bank\common                                                                                                                 |          3 |        108 |         11 |         24 |        143 |
+| src\main\java\com\inrip\bank\config                                                                                                                 |          2 |         69 |         62 |         20 |        151 |
+| src\main\java\com\inrip\bank\controller                                                                                                             |         11 |        517 |         43 |        189 |        749 |
+| src\main\java\com\inrip\bank\controller\exceptions                                                                                                  |          6 |        124 |          3 |         46 |        173 |
+| src\main\java\com\inrip\bank\controller\handlers                                                                                                    |          1 |        195 |          3 |         87 |        285 |
+| src\main\java\com\inrip\bank\dto                                                                                                                    |          8 |        420 |         42 |         95 |        557 |
+| src\main\java\com\inrip\bank\model                                                                                                                  |          3 |        168 |         37 |         69 |        274 |
+| src\main\java\com\inrip\bank\repository                                                                                                             |          3 |         30 |         18 |         16 |         64 |
+| src\main\java\com\inrip\bank\security                                                                                                               |          3 |        151 |          0 |         43 |        194 |
+| src\main\java\com\inrip\bank\service                                                                                                                |         16 |        750 |        256 |        247 |      1,253 |
+| src\main\java\com\inrip\bank\service\account                                                                                                        |          4 |        146 |         45 |         54 |        245 |
+| src\main\java\com\inrip\bank\service\accountTransaction                                                                                             |          5 |        391 |        178 |        108 |        677 |
+| src\main\java\com\inrip\bank\service\accountTransactionStatus                                                                                       |          2 |         87 |         22 |         33 |        142 |
+| src\main\java\com\inrip\bank\service\auth                                                                                                           |          3 |         74 |         11 |         35 |        120 |
+| src\main\java\com\inrip\bank\service\user                                                                                                           |          2 |         52 |          0 |         17 |         69 |
+| src\main\resources                                                                                                                                  |          1 |         13 |          6 |          5 |         24 |
+| src\test                                                                                                                                            |          2 |        726 |        261 |        192 |      1,179 |
+| src\test\java                                                                                                                                       |          2 |        726 |        261 |        192 |      1,179 |
+| src\test\java\com                                                                                                                                   |          2 |        726 |        261 |        192 |      1,179 |
+| src\test\java\com\inrip                                                                                                                             |          2 |        726 |        261 |        192 |      1,179 |
+| src\test\java\com\inrip\bank                                                                                                                        |          2 |        726 |        261 |        192 |      1,179 |
+| src\test\java\com\inrip\bank\common                                                                                                                 |          1 |        106 |         19 |         18 |        143 |
++-----------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| filename                                                                                                                                            | language        | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\.mvn\wrapper\maven-wrapper.properties                                                                  | Java Properties |          2 |          0 |          1 |          3 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\Bank.postman_collection.json                                                                           | JSON            |        311 |          0 |          0 |        311 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\README.md                                                                                              | Markdown        |        196 |          0 |         90 |        286 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\mvnw.cmd                                                                                               | Batch           |        102 |         51 |         36 |        189 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\pom.xml                                                                                                | XML             |         91 |         19 |         17 |        127 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\SimpleBankApplication.java                                                | Java            |         15 |          0 |          8 |         23 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\common\SimpleBankConstants.java                                           | Java            |         43 |          3 |          8 |         54 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\common\SimpleBankRequestMappings.java                                     | Java            |         12 |          8 |          7 |         27 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\common\SimpleBankUtils.java                                               | Java            |         53 |          0 |          9 |         62 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\config\ApplicationListenerInitialize.java                                 | Java            |         21 |         28 |         10 |         59 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\config\WebSecurityConfig.java                                             | Java            |         48 |         34 |         10 |         92 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\AccountController.java                                         | Java            |         61 |         25 |         24 |        110 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\AuthenticationController.java                                  | Java            |         44 |          0 |         11 |         55 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\DebugController.java                                           | Java            |         71 |         12 |         16 |         99 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\UserController.java                                            | Java            |         22 |          0 |          5 |         27 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\exceptions\DuplicateUserNameException.java                     | Java            |         14 |          0 |          5 |         19 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\exceptions\ResourceNotFoundException.java                      | Java            |         24 |          0 |          8 |         32 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\exceptions\SimpleBankBadRequestException.java                  | Java            |         13 |          0 |          6 |         19 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\exceptions\SimpleBankHTTPException.java                        | Java            |         44 |          0 |         17 |         61 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\exceptions\SimpleBankHttpAcceptException.java                  | Java            |         16 |          3 |          3 |         22 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\exceptions\SimpleBankNotFoundException.java                    | Java            |         13 |          0 |          7 |         20 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\controller\handlers\SimpleBankHTTPResponseHandler.java                    | Java            |        195 |          3 |         87 |        285 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\dto\AccountRequestDTO.java                                                | Java            |         44 |          4 |         11 |         59 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\dto\AccountResponseDTO.java                                               | Java            |         48 |          4 |         12 |         64 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\dto\AccountTransactionRequestDTO.java                                     | Java            |         99 |          4 |         18 |        121 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\dto\AccountTransactionResponseDTO.java                                    | Java            |         83 |          4 |         17 |        104 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\dto\AccountTransactionStatusRequestDTO.java                               | Java            |         42 |         10 |          8 |         60 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\dto\AccountTransactionStatusResponseDTO.java                              | Java            |         72 |         16 |         16 |        104 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\dto\AuthToken.java                                                        | Java            |         15 |          0 |          6 |         21 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\dto\LoginUser.java                                                        | Java            |         17 |          0 |          7 |         24 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\model\Account.java                                                        | Java            |         47 |         14 |         19 |         80 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\model\AccountTransaction.java                                             | Java            |         80 |         23 |         34 |        137 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\model\User.java                                                           | Java            |         41 |          0 |         16 |         57 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\repository\AccountRepository.java                                         | Java            |         10 |          9 |          6 |         25 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\repository\AccountTransactionRepository.java                              | Java            |         14 |          9 |          7 |         30 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\repository\UserRepository.java                                            | Java            |          6 |          0 |          3 |          9 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\security\JwtAuthenticationEntryPoint.java                                 | Java            |         17 |          0 |          5 |         22 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\security\JwtAuthenticationFilter.java                                     | Java            |         67 |          0 |         15 |         82 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\security\JwtTokenUtil.java                                                | Java            |         67 |          0 |         23 |         90 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\accountTransactionStatus\AccountTransactionStatusService.java     | Java            |          7 |          4 |          3 |         14 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\accountTransactionStatus\AccountTransactionStatusServiceImpl.java | Java            |         80 |         18 |         30 |        128 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\accountTransaction\AccountTransactionLogicalValidator.java        | Java            |         10 |         22 |          8 |         40 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\accountTransaction\AccountTransactionService.java                 | Java            |         13 |          4 |          4 |         21 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\accountTransaction\AccountTransactionServiceImpl.java             | Java            |        140 |         48 |         43 |        231 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\accountTransaction\AccountTransactionStatusLogicalValidator.java  | Java            |        194 |         93 |         42 |        329 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\accountTransaction\AccountTransactionTransformer.java             | Java            |         34 |         11 |         11 |         56 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\account\AccountLogicalValidator.java                              | Java            |         35 |         26 |         10 |         71 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\account\AccountService.java                                       | Java            |         10 |          0 |          4 |         14 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\account\AccountServiceImpl.java                                   | Java            |         74 |         11 |         29 |        114 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\account\AccountTransformer.java                                   | Java            |         27 |          8 |         11 |         46 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\auth\SimpleBankAuthService.java                                   | Java            |          4 |          3 |          4 |         11 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\auth\SimpleBankAuthServiceImpl.java                               | Java            |         25 |          4 |          9 |         38 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\auth\SimpleBankSecurityInterceptor.java                           | Java            |         45 |          4 |         22 |         71 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\user\UserService.java                                             | Java            |          6 |          0 |          3 |          9 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\java\com\inrip\bank\service\user\UserServiceImpl.java                                         | Java            |         46 |          0 |         14 |         60 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\main\resources\application.properties                                                              | Java Properties |         13 |          6 |          5 |         24 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\test\java\com\inrip\bank\SimpleBankApplicationTestsIT.java                                         | Java            |        620 |        242 |        174 |      1,036 |
+| d:\BACKUP_UBUNTU_PROFILE\develop\simple_bank\src\test\java\com\inrip\bank\common\UtilTest.java                                                      | Java            |        106 |         19 |         18 |        143 |
+| Total                                                                                                                                               |                 |      3,669 |        806 |      1,052 |      5,527 |
++-----------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
