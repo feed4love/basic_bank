@@ -15,7 +15,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.web.client.HttpServerErrorException;
 
 import com.inrip.bank.dto.AccountRequestDTO;
@@ -29,8 +28,6 @@ import com.inrip.bank.controller.exceptions.SimpleBankBadRequestException;
 import com.inrip.bank.controller.exceptions.SimpleBankNotFoundException;
 import com.inrip.bank.repository.AccountTransactionRepository;
 import com.inrip.bank.service.account.AccountService;
-
-import javassist.tools.web.BadHttpRequest;
 
 import com.inrip.bank.controller.exceptions.ResourceNotFoundException;
 /**
@@ -56,6 +53,9 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 	@Value("${com.inrip.bank.param.create_account_iban_if_not_exists}")
 	private boolean PARAM_ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS;
 	
+	@Value("${com.inrip.bank.param.max_items_protection}")
+	private int PARAM_MAX_ITEMS_PROTECTION;
+
 	/*
 	 * List all transactions
 	 */
@@ -97,9 +97,6 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 													.setAccountiban(transactionRequestDTO.getAccount_iban())
 													.build();
 
-			//AccountRequestDTO accountRequest = new AccountRequestDTO();
-			//accountRequest.setAccountiban(transactionRequestDTO.getAccount_iban());
-
 			Optional<AccountResponseDTO> account = mAccountService.findAccountByAccountIban(accountRequestDTO);
 			if(account.isPresent()) {
 				mLogger.debug("Account exists <" + account.get().toString() + ">");
@@ -112,10 +109,6 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 														.setCredit(Double.valueOf(0))
 														.build();
 
-				/*AccountRequestDTO newAccountRequest = new AccountRequestDTO();
-				newAccountRequest.setAccountiban(transactionRequestDTO.getAccount_iban());
-				newAccountRequest.setCredit(Double.valueOf(0));*/
-				
 				Optional<AccountResponseDTO> tmpAccount = mAccountService.addAccount(newAccountRequestDTO);
 				if(tmpAccount.isPresent())
 					mAccount = tmpAccount.get();
@@ -182,24 +175,22 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 	public List<AccountTransactionResponseDTO> getTransactionByAccountIban(String strAccountIban, int page, int size, boolean descending_amount) {		
 		mLogger.info("Init - getTransactionByAccountIban");
 		List<AccountTransactionResponseDTO> listTransactionsResponseDTO;
-		//List<AccountTransaction>            listTransaction = null;
 
-		if(size>20)
+		if(size>PARAM_MAX_ITEMS_PROTECTION)
 			throw new ResourceNotFoundException("SIZE_NOT_ALLOWED","Size up to 20 for a page is not allowed",page);
 
 		Direction direction = Direction.ASC;
 		if (descending_amount)
 			direction = Direction.DESC;
 
-		//listTransaction             = mTransactionRepository.findAllByAccountiban(strAccountIban, Sort.by(direction, "amount"));
 		Page<AccountTransaction> pageAccountTransaction = mTransactionRepository.findAllByAccountiban(
 									strAccountIban, 
 									PageRequest.of(page, size, Sort.by(direction, "amount")));
 
 		if (page > pageAccountTransaction.getTotalPages())
-				throw new ResourceNotFoundException("findAllByAccountiban", "Page", page);
+				throw new ResourceNotFoundException("END_OF_LIST", "Page", page);
 
-		//listTransactionsResponseDTO = AccountTransactionTransformer.listTransactionToResponseDTO(listTransaction);
+
 		listTransactionsResponseDTO = AccountTransactionTransformer.pagedTransactionToResponseDTO(pageAccountTransaction);
 
 		mLogger.info("End - Successfully returned <" + listTransactionsResponseDTO.size() + "> transactions by account_iban");
@@ -227,19 +218,5 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 		optTransaction = mTransactionRepository.findByReference(strReference);
 		return optTransaction;
 	}
-
-
-	/*public List<Transaction> findByReferenceASC(String strReference) {
-		List<Transaction> listTransactions = null;
-		listTransactions = mTransactionRepository.findByReference(strReference, Sort.by(Direction.ASC, "id"));
-		return listTransactions;
-	}
-
-	public List<Transaction> findByReferenceDESC(String strReference) {
-		List<Transaction> listTransactions = null;
-		listTransactions = mTransactionRepository.findByReference(strReference, Sort.by(Direction.DESC, "id"));
-		return listTransactions;
-	}*/
-
 
 }
