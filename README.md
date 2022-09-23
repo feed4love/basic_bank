@@ -22,7 +22,7 @@ The codes to switch for MongoDB are commented.
 
 7) Is asummed that is needed to have an entity Account to keep the information regarding credit. For the task to keep the credit possitive , and to validate or to deny a transaction according this rule. Negative fee is allowed, the only restriction is to havent. 
 
-8) When a no mandatory fee is received, the service shall manage nulls instead to alter the null state in the db.
+8) When a no mandatory fee is received, the service manage nulls instead to alter the null state in the db.
 
 9) Similar with the channel field in the account status requests, at this case the asumption is returns void http202 ACCEPTED.
 
