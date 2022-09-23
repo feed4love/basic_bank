@@ -1,10 +1,11 @@
 package com.inrip.bank.config;
 
-import com.inrip.bank.common.SimpleBankConstants.JWTConstants;
+import com.inrip.bank.common.SimpleBankConstants;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,13 +30,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+	@Value("${com.inrip.bank.param.secutity.signing_key}")
+	public String SIGNING_KEY;
+	
+	@Value("${com.inrip.bank.param.secutity.token_prefix}")
+	public String TOKEN_PREFIX;
+
+	@Value("${com.inrip.bank.param.secutity.header_string}")
+	public String HEADER_STRING;
+
+	public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60*60;
+
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        String header = req.getHeader(JWTConstants.HEADER_STRING);
+        String header = req.getHeader(HEADER_STRING);
         String username = null;
         String authToken = null;
-        if (header != null && header.startsWith(JWTConstants.TOKEN_PREFIX)) {
-            authToken = header.replace(JWTConstants.TOKEN_PREFIX,"");
+        if (header != null && header.startsWith(TOKEN_PREFIX)) {
+            authToken = header.replace(TOKEN_PREFIX,"");
             try {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
             } catch (IllegalArgumentException e) {

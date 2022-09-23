@@ -30,7 +30,7 @@ The codes to switch for MongoDB are commented.
 
 11) Without context hard difficult to know the best way to implement the endpoint ADD_TRANSACTION. As far PUT is less restrictive than POST, the first is the one chosen.
 
-12) It is implemented JWT security with HS512 signature algorithm. In SimpleBankConstants.JWTConstants can locate SIGNING_KEY, TOKEN_PREFIX and HEADER_STRING. The endpoints are /api/user/register and /api/auth/login. With the token as bearer in the header can acess the main context paths '/api/account/*'. The context paths '/api/debug/*' , '/api/user/*' and '/api/auth/*' are not filtered. As far need to remember, the database H2, so each time the server start is need to register a user.
+12) It is implemented JWT security with HS512 signature algorithm. In SimpleBankConstants.JWTConstants are located the SIGNING_KEY, TOKEN_PREFIX and HEADER_STRING. The endpoints are /api/user/register and /api/auth/login. The context paths /api/debug , /api/user and /api/auth are not filtering by JWT. The database is H2, so each time the server start is need to register a new user.
 
 # Main components
 
@@ -228,25 +228,32 @@ File application.properties has the next list of configurable parameters:
 
 • com.inrip.bank.param.validate_credit_before_transacion set to true then the service will check if the account iban has enough credit to support the operation. Set by default to TRUE.
 
-• com.inrip.bank.param.debug.enabled if set to true the service will add several debug information at the json response and startup the debug controller that expose the endpoints from /api/debug/**.
+• com.inrip.bank.param.debug.enabled if set to true the service will add several debug information at the json response and startup the debug controller that expose the endpoints from /api/debug/*.
+
+• com.inrip.bank.param.secutity.signing_key is the string to sign the securoty tokens.
+
+• com.inrip.bank.param.secutity.token_prefix included for the token.
+
+• com.inrip.bank.param.secutity.header_string is the string to locate the autorization block in the header.
 
 Default configuration:
 
-    server.port=8080    
+    server.port=8080
     server.servlet.context-path=/api
 
-    com.inrip.bank.param.alive_message=SimpleBank JWT REST API is running
+    server.tomcat.max-threads=1200
+    server.tomcat.accept-count=1200
 
     com.inrip.bank.param.alive_message=SimpleBank REST API is running
     com.inrip.bank.param.uncomputable_status_transactions_returns_unknown=false
     com.inrip.bank.param.simple_dates_comparision=true
     com.inrip.bank.param.create_account_iban_if_not_exists=true
-    com.inrip.bank.param.validate_credit_before_transacion=true
-    com.inrip.bank.param.debug.enabled=true
+    com.inrip.bank.param.validate_credit_before_transacion=false
+    com.inrip.bank.param.debug.enabled=false
 
-    ## para usar mongodb, en caso contrario H2
-    ## bank.basic.mongodb.uri=mongodb+srv://test:1234@sandbox.bjcecbp.mongodb.net/simple_bank
-    ## spring.data.mongodb.database=simple_bank
+    com.inrip.bank.param.secutity.signing_key=55a0653280be438084b6a4151daf26a1d274e76a4b0d408db86fa9aa51e616bf55a0653280be438084b6a4151daf26a1d274e76a4b0d408db86fa9aa51e616bf
+    com.inrip.bank.param.secutity.token_prefix=Bearer 
+    com.inrip.bank.param.secutity.header_string=Authorization
 
 # Test cases
 The next list parameters could interfere with the proper run of the test. 

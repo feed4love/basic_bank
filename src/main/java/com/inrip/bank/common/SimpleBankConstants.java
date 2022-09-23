@@ -1,9 +1,11 @@
 package com.inrip.bank.common;
 
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  *
  */
-public interface SimpleBankConstants {
+public class SimpleBankConstants {
 	
 	public static String PARAMTYPE_HEADER = "header";
 	public static String HTTP_METHOD_GET = "GET";
@@ -46,13 +48,6 @@ public interface SimpleBankConstants {
             return status;
         }
     }
-
-	public class JWTConstants {
-		public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60*60;
-		public static final String SIGNING_KEY = "55a0653280be438084b6a4151daf26a1d274e76a4b0d408db86fa9aa51e616bf55a0653280be438084b6a4151daf26a1d274e76a4b0d408db86fa9aa51e616bf";
-		public static final String TOKEN_PREFIX = "Bearer ";
-		public static final String HEADER_STRING = "Authorization";
-	}	
 
 	
 }

@@ -2,7 +2,7 @@ package com.inrip.bank.config;
 
 import com.inrip.bank.model.User;
 import com.google.gson.Gson;
-import com.inrip.bank.common.SimpleBankConstants.JWTConstants;
+import com.inrip.bank.common.SimpleBankConstants;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -10,6 +10,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.gson.io.GsonDeserializer;
 import io.jsonwebtoken.gson.io.GsonSerializer;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,11 @@ import java.util.function.Function;
 @Component
 public class JwtTokenUtil implements Serializable {
 
+	@Value("${com.inrip.bank.param.secutity.signing_key}")
+	private String SIGNING_KEY;
+    
+	public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60*60;
+    
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
@@ -41,7 +47,7 @@ public class JwtTokenUtil implements Serializable {
 
         return Jwts.parser()
                 .deserializeJsonWith(new GsonDeserializer(gson))
-                .setSigningKey(JWTConstants.SIGNING_KEY)
+                .setSigningKey(SIGNING_KEY)
                 .parseClaimsJws(token)                
                 .getBody();
     }
@@ -66,8 +72,8 @@ public class JwtTokenUtil implements Serializable {
                 .setClaims(claims)
                 .setIssuer("admin")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWTConstants.ACCESS_TOKEN_VALIDITY_SECONDS*1000))
-                .signWith(SignatureAlgorithm.HS512, JWTConstants.SIGNING_KEY)
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))
+                .signWith(SignatureAlgorithm.HS512, SIGNING_KEY)
                 .serializeToJsonWith(new GsonSerializer(gson))
                 .compact();
 
