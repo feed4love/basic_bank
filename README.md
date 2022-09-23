@@ -30,7 +30,7 @@ The codes to switch for MongoDB are commented.
 
 11) Without context hard difficult to know the best way to implement the endpoint ADD_TRANSACTION. As far PUT is less restrictive than POST, the first is the one chosen.
 
-12) Basic security has been replaced by JWT security (HS512.) The endpoints are /api/user/register and /api/auth/login. The context paths /api/debug , /api/user and /api/auth are not filtering by JWT. The database is H2, so each time the server start is need to register a new user.
+12) The Basic Security has been replaced by JWT security (HS512.) The endpoints are /api/user/register and /api/auth/login. The context paths /api/debug , /api/user and /api/auth are not filtering by JWT. The database is H2, so each time the server start is need to register a new user.
 
 13) All the endpoints that are not included or directly referenced in the requirements, or they are needs based on asumptions, are accesible by a debug controller for this tasks. Is going to startup according the value of com.inrip.bank.param.debug.enabled. Also several services are going to include debug traces on the json responses if this parameter is set to true.
 
