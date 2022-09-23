@@ -32,7 +32,7 @@ The codes to switch for MongoDB are commented.
 
 12) Basic security has been replaced by JWT security (HS512.) The endpoints are /api/user/register and /api/auth/login. The context paths /api/debug , /api/user and /api/auth are not filtering by JWT. The database is H2, so each time the server start is need to register a new user.
 
-13) All the endpoints that are not included or directly referenced in the requirements, or they are needs based on asumptions, are accesible by a unique controller for this tasks, will startup according the value of com.inrip.bank.param.debug.enabled. Also several services are going to include debug traces on json responses if this parameter is set to true.
+13) All the endpoints that are not included or directly referenced in the requirements, or they are needs based on asumptions, are accesible by a debug controller for this tasks. Is going to startup according the value of com.inrip.bank.param.debug.enabled. Also several services are going to include debug traces on the json responses if this parameter is set to true.
 
 14) The endpoint to retrieve transactions by account_iban has been protected to return a maximun of items defined by com.inrip.bank.param.security.max_items_size_protection. The client side can especify the page and the size of the result list. By default, the controller set the page to 0 and the size to 5. If the request has set a page where isn't data to response or the items requested are more than the configured protection, then the service will returns empty Http204 NO CONTENT.
 
