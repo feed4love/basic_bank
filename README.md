@@ -34,7 +34,7 @@ The codes to switch for MongoDB are commented.
 
 13) All the endpoints that are not included or directly referenced in the requirements, or they are needs based on asumptions, are accesible by a unique controller for this tasks, will startup according the value of com.inrip.bank.param.debug.enabled. Also some service are going to include debug traces on json responses if this parameter is set to true.
 
-14) Pagination on find by account_iba. Setting the parameters page and size will return a set of results paged, including the parameter descending_amount to true will return the collection inverse ordered. By default the page is set to 0, size is set to 5 and order is ascending. When the request set a page where are not data to response, the service returns Http400 BadRequest.
+14) Pagination on find by account_iba. Setting the parameters page and size will return a set of results paged, including the parameter descending_amount to true will return the collection inverse ordered. By default the page is set to 0, size is set to 5 and order is ascending. When the request set a page where aren't data to response, the service returns Http400 BadRequest.
 
 # Main components
 
