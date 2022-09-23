@@ -34,7 +34,7 @@ The codes to switch for MongoDB are commented.
 
 13) All the endpoints that are not included or directly referenced in the requirements, or they are needs based on asumptions, are accesible by a unique controller for this tasks, will startup according the value of com.inrip.bank.param.debug.enabled. Also some service are going to include debug traces on json responses if this parameter is set to true.
 
-14) The endpoint to retrieve transactions by account_iban has been protected to return a maximun of items defined by com.inrip.bank.param.secutity.max_items_size_protection. The client side can especify the page and the size of the result list. By default, the controller set page to 0 and max size to 5. If the request has set a page where isn't data to response or the page requested is more than max_items_size_protection, then the service will returns empty Http204 NO CONTENT.
+14) The endpoint to retrieve transactions by account_iban has been protected to return a maximun of items defined by com.inrip.bank.param.security.max_items_size_protection. The client side can especify the page and the size of the result list. By default, the controller set page to 0 and max size to 5. If the request has set a page where isn't data to response or the page requested is more than max_items_size_protection, then the service will returns empty Http204 NO CONTENT.
 
 # Main components
 
@@ -231,13 +231,13 @@ File application.properties has the next list of configurable parameters:
 
 • com.inrip.bank.param.debug.enabled if set to true the service will add several debug information at the json response and startup the debug controller that expose the endpoints from /api/debug/*.
 
-• com.inrip.bank.param.secutity.signing_key is the string to sign the securoty tokens.
+• com.inrip.bank.param.security.signing_key is the string to sign the securoty tokens.
 
-• com.inrip.bank.param.secutity.token_prefix included for the token.
+• com.inrip.bank.param.security.token_prefix included for the token.
 
-• com.inrip.bank.param.secutity.header_string is the string to locate the autorization block in the header.
+• com.inrip.bank.param.security.header_string is the string to locate the autorization block in the header.
 
-• com.inrip.bank.param.secutity.max_items_protection is the maximun size of items returned by the endpoints. 
+• com.inrip.bank.param.security.max_items_protection is the maximun size of items returned by the endpoints. 
 
 Default recommended configuration:
 
@@ -251,10 +251,10 @@ Default recommended configuration:
     com.inrip.bank.param.validate_credit_before_transacion=true
     com.inrip.bank.param.debug.enabled=false
 
-    com.inrip.bank.param.secutity.signing_key=<write_your_key>
-    com.inrip.bank.param.secutity.token_prefix=Bearer 
-    com.inrip.bank.param.secutity.header_string=Authorization
-    com.inrip.bank.param.secutity.max_items_size_protection=20
+    com.inrip.bank.param.security.signing_key=<write_your_key>
+    com.inrip.bank.param.security.token_prefix=Bearer 
+    com.inrip.bank.param.security.header_string=Authorization
+    com.inrip.bank.param.security.max_items_size_protection=20
 
 
 # Test cases

@@ -30,13 +30,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-	@Value("${com.inrip.bank.param.secutity.signing_key}")
+	@Value("${com.inrip.bank.param.security.signing_key}")
 	public String SIGNING_KEY;
 	
-	@Value("${com.inrip.bank.param.secutity.token_prefix}")
+	@Value("${com.inrip.bank.param.security.token_prefix}")
 	public String TOKEN_PREFIX;
 
-	@Value("${com.inrip.bank.param.secutity.header_string}")
+	@Value("${com.inrip.bank.param.security.header_string}")
 	public String HEADER_STRING;
 
 	public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60*60;

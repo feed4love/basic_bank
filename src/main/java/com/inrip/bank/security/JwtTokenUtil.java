@@ -23,7 +23,7 @@ import java.util.function.Function;
 @Component
 public class JwtTokenUtil implements Serializable {
 
-	@Value("${com.inrip.bank.param.secutity.signing_key}")
+	@Value("${com.inrip.bank.param.security.signing_key}")
 	private String SIGNING_KEY;
     
 	public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60*60;
