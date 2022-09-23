@@ -21,10 +21,9 @@ public class SimpleBankSecurityInterceptor extends HandlerInterceptorAdapter {
 
 	private static final String AUTH_HEADER_PARAMETER_AUTHERIZATION = "authorization";
 
-	@Value("${bank.basic.auth.username}")
-	private String userName;
-
-	@Value("${bank.basic.auth.password}")
+	/*@Value("${bank.basic.auth.username}")
+	@Value("${bank.basic.auth.password}")*/
+	private String userName;	
 	private String password;
 
 	@Autowired

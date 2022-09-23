@@ -30,39 +30,19 @@ The codes to switch for MongoDB are commented.
 
 11) Without context hard difficult to know the best way to implement the endpoint ADD_TRANSACTION. As far PUT is less restrictive than POST, the first is the one chosen.
 
+12) It is implemented JWT security with HS512 signature algorithm. In SimpleBankConstants.JWTConstants can locate SIGNING_KEY, TOKEN_PREFIX and HEADER_STRING. The endpoints are /api/user/register and /api/auth/login. With the token as bearer in the header can acess the main context paths '/api/account/*'. The context paths '/api/debug/*' , '/api/user/*' and '/api/auth/*' are not filtered. As far need to remember, the database H2, so each time the server start is need to register a user.
+
 # Main components
 
 #### Controller
 
-• AccountController
-
-#### Services
-
-• AccountService , exposed for debug serve the endpoint (not mandatory):
-
-    http://test:1234@localhost:8080/api/account/{account_iban}
-    Payload
-    {
-        "uid": "d2d6180c-55bb-48b4-9f28-13fe6d7625f8",
-        "accountiban": "1",
-        "credit": 1.0
-    }    
-
-• AccountTransactionService serve the endpoints:
-
-    http://test:1234@localhost:8080/api/account/    
+• AccountController the main controller for the api.
+    
+    http://localhost:8080/api  
     Payload:
     SimpleBank REST API is running
 
-    http://test:1234@localhost:8080/api/account/{account_iban}
-    Payload:
-    {
-        "uid": "1a215417-00e1-4860-b774-e606c0343bc0",
-        "accountiban": "1",
-        "credit": 1.0
-    }    
-
-    http://test:1234@localhost:8080/api/account/transaction/add
+    http://localhost:8080/api/account/transaction/add
     Payload PUT request:
     {   
         "reference":"1",
@@ -72,7 +52,8 @@ The codes to switch for MongoDB are commented.
         "fee":1
     }
 
-    http://test:1234@localhost:8080/api/account/transaction/iban/{account_iban}
+    http://localhost:8080/api/account/transaction/iban/{account_iban}
+    http://localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=true
     Payload:
     [
         {
@@ -91,10 +72,6 @@ The codes to switch for MongoDB are commented.
         }
     ]
 
-    http://test:1234@localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=true
-
-• AccountTransactionStatusService serve the endpoint:
-
     http://test:1234@localhost:8080/api/account/transaction/status
     Payload request:
     {
@@ -110,6 +87,85 @@ The codes to switch for MongoDB are commented.
         "debug": "doBusinessRule_B"
     }    
 
+• UserController to register a new user.
+
+    http://localhost:8080/api/user/register
+    Payload POST request
+    {
+    "userName": "test",
+    "password" : "1234",
+    "roles" : "ADMIN"
+    }    
+
+    Payload response
+    {
+        "id": 1,
+        "userName": "test",
+        "roles": "ADMIN"
+    }
+
+• AuthenticationController to login.
+
+    http://localhost:8080/api/auth/login
+    Payload request
+    {
+    "username": "test",
+    "password" : "1234"
+    }
+
+    Payload response
+    {
+        "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MjAyNTIsImV4cCI6MTY2MzkzODI1Mn0.y5dF9pN29D1M3t8zr3-VuohZRVz3LU8E4FqNV2mnfBCUX4KsJSKMvmIf7YgR1hWwFww-aqKIBLoTGsaOkrW_cw"
+    }    
+
+• DebugController will startup and expose the endpoints according the value in the debug the parameter.
+
+    http://test:1234@localhost:8080/api/debug/account/transaction/all
+    Payload:
+    [
+        {
+            "reference": "1",
+            "account_iban": "1",
+            "date": "2022-09-19T20:55:42.000+0000",
+            "amount": 2.0,
+            "fee": 1.0
+        },
+        {
+            "reference": "2",
+            "account_iban": "1",
+            "date": "2022-09-19T20:55:42.000+0000",
+            "amount": 2.0,
+            "fee": 1.0
+        }
+    ]
+
+    http://test:1234@localhost:8080/api/account/{account_iban}
+    Payload:
+    {
+        "uid": "1a215417-00e1-4860-b774-e606c0343bc0",
+        "accountiban": "1",
+        "credit": 1.0
+    }    
+
+    http://test:1234@localhost:8080/api/account/{account_iban}
+    Payload
+    {
+        "uid": "d2d6180c-55bb-48b4-9f28-13fe6d7625f8",
+        "accountiban": "1",
+        "credit": 1.0
+    }    
+
+
+#### Services
+
+• AccountService
+
+• AccountTransactionService
+
+• AccountTransactionStatusService
+
+• UserService
+
 #### Test
 
 • SimpleBankApplicationTestsIT
@@ -120,11 +176,15 @@ The codes to switch for MongoDB are commented.
 
 • AccountTransactionRepository
 
+• UserRepository
+
 #### Model
 
 • Account and request/response DTOs
 
 • AccountTransaction and request/response DTOs
+
+• User and AuthToken and LoginUser DTOs
 
 #### Handlers and Exception
 
@@ -132,9 +192,13 @@ The codes to switch for MongoDB are commented.
 
 • SimpleBankBadRequestException, SimpleBankHttpAcceptException, SimpleBankHTTPException and SimpleBankNotFoundException
 
+• JwtAuthenticationFilter
+
 #### Configuration and Initialize
 
 • SpringMVCConfig adds the Interceptor TransactionSecurityInterceptor.
+
+• WebSecurityConfig
 
 • ApplicationListenerInitialize , as H2 is a dbm in memory here is able to load the dabase for dev.
 
@@ -149,43 +213,35 @@ File application.properties has the next list of configurable parameters:
 
 • server.port is by default to 8080
 
-• bank.basic.message.alive is the welcome message in the API , accesible at the root path of the servlet context
+• com.inrip.bank.param.alive_message is the welcome message in the API , accesible at the root path of the servlet context
 
 • bank.basic.auth.username is the username expected in the request headers Basic Auth
 
 • bank.basic.auth.password is the password expected in the request headers Basic Auth
 
-• bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS if set to true, then the service will response status UNKNOWN for trasactions without the field date setted. Set it by default to FALSE, then the service will up a HttpAcceptException, then the servlet returns Http 202 ACCEPTED. Such of that, is better the assumption to response HTTP202 ACCEPTED. By default is set to FALSE.
+• com.inrip.bank.param.uncomputable_status_transactions_returns_unknown if set to true, then the service will response status UNKNOWN for trasactions without the field date setted. Set it by default to FALSE, then the service will up a HttpAcceptException, then the servlet returns Http 202 ACCEPTED. Such of that, is better the assumption to response HTTP202 ACCEPTED. By default is set to FALSE.
 
-• bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES if set to true the service will truncate dates for comparision and according the assumption about the requeriment TODAY. If set to false, then the comparision between dates will complete. Set by default to TRUE.
+• com.inrip.bank.param.simple_dates_comparision if set to true the service will truncate dates for comparision and according the assumption about the requeriment TODAY. If set to false, then the comparision between dates will complete. Set by default to TRUE.
 
-• bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS if set to true when the service receive a transaction and the account isnt exists, then the service will create the account and set the initial credit to 0.
+• com.inrip.bank.param.create_account_iban_if_not_exists if set to true when the service receive a transaction and the account isnt exists, then the service will create the account and set the initial credit to 0.
 
-• bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS set to true then the service will check if the account iban has enough credit to support the operation. Set by default to TRUE.
+• com.inrip.bank.param.validate_credit_before_transacion set to true then the service will check if the account iban has enough credit to support the operation. Set by default to TRUE.
 
-• bank.basic.DEBUG_DATA_ON_RESPONSES if set to true the service will add several debug information at the json response. Currently included at the StatusResponseDTO to track the constraint applied to calculate the status. By default set to FALSE.
-
-• bank.basic.DEBUG_API_METHODS if set to true the service will accept debuging api calls to the endpoints from externals:
-
-    /api/account/{account_iban} -> search an account by account_iban.
-    /api/account/transaction/all -> retrieve all transactions.
-    /api/account/transaction/reference/{reference} -> search transaction by reference
+• com.inrip.bank.param.debug.enabled if set to true the service will add several debug information at the json response and startup the debug controller that expose the endpoints from /api/debug/**.
 
 Default configuration:
 
     server.port=8080    
     server.servlet.context-path=/api
 
-    bank.basic.message.alive=SimpleBank REST API is running
-    bank.basic.auth.username=test
-    bank.basic.auth.password=1234
+    com.inrip.bank.param.alive_message=SimpleBank JWT REST API is running
 
-    bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS=false
-    bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES=true
-    bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS=true
-    bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS=true
-    bank.basic.DEBUG_DATA_ON_RESPONSES=false
-    bank.basic.DEBUG_API_METHODS=false
+    com.inrip.bank.param.alive_message=SimpleBank REST API is running
+    com.inrip.bank.param.uncomputable_status_transactions_returns_unknown=false
+    com.inrip.bank.param.simple_dates_comparision=true
+    com.inrip.bank.param.create_account_iban_if_not_exists=true
+    com.inrip.bank.param.validate_credit_before_transacion=true
+    com.inrip.bank.param.debug.enabled=true
 
     ## para usar mongodb, en caso contrario H2
     ## bank.basic.mongodb.uri=mongodb+srv://test:1234@sandbox.bjcecbp.mongodb.net/simple_bank
@@ -195,8 +251,8 @@ Default configuration:
 The next list parameters could interfere with the proper run of the test. 
 Set them to the default values:
 
-    bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS=true
-    bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS=true
+    com.inrip.bank.param.create_account_iban_if_not_exists=true
+    com.inrip.bank.param.validate_credit_before_transacion=true
 
 # API URL
 The file Bank.postman_collection.json include the main commands and paths to the api.
@@ -213,11 +269,11 @@ The file Bank.postman_collection.json include the main commands and paths to the
 
 • (done) apply Builder pattern to pojos.
 
-• JWT Security layer instead of Basic.
+• (done) JWT Security layer instead of Basic.
 
 • pagination on methods find and findAll (debug)
 
-• debugging instances into a debug apirest controller (debug, configured by a parameter on startup)
+• (done) debugging instances into a debug apirest controller (debug, configured by a parameter on startup)
 
 # Author
 2022, Enrique AC

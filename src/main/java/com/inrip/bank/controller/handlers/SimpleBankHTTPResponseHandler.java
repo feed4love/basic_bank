@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -258,11 +259,26 @@ public abstract class SimpleBankHTTPResponseHandler {
 		String endUserMessage = ex.getEndUserMessage();
 		String externalMessage = ex.getExternalMessage();
 
-		mLogger.error(message, ex);
+		mLogger.debug(message, ex);
 
 		constructHeaders(response, code, message, httpStatus, endUserMessage, externalMessage);
 
 	}
 
+	@ExceptionHandler(BadCredentialsException.class)
+	public void handleBadCredentialsException(BadCredentialsException ex, HttpServletRequest request,
+										  HttpServletResponse response) {
+
+		String code = SimpleBankConstants.HTTP_STATUS_ACCEPT_STATUS;
+		String message = ex.getMessage();
+		int httpStatus = HttpStatus.ACCEPTED.value();
+
+		mLogger.debug(message, ex);
+
+		constructHeaders(response, code, message, httpStatus, "The user do not exists", "The user do not exists");
+
+	}
+
+	
 
 }

@@ -74,7 +74,7 @@ class SimpleBankApplicationTestsIT {
     @Autowired
 	private WebApplicationContext webApplicationContext;
     
-    @Value("${bank.basic.message.alive}")
+    @Value("${com.inrip.bank.param.alive_message}")
 	private String REST_RUNNING;
 
 	MockMvc mMockMvc;
@@ -121,11 +121,10 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_service_is_running() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.SERVICE_STATUS;        
+        String url = SimpleBankRequestMappings.SERVICE_STATUS;        
         MvcResult result = this.mMockMvc.perform(get(url)
-                               .contentType(MediaType.TEXT_PLAIN_VALUE) 
-                               .with(httpBasic("test", "1234")) )
-                               .andExpect(status().isOk())                               
+                               .contentType(MediaType.TEXT_PLAIN_VALUE))
+                               .andExpect(status().isOk())
                                .andReturn();
         String responseString = result.getResponse().getContentAsString();
         assertTrue(responseString.equals(REST_RUNNING));
@@ -141,7 +140,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_add_transaction() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(true, true);
         AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
@@ -174,7 +173,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_add_transaction_reference_is_duplicated() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(true, true);
         AccountTransaction transactionResponse = AccountTransactionTransformer.transactionRequestDtoToTransaction(transactionRequestDTO);
@@ -204,7 +203,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_add_transaction_no_account_iban() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(false, true);
         /*AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
@@ -230,7 +229,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_add_transaction_no_reference_and_is_generated() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(true, false);
         /*AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();        
@@ -291,7 +290,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_case_status_ruleA() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
         
         statusRequestDTO = UtilTest.getFakeStatusRequestDTO(CLIENT);
@@ -340,7 +339,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleB() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
         true, Double.valueOf(10), Double.valueOf(2));
@@ -381,7 +380,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleB2_field_fee_is_null() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
                                                         true, 
@@ -425,7 +424,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleC() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
                     true,Double.valueOf( 10), Double.valueOf(2));
@@ -459,7 +458,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleC2_field_fee_is_null() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(YESTERDAY, 
                     true,Double.valueOf( 10), null);
@@ -492,7 +491,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleD() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
                                 true, Double.valueOf(10),Double.valueOf( 2));
@@ -536,7 +535,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleD2_field_fee_is_null() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
                                 true, Double.valueOf(10), null);
@@ -583,7 +582,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleE() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
                                 true,Double.valueOf( 10),Double.valueOf( 2));
@@ -618,7 +617,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleE2_field_fee_is_null() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TODAY, 
                                 true,Double.valueOf( 10),null);
@@ -651,7 +650,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleF() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                                 true,Double.valueOf( 10),Double.valueOf( 2));
@@ -684,7 +683,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleF2_field_fee_is_null() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                                 true,Double.valueOf( 10), null);
@@ -718,7 +717,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleG() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                     true, Double.valueOf(10), Double.valueOf(2));
@@ -751,7 +750,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleG_field_fee_is_null() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                     true, Double.valueOf(10), null);
@@ -787,7 +786,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleH() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                             true, Double.valueOf(10), Double.valueOf(2));
@@ -821,7 +820,7 @@ class SimpleBankApplicationTestsIT {
     @Test
     public void test_case_status_ruleH2_field_fee_is_null() throws Exception {
         AccountTransactionStatusRequestDTO statusRequestDTO = null;
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.TRANSACTION_STATUS;
 
         Optional<AccountTransaction> transaction = UtilTest.getFakeOptionalTransaction(TOMORROW, 
                                             true, Double.valueOf(10), Double.valueOf(2));
@@ -849,7 +848,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_case_credit_after_transaction_is_posivite() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         AccountTransactionRequestDTO transactionRequestDTO = UtilTest.getFakeTransactionRequestDTO(true, false);
         /*AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO();
@@ -889,7 +888,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_case_credit_after_transaction_is_negative() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         
         AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(
@@ -930,7 +929,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_case_credit_after_transaction_is_zero_deny() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(
                                         true, false, TODAY,false, -8, 3);
@@ -965,7 +964,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_case_credit_after_transaction_is_zero_accept() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(
                                         true, false, TODAY,false, -8, 2);
@@ -1001,7 +1000,7 @@ class SimpleBankApplicationTestsIT {
      */
     @Test
     public void test_case_total_result_credit_nagetive_fee_and_amount() throws Exception {
-        String url = SimpleBankRequestMappings.REQUEST_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
+        String url = SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT + SimpleBankRequestMappings.ADD_TRANSACTION;
 
         AccountTransactionRequestDTO transactionRequestDTO =  UtilTest.getFakeTransactionRequestDTO(
                                         true, false, TODAY,false, -10, -10);

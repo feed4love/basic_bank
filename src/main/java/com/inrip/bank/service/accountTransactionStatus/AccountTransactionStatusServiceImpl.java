@@ -39,13 +39,13 @@ public class AccountTransactionStatusServiceImpl implements AccountTransactionSt
 	private AccountTransactionService mTransactionService;
 
 	
-	@Value("${bank.basic.ACCEPT_UNKNOWN_TRANSACTION_STATUS}")
+	@Value("${com.inrip.bank.param.uncomputable_status_transactions_returns_unknown}")
 	private boolean PARAM_ACCEPT_UNKNOWN_TRANSACTION_STATUS;
 
-	@Value("${bank.basic.TRANSACTION_STATUS_TRUNCATE_DATES}")
+	@Value("${com.inrip.bank.param.simple_dates_comparision}")
 	private boolean PARAM_TRANSACTION_STATUS_TRUNCATE_DATES;
 			
-	@Value("${bank.basic.DEBUG_DATA_ON_RESPONSES}")
+	@Value("${com.inrip.bank.param.debug.enabled}")
 	private boolean PARAM_DEBUG_DATA_ON_RESPONSES;
 
 	@Override

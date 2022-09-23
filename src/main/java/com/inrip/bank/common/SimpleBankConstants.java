@@ -47,5 +47,12 @@ public interface SimpleBankConstants {
         }
     }
 
+	public class JWTConstants {
+		public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60*60;
+		public static final String SIGNING_KEY = "55a0653280be438084b6a4151daf26a1d274e76a4b0d408db86fa9aa51e616bf55a0653280be438084b6a4151daf26a1d274e76a4b0d408db86fa9aa51e616bf";
+		public static final String TOKEN_PREFIX = "Bearer ";
+		public static final String HEADER_STRING = "Authorization";
+	}	
+
 	
 }

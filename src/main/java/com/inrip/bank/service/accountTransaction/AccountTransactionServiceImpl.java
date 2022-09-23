@@ -49,7 +49,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 	@Autowired
 	private AccountService mAccountService;
 	
-	@Value("${bank.basic.ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS}")
+	@Value("${com.inrip.bank.param.create_account_iban_if_not_exists}")
 	private boolean PARAM_ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS;
 	
 	/*

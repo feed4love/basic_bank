@@ -1,16 +1,12 @@
 package com.inrip.bank.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inrip.bank.common.SimpleBankRequestMappings;
-import com.inrip.bank.controller.exceptions.SimpleBankHttpAcceptException;
 import com.inrip.bank.controller.handlers.SimpleBankHTTPResponseHandler;
-import com.inrip.bank.dto.AccountRequestDTO;
-import com.inrip.bank.dto.AccountResponseDTO;
 import com.inrip.bank.dto.AccountTransactionStatusRequestDTO;
 import com.inrip.bank.dto.AccountTransactionStatusResponseDTO;
 import com.inrip.bank.dto.AccountTransactionRequestDTO;
@@ -32,32 +25,30 @@ import com.inrip.bank.service.account.AccountService;
 import com.inrip.bank.service.accountTransaction.AccountTransactionService;
 import com.inrip.bank.service.accountTransactionStatus.AccountTransactionStatusService;
 
-import javassist.NotFoundException;
-
 /**
  * @author Enrique AC
  *	Main Rest Controller of Simple_Bank
  */
 
 @RestController
-@RequestMapping(SimpleBankRequestMappings.REQUEST_CONTEXT)
+@RequestMapping(SimpleBankRequestMappings.REQUEST_ACCOUNT_CONTEXT)
 public class AccountController extends SimpleBankHTTPResponseHandler {
 
 	private static final Logger mLogger = LogManager.getLogger(AccountController.class);
 
 	@Autowired
-	private AccountTransactionService mTransactionService;
-
-	@Autowired
 	private AccountTransactionStatusService mTransactionStatusService;
 
-	@Autowired
-	private AccountService mAccountService;
+	//@Autowired
+	//private AccountService mAccountService;
 
-	@Value("${bank.basic.message.alive}")
+	@Autowired
+	private AccountTransactionService mTransactionService;
+
+	@Value("${com.inrip.bank.param.alive_message}")
 	private String PARAM_REST_RUNNING;
 
-	@Value("${bank.basic.DEBUG_API_METHODS}")
+	@Value("${com.inrip.bank.param.debug.enabled}")
 	private boolean PARAM_DEBUG_API_METHODS;
 
 	/**
@@ -67,21 +58,6 @@ public class AccountController extends SimpleBankHTTPResponseHandler {
 	@RequestMapping(value = SimpleBankRequestMappings.SERVICE_STATUS, method = RequestMethod.GET)
 	public @ResponseBody String helloWorld() {
 		return PARAM_REST_RUNNING;
-	}
-
-	/**
-	 * extra: list all transacciones (4debug)
-	 *
-	 */
-	@RequestMapping(value = SimpleBankRequestMappings.LIST_ALL, method = RequestMethod.GET)
-	public @ResponseBody List<AccountTransactionResponseDTO> listAllTransactions() {
-		if(!PARAM_DEBUG_API_METHODS)
-			return null;
-
-		List<AccountTransactionResponseDTO> listTransactionResponseDTO = new ArrayList<AccountTransactionResponseDTO>();
-		mLogger.info("Init - listAllTransactions");
-		listTransactionResponseDTO = mTransactionService.getAllTransactions();
-		return  listTransactionResponseDTO;
 	}
 
 	/**
@@ -97,24 +73,7 @@ public class AccountController extends SimpleBankHTTPResponseHandler {
 		return mTransactionService.getTransactionByAccountIban(account_iban, descending_amount);
 	}
 
-	/**
-	 * extra: list transactions filtering by reference (4debug)
-	 * @throws NotFoundException
-	 *
-	 */
-	@RequestMapping(value = SimpleBankRequestMappings.SEARCH_BY_REFERENCE, method = RequestMethod.GET)
-	public @ResponseBody List<AccountTransactionResponseDTO> searchTransactionByReference(
-							@PathVariable String reference,
-							@RequestParam(name="descending_amount", required=false, defaultValue="false") boolean descending_amount
-							) throws NotFoundException {		
-		if(!PARAM_DEBUG_API_METHODS)
-			return null;
-					
-		List<AccountTransactionResponseDTO> resp = new ArrayList<AccountTransactionResponseDTO>();
-		mLogger.info("Init - searchTransactionByReference descending<" + descending_amount + ">");
-		resp = mTransactionService.getAllTransactionByReference(reference, descending_amount);
-		return resp;
-	}
+
 
 	/**
 	 * Add new transaction
@@ -143,31 +102,6 @@ public class AccountController extends SimpleBankHTTPResponseHandler {
 		resp = mTransactionStatusService.getTransactionStatus(statusRequestDTO);	
 		
 		return resp;
-	}
-
-	/**
-	 *  Obtain an Account 
-	 *  Filter by account_iban
-	 */
-	@RequestMapping(value = SimpleBankRequestMappings.SEARCH_ACCOUNT_BY_IBAN, 
-	                method = RequestMethod.GET, 
-					produces="application/json")
-	@ResponseBody
-	public AccountResponseDTO getAccountByAccountIban(@PathVariable String account_iban) {	
-		AccountResponseDTO accountResponseDTO = null;	
-		Optional<AccountResponseDTO> optAccountResponseDTO = null;	
-
-		mLogger.info("Init - getAccountByAccountIban <" + account_iban + ">");
-		
-		AccountRequestDTO accountRequestDTO = AccountRequestDTO.Builder.newInstance()
-													.setAccountiban(account_iban)
-													.build();
-
-		optAccountResponseDTO = mAccountService.findAccountByAccountIban(accountRequestDTO);
-		if(optAccountResponseDTO.isPresent())
-			accountResponseDTO = optAccountResponseDTO.get();
-		
-		return accountResponseDTO;
 	}
 
 

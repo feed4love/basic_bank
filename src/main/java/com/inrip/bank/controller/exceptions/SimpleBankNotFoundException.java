@@ -1,8 +1,5 @@
 package com.inrip.bank.controller.exceptions;
 
-/**
- *
- */
 public class SimpleBankNotFoundException extends SimpleBankHTTPException {
 
 	private static final long serialVersionUID = 1L;

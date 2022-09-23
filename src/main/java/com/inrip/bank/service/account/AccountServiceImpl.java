@@ -29,7 +29,7 @@ public class AccountServiceImpl  implements AccountService {
 	@Autowired
 	private AccountRepository mAccountRepository;
 
-    @Value("${bank.basic.ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS}")
+    @Value("${com.inrip.bank.param.validate_credit_before_transacion}")
 	private boolean PARAM_ASSUMPTION_CHECK_CREDIT_FOR_TRANSACTIONS;
 
     @Override
