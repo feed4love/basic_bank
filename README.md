@@ -33,6 +33,7 @@ The codes to switch for MongoDB are commented.
 12) JWT security with HS512 signature. The endpoints are /api/user/register and /api/auth/login. The context paths /api/debug , /api/user and /api/auth are not filtering by JWT. The database is H2, so each time the server start is need to register a new user.
 
     Register a new user /api/user/register
+    
     Login user /api/auth/login
 
 # Main components
