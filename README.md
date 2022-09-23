@@ -287,6 +287,8 @@ The file Bank.postman_collection.json include the main commands and paths to the
 
 • (done) debugging instances into a debug apirest controller (debug, configured by a parameter on startup)
 
+• http response general revision.
+
 • test cases for pagination
 
 # Author
