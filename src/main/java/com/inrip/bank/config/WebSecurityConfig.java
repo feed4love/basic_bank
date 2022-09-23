@@ -18,6 +18,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.inrip.bank.security.JwtAuthenticationEntryPoint;
+import com.inrip.bank.security.JwtAuthenticationFilter;
+
 import javax.annotation.Resource;
 
 @Configuration

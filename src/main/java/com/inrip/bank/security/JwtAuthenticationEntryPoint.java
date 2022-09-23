@@ -1,4 +1,4 @@
-package com.inrip.bank.config;
+package com.inrip.bank.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

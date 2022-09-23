@@ -1,8 +1,8 @@
 package com.inrip.bank.controller;
 
-import com.inrip.bank.config.JwtTokenUtil;
 import com.inrip.bank.controller.handlers.SimpleBankHTTPResponseHandler;
 import com.inrip.bank.model.User;
+import com.inrip.bank.security.JwtTokenUtil;
 import com.inrip.bank.service.user.UserService;
 import com.inrip.bank.dto.AuthToken;
 import com.inrip.bank.dto.LoginUser;

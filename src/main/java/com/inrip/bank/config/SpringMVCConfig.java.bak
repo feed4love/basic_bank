@@ -15,18 +15,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @author Enrique AC
  *
  */
-//@Configuration
+@Configuration
 public class SpringMVCConfig implements WebMvcConfigurer  {
 
-	/* 	
-	
-		Commented as far is using JWT filters
-
-	@Autowired
+ 	@Autowired
 	SimpleBankSecurityInterceptor transactionSecurityInterceptor;
+
 	@Override
 	public void addInterceptors(final InterceptorRegistry registry) {
 		registry.addInterceptor(transactionSecurityInterceptor);
-	} */
+	} 
 
 }

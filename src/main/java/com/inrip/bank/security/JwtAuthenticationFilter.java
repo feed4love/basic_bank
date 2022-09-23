@@ -1,4 +1,4 @@
-package com.inrip.bank.config;
+package com.inrip.bank.security;
 
 import com.inrip.bank.common.SimpleBankConstants;
 
