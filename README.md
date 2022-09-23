@@ -34,7 +34,7 @@ The codes to switch for MongoDB are commented.
 
 13) All the endpoints that are not included or directly referenced in the requirements, or they are needs based on asumptions, are accesible by a unique controller for this tasks, will startup according the value of com.inrip.bank.param.debug.enabled. Also some service are going to include debug traces on json responses if this parameter is set to true.
 
-14) The endpoint to retrieve transactions by account_iban has been protected to return a maximun of items defined by com.inrip.bank.param.security.max_items_size_protection. The client side can especify the page and the size of the result list. By default, the controller set page to 0 and max size to 5. If the request has set a page where isn't data to response or the page requested is more than max_items_size_protection, then the service will returns empty Http204 NO CONTENT.
+14) The endpoint to retrieve transactions by account_iban has been protected to return a maximun of items defined by com.inrip.bank.param.security.max_items_size_protection. The client side can especify the page and the size of the result list. By default, the controller set page to 0 and max size to 5. If the request has set a page where isn't data to response or the items requested are more than the configured protection, then the service will returns empty Http204 NO CONTENT.
 
 # Main components
 
