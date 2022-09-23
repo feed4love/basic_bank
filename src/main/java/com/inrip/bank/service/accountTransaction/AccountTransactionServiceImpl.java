@@ -53,7 +53,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 	@Value("${com.inrip.bank.param.create_account_iban_if_not_exists}")
 	private boolean PARAM_ASSUMPTION_ACCOUNT_IBAN_SHALL_EXISTS;
 	
-	@Value("${com.inrip.bank.param.max_items_protection}")
+	@Value("${com.inrip.bank.param.secutity.max_items_size_protection}")
 	private int PARAM_MAX_ITEMS_PROTECTION;
 
 	/*

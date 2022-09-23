@@ -34,7 +34,7 @@ The codes to switch for MongoDB are commented.
 
 13) All the endpoints that are not included or directly referenced in the requirements, or they are needs based on asumptions, are accesible by a unique controller for this tasks, will startup according the value of com.inrip.bank.param.debug.enabled. Also some service are going to include debug traces on json responses if this parameter is set to true.
 
-14) The endpoint to retrieve transactions by account_iban has been protected to return a maximun of 20 items. The client side can especify the page and the size of the result list. By default, the controller set page to 0 and max size to 5. If the request has set a page where isn't data to response, then the service will returns empty Http204 NO CONTENT.
+14) The endpoint to retrieve transactions by account_iban has been protected to return a maximun of items defined by the com.inrip.bank.param.secutity.max_items_size_protection. The client side can especify the page and the size of the result list. By default, the controller set page to 0 and max size to 5. If the request has set a page where isn't data to response or the page requested is more than max_items_size_protection, then the service will returns empty Http204 NO CONTENT.
 
 # Main components
 
@@ -237,6 +237,8 @@ File application.properties has the next list of configurable parameters:
 
 • com.inrip.bank.param.secutity.header_string is the string to locate the autorization block in the header.
 
+• com.inrip.bank.param.secutity.max_items_protection is the maximun size of items returned by the endpoints. 
+
 Default configuration:
 
     server.port=8080
@@ -255,6 +257,7 @@ Default configuration:
     com.inrip.bank.param.secutity.signing_key=55a0653280be438084b6a4151daf26a1d274e76a4b0d408db86fa9aa51e616bf55a0653280be438084b6a4151daf26a1d274e76a4b0d408db86fa9aa51e616bf
     com.inrip.bank.param.secutity.token_prefix=Bearer 
     com.inrip.bank.param.secutity.header_string=Authorization
+    com.inrip.bank.param.secutity.max_items_protection=5
 
 # Test cases
 The next list parameters could interfere with the proper run of the test. 
