@@ -9,92 +9,26 @@
 			"name": "Hello",
 			"request": {
 				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://test:1234@localhost:8080/api/account/transaction/all",
-					"protocol": "http",
-					"auth": {
-						"user": "test",
-						"password": "1234"
-					},
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"account",
-						"transaction",
-						"all"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Search Account by IBAN",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MTcyNDAsImV4cCI6MTY2MzkzNTI0MH0.JSWHyepF888Y0dbKXmhVIrzSGRNHzyuQjsyZoYazrD5b9lM48O7ynLK3hVjzYlHd9SacB0_drw4KHQwzwmkMUA",
+							"type": "string"
 						}
-					}
-				},
-				"url": {
-					"raw": "http://test:1234@localhost:8080/api/account/1",
-					"protocol": "http",
-					"auth": {
-						"user": "test",
-						"password": "1234"
-					},
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"account",
-						"1"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "All transactions",
-			"request": {
-				"auth": {
-					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://test:1234@localhost:8080/api/account/transaction/all",
+					"raw": "http://localhost:8080/api",
 					"protocol": "http",
-					"auth": {
-						"user": "test",
-						"password": "1234"
-					},
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"api",
-						"account",
-						"transaction",
-						"all"
+						"api"
 					]
 				}
 			},
@@ -103,8 +37,24 @@
 		{
 			"name": "Add transaction",
 			"request": {
-				"method": "POST",
-				"header": [],
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MTcyNDAsImV4cCI6MTY2MzkzNTI0MH0.JSWHyepF888Y0dbKXmhVIrzSGRNHzyuQjsyZoYazrD5b9lM48O7ynLK3hVjzYlHd9SacB0_drw4KHQwzwmkMUA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{   \r\n    \"reference\":\"1\",\r\n    \"account_iban\":\"1\",\r\n    \"date\":\"2022-09-19T20:55:42.000Z\",\r\n    \"amount\":2,\r\n    \"fee\":1\r\n}",
@@ -115,12 +65,8 @@
 					}
 				},
 				"url": {
-					"raw": "http://test:1234@localhost:8080/api/account/transaction/add",
+					"raw": "http://localhost:8080/api/account/transaction/add",
 					"protocol": "http",
-					"auth": {
-						"user": "test",
-						"password": "1234"
-					},
 					"host": [
 						"localhost"
 					],
@@ -138,15 +84,21 @@
 		{
 			"name": "Search Transaction by Account IBAN",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MTcyNDAsImV4cCI6MTY2MzkzNTI0MH0.JSWHyepF888Y0dbKXmhVIrzSGRNHzyuQjsyZoYazrD5b9lM48O7ynLK3hVjzYlHd9SacB0_drw4KHQwzwmkMUA",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://test:1234@localhost:8080/api/account/transaction/iban/1?descending_amount=false",
+					"raw": "http://localhost:8080/api/account/transaction/iban/1?descending_amount=false",
 					"protocol": "http",
-					"auth": {
-						"user": "test",
-						"password": "1234"
-					},
 					"host": [
 						"localhost"
 					],
@@ -169,44 +121,21 @@
 			"response": []
 		},
 		{
-			"name": "Search Transaction By Reference",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://test:1234@localhost:8080/api/account/transaction/reference/1?descending_amount=false",
-					"protocol": "http",
-					"auth": {
-						"user": "test",
-						"password": "1234"
-					},
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"account",
-						"transaction",
-						"reference",
-						"1"
-					],
-					"query": [
-						{
-							"key": "descending_amount",
-							"value": "false"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Transaction Status by Reference",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MTcyNDAsImV4cCI6MTY2MzkzNTI0MH0.JSWHyepF888Y0dbKXmhVIrzSGRNHzyuQjsyZoYazrD5b9lM48O7ynLK3hVjzYlHd9SacB0_drw4KHQwzwmkMUA",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -219,20 +148,172 @@
 					}
 				},
 				"url": {
-					"raw": "http://test:1234@localhost:8080/api/transaction/status",
+					"raw": "http://localhost:8080/api/account/transaction/status",
 					"protocol": "http",
-					"auth": {
-						"user": "test",
-						"password": "1234"
-					},
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"api",
+						"account",
 						"transaction",
 						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n   \"userName\": \"test\",\r\n   \"password\" : \"1234\",\r\n   \"roles\" : \"ADMIN\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"username\": \"test\",\r\n   \"password\" : \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All transactions (debug)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MTcyNDAsImV4cCI6MTY2MzkzNTI0MH0.JSWHyepF888Y0dbKXmhVIrzSGRNHzyuQjsyZoYazrD5b9lM48O7ynLK3hVjzYlHd9SacB0_drw4KHQwzwmkMUA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/debug/account/transaction/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"debug",
+						"account",
+						"transaction",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Account by IBAN (debug)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwic2NvcGVzIjpbeyJyb2xlIjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiYWRtaW4iLCJpYXQiOjE2NjM5MTcyNDAsImV4cCI6MTY2MzkzNTI0MH0.JSWHyepF888Y0dbKXmhVIrzSGRNHzyuQjsyZoYazrD5b9lM48O7ynLK3hVjzYlHd9SacB0_drw4KHQwzwmkMUA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/debug/account/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"debug",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Transaction By Reference (debug)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/debug/account/transaction/reference/1?descending_amount=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"debug",
+						"account",
+						"transaction",
+						"reference",
+						"1"
+					],
+					"query": [
+						{
+							"key": "descending_amount",
+							"value": "false"
+						}
 					]
 				}
 			},
