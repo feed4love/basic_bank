@@ -251,7 +251,7 @@ Default recommended configuration:
     com.inrip.bank.param.validate_credit_before_transacion=true
     com.inrip.bank.param.debug.enabled=false
 
-    com.inrip.bank.param.secutity.signing_key=your_key
+    com.inrip.bank.param.secutity.signing_key=<write_your_key>
     com.inrip.bank.param.secutity.token_prefix=Bearer 
     com.inrip.bank.param.secutity.header_string=Authorization
     com.inrip.bank.param.secutity.max_items_size_protection=20
