@@ -30,7 +30,10 @@ The codes to switch for MongoDB are commented.
 
 11) Without context hard difficult to know the best way to implement the endpoint ADD_TRANSACTION. As far PUT is less restrictive than POST, the first is the one chosen.
 
-12) It is implemented JWT security with HS512 signature algorithm. In SimpleBankConstants.JWTConstants are located the SIGNING_KEY, TOKEN_PREFIX and HEADER_STRING. The endpoints are /api/user/register and /api/auth/login. The context paths /api/debug , /api/user and /api/auth are not filtering by JWT. The database is H2, so each time the server start is need to register a new user.
+12) JWT security with HS512 signature algorithm. The endpoints are /api/user/register and /api/auth/login. The context paths /api/debug , /api/user and /api/auth are not filtering by JWT. The database is H2, so each time the server start is need to register a new user.
+
+    http://localhost:8080/api/user/register
+    http://localhost:8080/api/auth/login
 
 # Main components
 
