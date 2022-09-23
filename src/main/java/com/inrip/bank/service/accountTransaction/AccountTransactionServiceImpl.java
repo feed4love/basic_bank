@@ -185,7 +185,7 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 		//List<AccountTransaction>            listTransaction = null;
 
 		if(size>20)
-			throw new SimpleBankBadRequestException("SIZE_NOT_ALLOWED","Size up to 20 for a page is not allowed");
+			throw new SimpleBankNoContent("SIZE_NOT_ALLOWED","Size up to 20 for a page is not allowed");
 
 		Direction direction = Direction.ASC;
 		if (descending_amount)

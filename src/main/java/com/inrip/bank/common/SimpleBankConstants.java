@@ -30,6 +30,7 @@ public class SimpleBankConstants {
 	public static String HTTP_STATUS_NOT_FOUND_STATUS_DESCRIPTION = "Not Found";
 	public static int HTTP_STATUS_FAILURE_STATUS_CODE = 500;
 	public static String HTTP_STATUS_FAILURE_STATUS_DESCRIPTION = "Failure";
+	public static String HTTP_STATUS_NO_CONTENT = "NO_CONTENT";
 	public static String CONTENT_TYPE = "Content-Type";
 	public static String DATE_FORMAT = "yyyy-MM-dd";
 	public static String DATE_FORMAT_REGX = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";

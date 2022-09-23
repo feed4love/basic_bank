@@ -284,9 +284,9 @@ public abstract class SimpleBankHTTPResponseHandler {
 	public void handleResourceNotFoundException(ResourceNotFoundException ex, HttpServletRequest request,
 										  HttpServletResponse response) {
 
-		String code = SimpleBankConstants.HTTP_STATUS_BAD_REQUEST_STATUS;
+		String code = SimpleBankConstants.HTTP_STATUS_NO_CONTENT;
 		String message = ex.getMessage();
-		int httpStatus = HttpStatus.BAD_REQUEST.value();
+		int httpStatus = HttpStatus.NO_CONTENT.value();
 
 		mLogger.debug(message, ex);
 		
