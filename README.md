@@ -24,7 +24,7 @@ The codes to switch for MongoDB are commented.
 
 8) When a no mandatory fee is received, the service manage nulls instead to alter the null state in the db.
 
-9) Similar with the channel field in the account status requests, at this case the asumption is returns void http202 ACCEPTED.
+9) Similar with the channel field in the account status requests, at this case the asumption is returns void Http204 NO CONTENT.
 
 10) It is assumen according the model class than a transaction is a child from parent account, assumed that is need to keep record of the credit avaibable for an account_iban , and validate or deny a transaction before it occurs. Could be nice to contruct an interceptor to validate the transactions by the Account service. Following the rule easy code at this stage here is an estandart implementation. The endpoints are contructed following this assumptions, but they are running as separated services.
 
