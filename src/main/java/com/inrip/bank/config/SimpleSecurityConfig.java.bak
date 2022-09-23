@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  *
  */
 @Configuration
-public class SpringMVCConfig implements WebMvcConfigurer  {
+public class SimpleSecurityConfig implements WebMvcConfigurer  {
 
  	@Autowired
 	SimpleBankSecurityInterceptor transactionSecurityInterceptor;
