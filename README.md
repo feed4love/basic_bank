@@ -58,7 +58,7 @@ The codes to switch for MongoDB are commented.
 
     http://localhost:8080/api/account/transaction/iban/{account_iban}
     http://localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=true
-    http://localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=true&page=0&size=20
+    http://localhost:8080/api/account/transaction/iban/{account_iban}?descending_amount=false&page=0&size=20
     Payload:
     [
         {
